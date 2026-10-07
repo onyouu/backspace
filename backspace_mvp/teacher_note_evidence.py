@@ -3,7 +3,7 @@ from pathlib import Path
 
 from .model import read_json
 from .pipeline import digest, empty_dataset
-from .teacher_incremental import evidence_verifier
+from .teacher_incremental import evidence_verifier, retrieve_memory
 from .teacher_update import TeacherModelUpdateEngine, VERSION, evidence_fingerprint
 from .teacher_questions import RELATION_VERSION
 from .understanding import source_fingerprint
@@ -39,16 +39,17 @@ def update_note_evidence(root, source, *, control=None):
                 'raw_evidence':p['quote'],'char_start':p['span']['start'],'char_end':p['span']['end']}]}
         engine.register_evidence(record);registered+=1
         hypotheses,available=engine.relevant_hypotheses(record)
-        hypotheses=[h for h in hypotheses if digest(['relation',VERSION,RELATION_VERSION,evidence_fingerprint(record),h['id'],
-            h['statement'],h['scope'],control.threshold_version]) not in engine.state['processed']]
-        if not hypotheses:continue
+        if not hypotheses or engine.generic_evidence_processed(record,[h['id'] for h in hypotheses]):continue
+        if all(digest(['relation',VERSION,RELATION_VERSION,evidence_fingerprint(record),h['id'],
+            h['statement'],h['scope'],control.threshold_version]) in engine.state['processed'] for h in hypotheses):continue
         if selected>=engine.policy['max_changed_evidence']:
             pending+=len(hypotheses);continue
-        for h in hypotheses:
-            relation=engine.update_evidence(record,h['id'],coverage={'evidence_selected':1,
-                'evidence_available':len(manifest['units']),'hypotheses_selected':len(hypotheses),
-                'hypotheses_available':available,'counter_search_scope':'provided_note_only'})
-            pending+=relation['status']=='pending_review'
+        memory=retrieve_memory(root/'memory',{'sources':[source]},p['quote'][:1000])
+        result=engine.update_related_evidence(record,[h['id'] for h in hypotheses],memory=memory,
+            coverage={'evidence_selected':1,'evidence_available':len(manifest['units']),
+                'hypotheses_selected':len(hypotheses),'hypotheses_available':available,
+                'counter_search_scope':'provided_note_only'})
+        pending+=result['status']=='pending_review'
         selected+=1
     return {'registered_notes':registered,'selected_notes':selected,'pending_count':pending,
             'state_hash':engine.state['state_hash'],

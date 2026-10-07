@@ -164,6 +164,8 @@ def update_teacher_model(state, *, provider=None, jev_provider=None, control=Non
         pending_pairs = []
         for e in registry.values():
             relevant, available = engine.relevant_hypotheses(e)
+            if engine.generic_evidence_processed(e, [h['id'] for h in relevant]):
+                continue
             for h in relevant:
                 identity = digest(['relation', VERSION, RELATION_VERSION, evidence_fingerprint(e), h['id'],
                     h['statement'], h['scope'], control.threshold_version])
@@ -171,11 +173,14 @@ def update_teacher_model(state, *, provider=None, jev_provider=None, control=Non
                     pending_pairs.append((e, h['id'], len(relevant), available))
         changed_ids = list(dict.fromkeys(e['id'] for e, *_ in pending_pairs))
         chosen = set(changed_ids[:config['max_changed_evidence']])
-        for e, hid, selected_h, available_h in pending_pairs:
-            if e['id'] in chosen:
-                engine.update_evidence(e, hid, memory=memory, coverage={
-                    'evidence_selected': len(chosen), 'evidence_available': len(changed_ids),
-                    'hypotheses_selected': selected_h, 'hypotheses_available': available_h})
+        for eid in changed_ids[:config['max_changed_evidence']]:
+            e = registry[eid]
+            relevant, available_h = engine.relevant_hypotheses(e)
+            query = ' '.join([c['raw_evidence'] for c in e['citations']] + [h['statement'] for h in relevant])[:1200]
+            related_memory = retrieve_memory(memory_folder or root / 'memory', data, query)
+            engine.update_related_evidence(e, [h['id'] for h in relevant], memory=related_memory, coverage={
+                'evidence_selected': len(chosen), 'evidence_available': len(changed_ids),
+                'hypotheses_selected': len(relevant), 'hypotheses_available': available_h})
         # Novelty only operates on complete question bundles, never a giant model JSON.
         eligible = [r for kind in ('subgraphs', 'paths', 'edges', 'nodes') for r in patterns['patterns'][kind]
             if r['is_repeated'] and r['meets_min_support'] and r['mode'] == 'reasoning_structure']

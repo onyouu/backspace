@@ -381,7 +381,59 @@
           "change": "recorded"
         }
       ]
+    },
+    {
+      "id": "change-5b58f440a5e5441e85cbf3427dcb9d35",
+      "at": "2026-10-07T21:16:41+09:00",
+      "category": "업데이트",
+      "title": "교사 가설 갱신 전 증거 선별 추가",
+      "summary": "일반 교과 설명은 보존하면서 불필요한 관계 분석을 줄입니다. 시험문항과 확인된 반례는 보호하고, 불확실한 판단은 검토 대기로 남깁니다. 전체 테스트 203개를 통과했습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/schemas/teacher_prefilter.schema.json",
+          "sha256": "5d7f73abe509f9b3953bf86d6d766f3b050df8c8b36750a6c3b62acdcdd23ef8",
+          "modified_at": "2026-10-07T21:10:44+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/teacher_incremental.py",
+          "sha256": "05bb3ccefc902da0ef8c2a51b0acce3e64bd0d8389b3888f0108713515c8cc9c",
+          "modified_at": "2026-10-07T21:11:32+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/teacher_note_evidence.py",
+          "sha256": "7abee0dca248f1fa0bd4064aec6c3a2b249aaf8391fe377a59a5959c7d6c209e",
+          "modified_at": "2026-10-07T21:09:12+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/teacher_update.py",
+          "sha256": "1bd009c473174a2d90cbc862afef0389d1e08624b15583c14465764a47c6985e",
+          "modified_at": "2026-10-07T21:14:15+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/web.py",
+          "sha256": "5760b36fef60b15d318018e40f87a5a558f789acfcf61cd0e5d0fc9347536fb5",
+          "modified_at": "2026-10-07T21:09:12+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "scripts/validate_teacher_prefilter.py",
+          "sha256": "96ae4d4bfabf6fafa3c50262af3f10a5ae1a479959b41a38be0b50323370d3d0",
+          "modified_at": "2026-10-07T21:12:46+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "tests/test_teacher_prefilter.py",
+          "sha256": "415678c83702baae898ef38a194f6c73c35b5ef6e82b2d32451811889abf3f0f",
+          "modified_at": "2026-10-07T21:14:35+09:00",
+          "change": "recorded"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-10-07T20:32:55+09:00"
+  "updated_at": "2026-10-07T21:16:41+09:00"
 }

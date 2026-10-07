@@ -40,7 +40,9 @@ ARTIFACTS = {'material': 'material_graph.json', 'patterns': 'patterns.json',
 
 
 def backend_revision():
-    files=('web.py','web_pipeline.py','staged.py','grounded.py','nvidia.py','stage_state.py','understanding.py')
+    files=('web.py','web_pipeline.py','staged.py','grounded.py','nvidia.py','stage_state.py','understanding.py',
+           'teacher_update.py','teacher_incremental.py','teacher_note_evidence.py','teacher_questions.py',
+           'semantic_control.py')
     return hashlib.sha256(b''.join((Path(__file__).parent/name).read_bytes() for name in files)).hexdigest()[:16]
 
 

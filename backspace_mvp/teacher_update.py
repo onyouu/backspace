@@ -75,7 +75,7 @@ class TeacherModelUpdateEngine:
                 'question_versions': [RELATION_VERSION, PREFILTER_VERSION, NOVELTY_VERSION,
                     INTEGRATION_VERSION, SUFFICIENT_VERSION], 'scope': self.scope, 'version': 0,
                 'hypotheses': {}, 'evidence': {}, 'relations': {}, 'updates': {},
-                'processed': {}, 'clusters': {}, 'pending': {}, 'feedback': {}, 'imported': []}
+                'processed': {}, 'clusters': {}, 'pending': {}, 'feedback': {}, 'imported': [], 'prefilters': {}}
         expected = [RELATION_VERSION, PREFILTER_VERSION, NOVELTY_VERSION, INTEGRATION_VERSION, SUFFICIENT_VERSION]
         if self.state['question_versions'] != expected:
             raise ValueError('Jev 질문 버전이 변경됐습니다. 이전 결과를 보존하고 명시적으로 마이그레이션하세요.')
@@ -114,8 +114,10 @@ class TeacherModelUpdateEngine:
             handle.close()
 
     def _repair(self):
+        # Additive checkpoint projection: old decisions and question versions stay intact.
+        self.state.setdefault('prefilters', {})
         for key, directory in [('hypotheses', 'hypotheses'), ('relations', 'relations'),
-            ('updates', 'updates'), ('feedback', 'feedback'), ('pending', 'pending')]:
+            ('updates', 'updates'), ('feedback', 'feedback'), ('pending', 'pending'), ('prefilters', 'prefilters')]:
             for rid, value in self.state[key].items():
                 path = self.folder / directory / (rid + '.json')
                 try:
@@ -233,6 +235,63 @@ class TeacherModelUpdateEngine:
         if identity in self.state['pending']:
             self.state['pending'][identity]['resolved'] = True
 
+    def prefilter_identity(self, evidence, hypothesis_ids):
+        hypotheses = [compact(self.state['hypotheses'][hid]) for hid in sorted(hypothesis_ids)]
+        for h in hypotheses:
+            h.pop('lifecycle_status', None)
+        return digest(['evidence_prefilter', PREFILTER_VERSION, evidence_fingerprint(evidence),
+            hypotheses, self.control.threshold_version,
+            getattr(self.control.provider, 'model', None) or os.environ.get('JEV_MODEL', 'jev-latest')])
+
+    def generic_evidence_processed(self, evidence, hypothesis_ids):
+        if evidence['kind'] == 'question' or any(evidence['id'] in h['contradicting_evidence']
+            for h in self.state['hypotheses'].values()):
+            return False
+        result = self.state.get('prefilters', {}).get(self.prefilter_identity(evidence, hypothesis_ids), {})
+        return result.get('status') == 'generic_evidence_preserved'
+
+    def update_related_evidence(self, evidence, hypothesis_ids, *, memory=None, coverage=None):
+        """One shared gate before per-H five-question decisions. Never discard a witness."""
+        with self.transaction():
+            self.register_evidence(evidence)
+            identity = self.prefilter_identity(evidence, hypothesis_ids)
+            if self.generic_evidence_processed(evidence, hypothesis_ids):
+                self._resolved(identity); self._commit()
+                return self.state['prefilters'][identity]
+            hypotheses = [compact(self.state['hypotheses'][hid]) for hid in hypothesis_ids]
+            decision = self.control.judge('teacher_prefilter', {
+                'evidence': [evidence], 'existing_hypotheses': hypotheses,
+                'related_memory': memory or {}, 'retrieval_coverage': coverage or {}},
+                prefilter_questions(1), PREFILTER_VERSION, hypothesis_ids=hypothesis_ids)
+            a = decision['raw_answers']
+            signal = self.control.noul(a.get('teacher_signal'))
+            generic = self.control.noul(a.get('generic_subject_knowledge'))
+            mandatory = evidence['kind'] == 'question' or any(
+                evidence['id'] in h['contradicting_evidence'] for h in self.state['hypotheses'].values())
+            result = {'id': identity, 'evidence_id': evidence['id'],
+                'evidence_hash': evidence_fingerprint(evidence), 'hypothesis_ids': list(hypothesis_ids),
+                'status': 'pending_review', 'decision_id': decision['decision_id'],
+                'question_version': PREFILTER_VERSION, 'mandatory': mandatory,
+                'coverage': coverage or {}, 'provenance': copy.deepcopy(evidence['citations']), 'created_at': now()}
+            # These are independent predicates: an ambiguous generic flag cannot
+            # veto a clear teacher signal or drop a mandatory assessment witness.
+            trusted = decision['status'] == 'success'
+            if trusted and signal is False and generic is True and not mandatory:
+                result['status'] = 'generic_evidence_preserved'
+                self._resolved(identity)
+            elif trusted and (signal is True or mandatory):
+                relations = [self.update_evidence(evidence, hid, memory=memory, coverage=coverage)
+                    for hid in hypothesis_ids]
+                result['relation_ids'] = [r['id'] for r in relations]
+                result['status'] = 'applied' if all(r['status'] == 'applied' for r in relations) else 'pending_review'
+                if result['status'] == 'applied': self._resolved(identity)
+            if result['status'] == 'pending_review':
+                self._pending(identity, 'pending_review', evidence['id'], decision_id=decision['decision_id'])
+            self._validate('teacher_prefilter.schema.json', result)
+            self.state['prefilters'][identity] = result
+            self._commit()
+            return result
+
     def update_evidence(self, evidence, hypothesis_id, *, memory=None, coverage=None):
         with self.transaction():
             fingerprint = self.register_evidence(evidence)
@@ -318,7 +377,8 @@ class TeacherModelUpdateEngine:
         incomplete_retrieval = any(r.get('coverage', {}).get('hypotheses_selected', 0) <
             r.get('coverage', {}).get('hypotheses_available', 0) for r in self.state['relations'].values()
             if r['hypothesis_id'] == h['id'] and r['status'] == 'applied' and r['relation'] != 'unrelated'
-            and self.state['evidence'].get(r['evidence_id'], {}).get('current'))
+            and self.state['evidence'].get(r['evidence_id'], {}).get('current')
+            and self.state['evidence'][r['evidence_id']]['fingerprint'] == r['evidence_hash'])
         return stats.get('independent_questions', 0) >= self.policy['minimum_questions'] and \
             stats.get('source_diversity', 0) >= self.policy['minimum_sources'] and \
             not stats.get('unresolved_strong_contradiction', False) and not incomplete_retrieval and coverage >= self.policy['minimum_coverage']
