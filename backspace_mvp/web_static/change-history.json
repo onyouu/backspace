@@ -365,7 +365,23 @@
           "change": "modified"
         }
       ]
+    },
+    {
+      "id": "change-af23619c5fae497f9a5735d1cc13650b",
+      "at": "2026-10-07T20:32:55+09:00",
+      "category": "업데이트",
+      "title": "GitHub 비공개 저장소에 첫 업로드",
+      "summary": "코드·샘플·설명서·변경 연표를 비공개 저장소에 보관했습니다. API 키와 실제 학습자료·분석 결과는 올리지 않았습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "scripts/prepare_github_export.py",
+          "sha256": "b1603f93694fed64d36dd20b809da5f5b3be50efc4bdae2de6d20a61f6d33bc7",
+          "modified_at": "2026-10-07T20:26:47+09:00",
+          "change": "recorded"
+        }
+      ]
     }
   ],
-  "updated_at": "2026-10-07T20:15:41+09:00"
+  "updated_at": "2026-10-07T20:32:55+09:00"
 }
