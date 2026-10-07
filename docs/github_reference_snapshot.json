@@ -1,0 +1,106 @@
+{
+  "checked_date": "2026-10-06",
+  "method": "GitHub connector: repository metadata, default-branch commits, and files fetched again at those commits. No repositories installed or executed.",
+  "scope": "Seven repositories; selected files only, not a full repository audit. Source inspection does not establish performance on Backspace.",
+  "sources": [
+    {
+      "key": "ragas_metric",
+      "repo": "vibrantlabsai/ragas",
+      "path": "src/ragas/metrics/collections/faithfulness/metric.py",
+      "commit": "298b68274234c060deacab3cf5fb52aa3a20e885",
+      "blob_sha": "6220f0616750aca43565e09a741916629c4d4f20",
+      "url": "https://github.com/vibrantlabsai/ragas/blob/298b68274234c060deacab3cf5fb52aa3a20e885/src/ragas/metrics/collections/faithfulness/metric.py",
+      "characters": 5964
+    },
+    {
+      "key": "deeptutor_models",
+      "repo": "HKUDS/DeepTutor",
+      "path": "deeptutor/learning/models.py",
+      "commit": "f07029cfcf2c8dfccdb671cdfc343db8334f5741",
+      "blob_sha": "555f32d7cb4bdde9e74d3cfaf00ba90f5124785e",
+      "url": "https://github.com/HKUDS/DeepTutor/blob/f07029cfcf2c8dfccdb671cdfc343db8334f5741/deeptutor/learning/models.py",
+      "characters": 21296
+    },
+    {
+      "key": "graph_readme",
+      "repo": "microsoft/graphrag",
+      "path": "README.md",
+      "commit": "769542fbf1d8e5b4c6a8677fefc34621c87894c5",
+      "blob_sha": "eb7d564ece1b898600feec8261a96e7d9e1d1d88",
+      "url": "https://github.com/microsoft/graphrag/blob/769542fbf1d8e5b4c6a8677fefc34621c87894c5/README.md",
+      "characters": 5085
+    },
+    {
+      "key": "graph_outputs",
+      "repo": "microsoft/graphrag",
+      "path": "docs/index/outputs.md",
+      "commit": "769542fbf1d8e5b4c6a8677fefc34621c87894c5",
+      "blob_sha": "e76ea89d591e7167af58045dd2964fc3b1e7ef2e",
+      "url": "https://github.com/microsoft/graphrag/blob/769542fbf1d8e5b4c6a8677fefc34621c87894c5/docs/index/outputs.md",
+      "characters": 7363
+    },
+    {
+      "key": "dspy_gepa",
+      "repo": "stanfordnlp/dspy",
+      "path": "docs/docs/diving-deeper/gepa-in-depth.md",
+      "commit": "bc8af7ed3d5ee0b892211e5c03274396442a413c",
+      "blob_sha": "730d04e3a79b3ae21506139f474ba2eb6f3e0676",
+      "url": "https://github.com/stanfordnlp/dspy/blob/bc8af7ed3d5ee0b892211e5c03274396442a413c/docs/docs/diving-deeper/gepa-in-depth.md",
+      "characters": 12638
+    },
+    {
+      "key": "docling_converter",
+      "repo": "docling-project/docling",
+      "path": "docling/document_converter.py",
+      "commit": "d15cf10c26cf33c54ef2779a1fd9d4e3066d07e0",
+      "blob_sha": "9f8bb6c6f65cf7e54e0f10a00e510d9de71ffb33",
+      "url": "https://github.com/docling-project/docling/blob/d15cf10c26cf33c54ef2779a1fd9d4e3066d07e0/docling/document_converter.py",
+      "characters": 34892
+    },
+    {
+      "key": "hippo_core",
+      "repo": "OSU-NLP-Group/HippoRAG",
+      "path": "src/hipporag/HippoRAG.py",
+      "commit": "2bfd831417202b49cda9da7973e141a456e16872",
+      "blob_sha": "c836d03332af9b3303a62add859b247005847dc6",
+      "url": "https://github.com/OSU-NLP-Group/HippoRAG/blob/2bfd831417202b49cda9da7973e141a456e16872/src/hipporag/HippoRAG.py",
+      "characters": 116930
+    },
+    {
+      "key": "lightrag_operate",
+      "repo": "HKUDS/LightRAG",
+      "path": "lightrag/operate.py",
+      "commit": "453dce83d6d0354a06e46c8d4029a0895c4e054b",
+      "blob_sha": "910802339139b0344920c1e589913f0251f05525",
+      "url": "https://github.com/HKUDS/LightRAG/blob/453dce83d6d0354a06e46c8d4029a0895c4e054b/lightrag/operate.py",
+      "characters": 299834
+    },
+    {
+      "key": "deeptutor_objectives",
+      "repo": "HKUDS/DeepTutor",
+      "path": "deeptutor/learning/objective_relations.py",
+      "commit": "f07029cfcf2c8dfccdb671cdfc343db8334f5741",
+      "blob_sha": "87361ecb09169d9a6f8c662e4f256b88bd0b68a0",
+      "url": "https://github.com/HKUDS/DeepTutor/blob/f07029cfcf2c8dfccdb671cdfc343db8334f5741/deeptutor/learning/objective_relations.py",
+      "characters": 6668
+    },
+    {
+      "key": "ragas_correctness",
+      "repo": "vibrantlabsai/ragas",
+      "path": "docs/concepts/metrics/available_metrics/factual_correctness.md",
+      "commit": "298b68274234c060deacab3cf5fb52aa3a20e885",
+      "blob_sha": "d74bdf97e2caa4ec362d71d4aab379a2d673b8b0",
+      "url": "https://github.com/vibrantlabsai/ragas/blob/298b68274234c060deacab3cf5fb52aa3a20e885/docs/concepts/metrics/available_metrics/factual_correctness.md",
+      "characters": 8914
+    },
+    {
+      "key": "docling_doc/pinned",
+      "repo": "docling-project/docling",
+      "path": "docs/concepts/docling_document.md",
+      "commit": "d15cf10c26cf33c54ef2779a1fd9d4e3066d07e0",
+      "blob_sha": "4b20b7f7c4c2be72fcf9188307f0a2e90ad0d8f3",
+      "url": "https://github.com/docling-project/docling/blob/d15cf10c26cf33c54ef2779a1fd9d4e3066d07e0/docs/concepts/docling_document.md",
+      "characters": 3098
+    }
+  ]
+}

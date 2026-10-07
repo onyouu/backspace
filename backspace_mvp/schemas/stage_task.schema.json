@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "required":["task_id","stage","source_id","note_id","hypothesis_id","status","attempt_count","last_error","last_attempt_at","checkpoint","input_hash","payload","dependencies","created_at"],
+  "properties":{
+    "task_id":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "stage":{"enum":["PERCEPTION","UNDERSTANDING","MEMORY_PERSIST","MEMORY_ENRICHMENT","JEV_ROUTING","GRAPH_PROJECTION","PATTERN_MINING","TEACHER_UPDATE","TEACHER_SYNTHESIS","PLANNING"]},
+    "source_id":{"type":"string","minLength":1},
+    "note_id":{"type":["string","null"]},"hypothesis_id":{"type":["string","null"]},
+    "status":{"enum":["not_started","running","complete","skipped","pending","failed_retryable","failed_terminal","rejected"]},
+    "attempt_count":{"type":"integer","minimum":0},
+    "last_error":{"type":["object","null"]},"last_attempt_at":{"type":["string","null"]},
+    "checkpoint":{"type":["string","null"]},"input_hash":{"type":"string","minLength":1},
+    "payload":{"type":"object"},"dependencies":{"type":"array","items":{"type":"string"}},
+    "created_at":{"type":"string"},"version_key":{"type":["string","null"]}
+  },
+  "additionalProperties":true
+}

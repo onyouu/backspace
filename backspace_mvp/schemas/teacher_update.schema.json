@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["update_id", "teacher_model_version_before", "teacher_model_version_after", "evidence_id", "hypothesis_id", "jev_decision_id", "action", "previous_state", "new_state", "created_at"],
+  "properties": {
+    "update_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "teacher_model_version_before": {"type": "integer", "minimum": 0},
+    "teacher_model_version_after": {"type": "integer", "minimum": 1},
+    "evidence_id": {"type": ["string", "null"]},
+    "hypothesis_id": {"type": "string"},
+    "jev_decision_id": {"type": ["string", "null"]},
+    "action": {"type": "string"},
+    "previous_state": {"type": ["object", "null"]},
+    "new_state": {"type": ["object", "null"]},
+    "created_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}

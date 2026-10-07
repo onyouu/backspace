@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.1",
+  "reasoning_codes": [
+    {
+      "id": "read_data",
+      "label": "자료 해석",
+      "definition": "표, 그래프, 모식도에서 조건과 정보를 읽는다."
+    },
+    {
+      "id": "recall",
+      "label": "개념 회상",
+      "definition": "필요한 개념이나 정의를 떠올린다."
+    },
+    {
+      "id": "compare",
+      "label": "조건 비교",
+      "definition": "둘 이상의 상태, 조건, 구조를 비교한다."
+    },
+    {
+      "id": "classify",
+      "label": "분류",
+      "definition": "대상의 특성에 따라 범주를 판정한다."
+    },
+    {
+      "id": "calculate",
+      "label": "수량 계산",
+      "definition": "수치 관계나 비율을 계산한다."
+    },
+    {
+      "id": "infer_cause",
+      "label": "원인 추론",
+      "definition": "관찰된 결과를 설명하는 기작이나 원인을 연결한다."
+    },
+    {
+      "id": "predict",
+      "label": "결과 예측",
+      "definition": "조건 변화가 일으킬 결과를 예측한다."
+    },
+    {
+      "id": "evaluate",
+      "label": "진술 판단",
+      "definition": "보기나 설명이 자료와 개념에 맞는지 판단한다."
+    },
+    {
+      "id": "justify",
+      "label": "근거 제시",
+      "definition": "결론을 자료 또는 개념으로 설명한다."
+    },
+    {
+      "id": "integrate",
+      "label": "체계 통합",
+      "definition": "여러 요소나 기관의 관계를 연결한다."
+    },
+    {
+      "id": "propose",
+      "label": "변화 방안 제시",
+      "definition": "주어진 목표를 만드는 조건 변화를 제안한다."
+    }
+  ],
+  "scope": {
+    "teacher_id": "local",
+    "subject": "생명과학",
+    "label": "합성 검증용 자료 2개 (실제 교사 데이터 아님)",
+    "teacher_identity_verified": false
+  },
+  "notes": [
+    "손으로 작성한 합성 추출 fixture. confidence는 검증용 임의 값이며 실제 GLM/Jev 점수가 아니다.",
+    "lesson.txt의 ppt 분류는 PPT 전사를 가정한 합성 예시이며 실제 PowerPoint 원본이 아니다."
+  ],
+  "sources": [
+    {
+      "id": "src_f8302e524b5f352abb00",
+      "kind": "learning_material",
+      "title": "lesson.txt",
+      "path": "data/material_graph_v01/lesson.txt",
+      "sha256": "0087b580a9b1df6489bd2f54f8a530d8d53899e163a9d15ae06fd99c7b0016df",
+      "format": "txt",
+      "extraction_status": "text_extracted_needs_review",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "중요: 산소는 전자 전달계의 최종 전자 수용체이다.\r\n산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.\r\n세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다.\r\n"
+        }
+      ],
+      "material_type": "ppt",
+      "material_analysis_version": "teacher-material-1.0"
+    },
+    {
+      "id": "src_6eec927f93b99582f7f7",
+      "kind": "learning_material",
+      "title": "worksheet.txt",
+      "path": "data/material_graph_v01/worksheet.txt",
+      "sha256": "c574fe0f10a0234ad45ec900890a12314618b1ec761e1cced118bc794ea7190c",
+      "format": "txt",
+      "extraction_status": "text_extracted_needs_review",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "산소가 충분한 조건과 감소한 조건의 ATP 생성을 비교한다.\r\n반드시 산소의 역할을 설명한다.\r\n"
+        }
+      ],
+      "material_type": "worksheet",
+      "material_analysis_version": "teacher-material-1.0"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c_2c02cf60cf097927",
+      "label": "산소",
+      "aliases": []
+    },
+    {
+      "id": "c_01b63c234dbdc2de",
+      "label": "전자 전달계",
+      "aliases": []
+    },
+    {
+      "id": "c_2b3a8b934997f742",
+      "label": "최종 전자 수용체",
+      "aliases": []
+    },
+    {
+      "id": "c_0633cce65e59802a",
+      "label": "산화적 인산화",
+      "aliases": []
+    },
+    {
+      "id": "c_62405a156d12218b",
+      "label": "ATP",
+      "aliases": []
+    },
+    {
+      "id": "c_536402970a38c239",
+      "label": "세포호흡",
+      "aliases": []
+    }
+  ],
+  "material_relations": [
+    {
+      "id": "src_f8302e524b5f352abb00:fixture:r1",
+      "from": "c_2c02cf60cf097927",
+      "to": "c_62405a156d12218b",
+      "relation": "related_to",
+      "statement": "산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.",
+      "conditions": [
+        "산소 공급 감소",
+        "산화적 인산화에 의한 ATP 생성"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다."
+        }
+      ]
+    }
+  ],
+  "questions": [],
+  "material_observations": [
+    {
+      "id": "mo_0471334073d0bb82064a",
+      "concept_id": "c_2c02cf60cf097927",
+      "surface_form": "산소",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ],
+      "explicit_emphasis": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ]
+    },
+    {
+      "id": "mo_c4f68ba6515acb80c774",
+      "concept_id": "c_01b63c234dbdc2de",
+      "surface_form": "전자 전달계",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ],
+      "explicit_emphasis": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ]
+    },
+    {
+      "id": "mo_f8662a77d2f20dba6965",
+      "concept_id": "c_2b3a8b934997f742",
+      "surface_form": "최종 전자 수용체",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ],
+      "explicit_emphasis": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "중요: 산소는 전자 전달계의 최종 전자 수용체이다."
+        }
+      ]
+    },
+    {
+      "id": "mo_e2eb349fb26131178bd4",
+      "concept_id": "c_0633cce65e59802a",
+      "surface_form": "산화적 인산화",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_5e9d48272d46fdc253f8",
+      "concept_id": "c_62405a156d12218b",
+      "surface_form": "ATP",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_10b35a74d0796619b7fd",
+      "concept_id": "c_536402970a38c239",
+      "surface_form": "세포호흡",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_f8302e524b5f352abb00",
+          "locator": "p1",
+          "quote": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_6e50d3310673e8bc594b",
+      "concept_id": "c_2c02cf60cf097927",
+      "surface_form": "산소",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_6eec927f93b99582f7f7",
+          "locator": "p1",
+          "quote": "산소가 충분한 조건과 감소한 조건의 ATP 생성을 비교한다."
+        }
+      ],
+      "explicit_emphasis": [
+        {
+          "source_id": "src_6eec927f93b99582f7f7",
+          "locator": "p1",
+          "quote": "반드시 산소의 역할을 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "mo_e97fb9630951dbddb2cf",
+      "concept_id": "c_62405a156d12218b",
+      "surface_form": "ATP",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source_id": "src_6eec927f93b99582f7f7",
+          "locator": "p1",
+          "quote": "산소가 충분한 조건과 감소한 조건의 ATP 생성을 비교한다."
+        }
+      ],
+      "explicit_emphasis": []
+    }
+  ]
+}

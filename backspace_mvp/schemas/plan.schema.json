@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "teacher_scope",
+    "revision",
+    "dataset_hash",
+    "exam_format",
+    "updated_at",
+    "tasks",
+    "events",
+    "assumptions"
+  ],
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "teacher_scope": {
+      "type": "object",
+      "required": [
+        "teacher_id",
+        "subject",
+        "label",
+        "teacher_identity_verified"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "teacher_id": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "teacher_identity_verified": {
+          "type": "boolean"
+        }
+      }
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "dataset_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "exam_format": {
+      "type": "string",
+      "minLength": 1
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "at",
+          "type",
+          "text"
+        ],
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "type": {
+            "const": "revision"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "concept_id",
+          "activity",
+          "question_ids",
+          "material_source_ids",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "concept_id": {
+            "type": "string"
+          },
+          "activity": {
+            "type": "string"
+          },
+          "question_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material_source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "in_progress",
+              "completed"
+            ]
+          },
+          "objective": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected_output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "success_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "step_id": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/evidence"
+            }
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "review_status": {
+            "enum": [
+              "ai_reviewed",
+              "needs_reference_review",
+              "legacy_needs_reanalysis"
+            ]
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "student_observation": {
+      "const": "not_observed"
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_id",
+        "locator",
+        "quote"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "1.1"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "student_observation"
+        ],
+        "properties": {
+          "tasks": {
+            "items": {
+              "required": [
+                "objective",
+                "expected_output",
+                "success_criteria",
+                "conditions",
+                "step_id",
+                "evidence",
+                "claim_ids",
+                "review_status",
+                "content_hash"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

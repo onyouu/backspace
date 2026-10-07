@@ -1,0 +1,46 @@
+{
+  "repository": "agiresearch/A-mem",
+  "commit": "ceffb860f0712bbae97b184d440df62bc910ca8d",
+  "files": [
+    {
+      "path": "agentic_memory/__init__.py",
+      "upstream_blob_sha": "0519ecba6ea913e21689ec692e81e9e4973fbf73",
+      "source_trailing_newline": false
+    },
+    {
+      "path": "agentic_memory/memory_system.py",
+      "upstream_blob_sha": "594b2f94c2bbdccc439f8294aa797a1e22d9db56",
+      "source_trailing_newline": true
+    },
+    {
+      "path": "agentic_memory/retrievers.py",
+      "upstream_blob_sha": "3fdc993c91885755cef7b4a036dc69aeeafd1e3c",
+      "source_trailing_newline": true
+    },
+    {
+      "path": "agentic_memory/llm_controller.py",
+      "upstream_blob_sha": "6211f6100e1cba75462c94fcd07f49d5edcd6e09",
+      "source_trailing_newline": true
+    },
+    {
+      "path": "README.md",
+      "upstream_blob_sha": "c2c7eb0f255dab75eed8e3e3bdaa6ec0ca61bda0",
+      "source_trailing_newline": true
+    },
+    {
+      "path": "LICENSE",
+      "upstream_blob_sha": "12597231b2c37fef747a2e39df55cccba71c3ceb",
+      "source_trailing_newline": false
+    },
+    {
+      "path": "pyproject.toml",
+      "upstream_blob_sha": "ea824397f2e44ff70029e68df8cb062d1a79d44d",
+      "source_trailing_newline": true
+    },
+    {
+      "path": "requirements.txt",
+      "upstream_blob_sha": "c36b530870887a01ccd4faecb8e37e2875173213",
+      "source_trailing_newline": true
+    }
+  ]
+}

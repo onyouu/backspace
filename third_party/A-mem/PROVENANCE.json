@@ -1,0 +1,63 @@
+{
+  "repository": "agiresearch/A-mem",
+  "commit": "ceffb860f0712bbae97b184d440df62bc910ca8d",
+  "files": [
+    {
+      "path": "agentic_memory/__init__.py",
+      "upstream_blob_sha": "0519ecba6ea913e21689ec692e81e9e4973fbf73",
+      "source_trailing_newline": false,
+      "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "agentic_memory/memory_system.py",
+      "upstream_blob_sha": "594b2f94c2bbdccc439f8294aa797a1e22d9db56",
+      "source_trailing_newline": true,
+      "sha256": "fa58c3ed405e37d298a3d11e5cd69459bc9709004461c0e01fc0c497c77c949b",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "agentic_memory/retrievers.py",
+      "upstream_blob_sha": "3fdc993c91885755cef7b4a036dc69aeeafd1e3c",
+      "source_trailing_newline": true,
+      "sha256": "a4cd9645b9df0774f7f67bdfff3cf4d1a41911b4bac3843208db2019b57e311d",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "agentic_memory/llm_controller.py",
+      "upstream_blob_sha": "6211f6100e1cba75462c94fcd07f49d5edcd6e09",
+      "source_trailing_newline": true,
+      "sha256": "44e7d228326fe78dd8ecb8c8176364511547f5fef7cd7d58e433e883caeae0bb",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "README.md",
+      "upstream_blob_sha": "c2c7eb0f255dab75eed8e3e3bdaa6ec0ca61bda0",
+      "source_trailing_newline": true,
+      "sha256": "6f7185bb241d8ed5f7c0b8c4716b4f5e5cf1e9a3c630c3a1a92e54c3f5fb88b0",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "LICENSE",
+      "upstream_blob_sha": "12597231b2c37fef747a2e39df55cccba71c3ceb",
+      "source_trailing_newline": false,
+      "sha256": "c8a51c83455b8afc3a11b085ce57c7b9b34c6725d6b2329ce3dd9a273f0add6d",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "pyproject.toml",
+      "upstream_blob_sha": "ea824397f2e44ff70029e68df8cb062d1a79d44d",
+      "source_trailing_newline": true,
+      "sha256": "d0cb38f6860dfa50cdc0141896bc6115501bd181fd6c122910cdf0fb07db9dc5",
+      "upstream_blob_verified": true
+    },
+    {
+      "path": "requirements.txt",
+      "upstream_blob_sha": "c36b530870887a01ccd4faecb8e37e2875173213",
+      "source_trailing_newline": true,
+      "sha256": "d01b0399ebf1903f2b88d92f238eb229cebe1ddc434ba2c65c4e716642f636ec",
+      "upstream_blob_verified": true
+    }
+  ],
+  "runtime_patch": "backspace.patch"
+}

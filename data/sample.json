@@ -1,0 +1,709 @@
+{
+  "schema_version": "1.0",
+  "scope": {
+    "teacher_id": "sample",
+    "subject": "생명과학",
+    "label": "알고리즘 검증용 합성 샘플 · 실제 시험 분석과 별도",
+    "teacher_identity_verified": false
+  },
+  "notes": [
+    "문항·자료는 합성 데이터이며 실제 선생님에 대한 결론이 아닙니다.",
+    "Q1/Q3: 같은 경로, Q5/Q6: 같은 분기·합류 부분그래프. 단독 패턴도 JSON에 남습니다."
+  ],
+  "sources": [
+    {
+      "id": "sample_lesson",
+      "kind": "learning_material",
+      "title": "합성 학습자료",
+      "path": "synthetic/lesson",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "format": "synthetic",
+      "extraction_status": "synthetic",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "산소 공급과 세포호흡의 관계를 설명한다."
+        }
+      ]
+    },
+    {
+      "id": "sample_exam",
+      "kind": "exam",
+      "title": "합성 시험",
+      "path": "synthetic/exam",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "format": "synthetic",
+      "extraction_status": "synthetic",
+      "exam_id": "sample_exam",
+      "excerpts": [
+        {
+          "locator": "question:Q1",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+        },
+        {
+          "locator": "question:Q2",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+        },
+        {
+          "locator": "question:Q3",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+        },
+        {
+          "locator": "question:Q4",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4"
+        },
+        {
+          "locator": "question:Q5",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+        },
+        {
+          "locator": "question:Q6",
+          "text": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "respiration",
+      "label": "세포호흡",
+      "aliases": []
+    },
+    {
+      "id": "oxygen",
+      "label": "산소 공급",
+      "aliases": []
+    }
+  ],
+  "reasoning_codes": [
+    {
+      "id": "read_data",
+      "label": "자료 해석",
+      "definition": "표, 그래프, 모식도에서 조건과 정보를 읽는다."
+    },
+    {
+      "id": "recall",
+      "label": "개념 회상",
+      "definition": "필요한 개념이나 정의를 떠올린다."
+    },
+    {
+      "id": "compare",
+      "label": "조건 비교",
+      "definition": "둘 이상의 상태, 조건, 구조를 비교한다."
+    },
+    {
+      "id": "classify",
+      "label": "분류",
+      "definition": "대상의 특성에 따라 범주를 판정한다."
+    },
+    {
+      "id": "calculate",
+      "label": "수량 계산",
+      "definition": "수치 관계나 비율을 계산한다."
+    },
+    {
+      "id": "infer_cause",
+      "label": "원인 추론",
+      "definition": "관찰된 결과를 설명하는 기작이나 원인을 연결한다."
+    },
+    {
+      "id": "predict",
+      "label": "결과 예측",
+      "definition": "조건 변화가 일으킬 결과를 예측한다."
+    },
+    {
+      "id": "evaluate",
+      "label": "진술 판단",
+      "definition": "보기나 설명이 자료와 개념에 맞는지 판단한다."
+    },
+    {
+      "id": "justify",
+      "label": "근거 제시",
+      "definition": "결론을 자료 또는 개념으로 설명한다."
+    },
+    {
+      "id": "integrate",
+      "label": "체계 통합",
+      "definition": "여러 요소나 기관의 관계를 연결한다."
+    },
+    {
+      "id": "propose",
+      "label": "변화 방안 제시",
+      "definition": "주어진 목표를 만드는 조건 변화를 제안한다."
+    }
+  ],
+  "material_relations": [
+    {
+      "id": "m1",
+      "from": "oxygen",
+      "to": "respiration",
+      "relation": "related_to",
+      "evidence": [
+        {
+          "source_id": "sample_lesson",
+          "locator": "p1",
+          "quote": "산소 공급과 세포호흡의 관계를 설명한다."
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q1",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "조건 비교"
+        },
+        {
+          "id": "s1",
+          "code": "infer_cause",
+          "label": "원인 추론"
+        },
+        {
+          "id": "s2",
+          "code": "justify",
+          "label": "근거 제시"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q1",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q1",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+            }
+          ]
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q1",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q1",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q1",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q1"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q2",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "조건 비교"
+        },
+        {
+          "id": "s1",
+          "code": "predict",
+          "label": "결과 예측"
+        },
+        {
+          "id": "s2",
+          "code": "justify",
+          "label": "근거 제시"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q2",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q2",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+            }
+          ]
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q2",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q2",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q2",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q2"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q3",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "조건 비교"
+        },
+        {
+          "id": "s1",
+          "code": "infer_cause",
+          "label": "원인 추론"
+        },
+        {
+          "id": "s2",
+          "code": "justify",
+          "label": "근거 제시"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q3",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q3",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+            }
+          ]
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q3",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q3",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q3",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q3"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q4",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "recall",
+          "label": "개념 회상"
+        },
+        {
+          "id": "s1",
+          "code": "classify",
+          "label": "분류"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q4",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q4",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q4",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q4",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q4"
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q5",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "조건 비교"
+        },
+        {
+          "id": "s1",
+          "code": "infer_cause",
+          "label": "원인 추론"
+        },
+        {
+          "id": "s2",
+          "code": "predict",
+          "label": "결과 예측"
+        },
+        {
+          "id": "s3",
+          "code": "justify",
+          "label": "근거 제시"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q5",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q5",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s2",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q5",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+            }
+          ]
+        },
+        {
+          "from": "s1",
+          "to": "s3",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q5",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+            }
+          ]
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q5",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q5",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q5",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q5"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "exam_id": "sample_exam",
+      "title": "합성 문항 Q6",
+      "prompt_excerpt": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6",
+      "concept_ids": [
+        "respiration"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "조건 비교"
+        },
+        {
+          "id": "s1",
+          "code": "infer_cause",
+          "label": "원인 추론"
+        },
+        {
+          "id": "s2",
+          "code": "predict",
+          "label": "결과 예측"
+        },
+        {
+          "id": "s3",
+          "code": "justify",
+          "label": "근거 제시"
+        }
+      ],
+      "edges": [
+        {
+          "from": "respiration",
+          "to": "s0",
+          "relation": "activates",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q6",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q6",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s2",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q6",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+            }
+          ]
+        },
+        {
+          "from": "s1",
+          "to": "s3",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q6",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+            }
+          ]
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "relation": "precedes",
+          "evidence": [
+            {
+              "source_id": "sample_exam",
+              "locator": "question:Q6",
+              "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "objective": "조건 변화와 개념의 관계를 설명할 수 있는지 확인한다.",
+        "success_criteria": [
+          "조건과 결론의 관계를 명시한다."
+        ],
+        "review_status": "unreviewed",
+        "evidence": [
+          {
+            "source_id": "sample_exam",
+            "locator": "question:Q6",
+            "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "sample_exam",
+          "locator": "question:Q6",
+          "quote": "조건을 비교하고 기작 또는 결과를 근거와 함께 설명한다. Q6"
+        }
+      ]
+    }
+  ]
+}

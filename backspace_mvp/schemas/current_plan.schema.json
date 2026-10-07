@@ -1,0 +1,1215 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "architecture_version": {
+      "const": "teacher-intelligence-0.1"
+    },
+    "implementation_milestone": {
+      "const": "0.7"
+    },
+    "planner_version": {
+      "const": "teacher-plan-1"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "teacher_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "teacher_identity_verified": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "teacher_id",
+        "subject",
+        "label",
+        "teacher_identity_verified"
+      ],
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "teacher_model_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "materials_dataset_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "material_graph_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "teacher_model_hash",
+        "materials_dataset_hash",
+        "material_graph_hash"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "exam_format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "daily_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_concepts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_context_chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "offline": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "exam_format",
+        "days",
+        "daily_minutes",
+        "max_concepts",
+        "max_context_chars",
+        "offline"
+      ],
+      "additionalProperties": false
+    },
+    "generation": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "offline_template",
+            "nvidia_generated"
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "context_version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "model",
+        "context_hash"
+      ],
+      "additionalProperties": false
+    },
+    "student_factors": {
+      "type": "object",
+      "properties": {
+        "weakness": {
+          "type": "null"
+        },
+        "forgetting": {
+          "type": "null"
+        },
+        "performance": {
+          "const": "not_observed"
+        }
+      },
+      "required": [
+        "weakness",
+        "forgetting",
+        "performance"
+      ],
+      "additionalProperties": false
+    },
+    "priorities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/study_priority"
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/study_task"
+      }
+    },
+    "schedule": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "task_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "day",
+          "task_id",
+          "minutes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "capacity_minutes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scheduled_minutes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "overflow_minutes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "capacity_minutes",
+        "scheduled_minutes",
+        "overflow_minutes"
+      ],
+      "additionalProperties": false
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "selected_concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "omitted_concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "selected_concept_ids",
+        "omitted_concept_ids"
+      ],
+      "additionalProperties": false
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/plan_event"
+      }
+    },
+    "processed_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "needs_revision": {
+      "type": "boolean"
+    },
+    "revision_assessment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/plan_judgement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "const": "provisional_plan"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "previous_hash": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "schema_version",
+    "architecture_version",
+    "implementation_milestone",
+    "planner_version",
+    "scope",
+    "inputs",
+    "parameters",
+    "generation",
+    "student_factors",
+    "priorities",
+    "tasks",
+    "schedule",
+    "budget",
+    "selection",
+    "events",
+    "processed_event_ids",
+    "needs_revision",
+    "revision_assessment",
+    "status",
+    "assumptions",
+    "content_hash",
+    "revision",
+    "previous_hash",
+    "updated_at"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Backspace milestone v0.7 persistent study plan",
+  "$defs": {
+    "raw_score": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "score"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "legend": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "probabilities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "required": [
+        "type",
+        "score",
+        "confidence",
+        "legend",
+        "probabilities"
+      ],
+      "additionalProperties": true
+    },
+    "dimension": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "scored"
+            },
+            "dimension": {
+              "type": "string",
+              "minLength": 1
+            },
+            "raw_answer": {
+              "$ref": "#/$defs/raw_score"
+            },
+            "normalized_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "rubric": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "const": "score"
+                },
+                "instructions": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "criteria": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 2,
+                  "maxItems": 10
+                }
+              },
+              "required": [
+                "type",
+                "instructions",
+                "criteria"
+              ],
+              "additionalProperties": false
+            },
+            "rubric_version": {
+              "const": "teacher-scoring-1"
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "request_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "context_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "quality_flag": {
+              "enum": [
+                "low_confidence",
+                "unvalidated_judgement"
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "dimension",
+            "raw_answer",
+            "normalized_score",
+            "rubric",
+            "rubric_version",
+            "model",
+            "request_hash",
+            "context_hash",
+            "quality_flag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "not_observed"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "normalized_score": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "status",
+            "reason",
+            "normalized_score"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "concept_score": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "recurrence": {
+              "$ref": "#/$defs/dimension"
+            },
+            "source_diversity": {
+              "$ref": "#/$defs/dimension"
+            },
+            "exam_relevance": {
+              "$ref": "#/$defs/dimension"
+            },
+            "reasoning_centrality": {
+              "$ref": "#/$defs/dimension"
+            },
+            "explicit_emphasis": {
+              "$ref": "#/$defs/dimension"
+            },
+            "evidence_quality": {
+              "$ref": "#/$defs/dimension"
+            }
+          },
+          "required": [
+            "recurrence",
+            "source_diversity",
+            "exam_relevance",
+            "reasoning_centrality",
+            "explicit_emphasis",
+            "evidence_quality"
+          ],
+          "additionalProperties": false
+        },
+        "statistics": {
+          "type": "object",
+          "properties": {
+            "material_source_page_frequency": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_support": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_denominator": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "reasoning_connections": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "material_source_page_frequency",
+            "exam_support",
+            "exam_denominator",
+            "exam_ids",
+            "source_ids",
+            "source_types",
+            "reasoning_connections"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "teacher_salience": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "weight_version": {
+              "const": "salience-available-weight-v1"
+            },
+            "weights": {
+              "type": "object",
+              "properties": {
+                "recurrence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "source_diversity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "exam_relevance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "reasoning_centrality": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "explicit_emphasis": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "evidence_quality": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "recurrence",
+                "source_diversity",
+                "exam_relevance",
+                "reasoning_centrality",
+                "explicit_emphasis",
+                "evidence_quality"
+              ],
+              "additionalProperties": false
+            },
+            "available_weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1.000001
+            },
+            "status": {
+              "enum": [
+                "provisional",
+                "insufficient_observation"
+              ]
+            },
+            "meaning": {
+              "const": "weighted_available_normalized_scores_not_probability"
+            }
+          },
+          "required": [
+            "weight_version",
+            "weights",
+            "available_weight",
+            "status",
+            "meaning"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "concept_id",
+        "label",
+        "dimensions",
+        "statistics",
+        "evidence",
+        "teacher_salience",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "hypothesis_score": {
+      "type": "object",
+      "properties": {
+        "hypothesis_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "support": {
+              "$ref": "#/$defs/dimension"
+            },
+            "counter": {
+              "$ref": "#/$defs/dimension"
+            },
+            "evidence_quality": {
+              "$ref": "#/$defs/dimension"
+            },
+            "consistency": {
+              "$ref": "#/$defs/dimension"
+            }
+          },
+          "required": [
+            "support",
+            "counter",
+            "evidence_quality",
+            "consistency"
+          ],
+          "additionalProperties": false
+        },
+        "evidence_scores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "evidence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dimensions": {
+                "type": "object",
+                "properties": {
+                  "support": {
+                    "$ref": "#/$defs/dimension"
+                  },
+                  "counter": {
+                    "$ref": "#/$defs/dimension"
+                  },
+                  "evidence_quality": {
+                    "$ref": "#/$defs/dimension"
+                  }
+                },
+                "required": [
+                  "support",
+                  "counter",
+                  "evidence_quality"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "evidence_id",
+              "dimensions"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "selected_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "omitted_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status": {
+          "const": "judged_provisional_not_verified"
+        }
+      },
+      "required": [
+        "hypothesis_id",
+        "dimensions",
+        "evidence_scores",
+        "selected_evidence_ids",
+        "omitted_evidence_ids",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "citation": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "char_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "char_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "question_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transcription": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "source_sha256",
+        "locator",
+        "raw_evidence",
+        "char_start",
+        "char_end",
+        "question_id",
+        "confidence"
+      ],
+      "additionalProperties": true
+    },
+    "plan_judgement": {
+      "type": "object",
+      "properties": {
+        "raw_response": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "answers": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/raw_score"
+              }
+            },
+            "usage": {}
+          },
+          "required": [
+            "model",
+            "answers",
+            "usage"
+          ],
+          "additionalProperties": false
+        },
+        "rubrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "request_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "context_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "raw_response",
+        "rubrics",
+        "request_hash",
+        "context_hash"
+      ],
+      "additionalProperties": false
+    },
+    "study_priority": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "importance": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "importance_basis": {
+          "enum": [
+            "transferred_exact_match_provisional",
+            "not_observed",
+            "jev_teacher_relative_provisional"
+          ]
+        },
+        "judgement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/plan_judgement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "teacher_context": {
+          "type": "object",
+          "properties": {
+            "matched_concept_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "matching_method": {
+              "const": "exact_id_or_label_alias"
+            },
+            "comparison_concepts": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "assessment_ideals": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "selected_ideal_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "comparison_status": {
+              "const": "conditional_anchors_not_automatic_semantic_equivalence"
+            }
+          },
+          "required": [
+            "matched_concept_ids",
+            "matching_method",
+            "comparison_concepts",
+            "assessment_ideals",
+            "selected_ideal_ids",
+            "comparison_status"
+          ],
+          "additionalProperties": false
+        },
+        "material_node": {
+          "type": "object"
+        },
+        "material_relations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "depth": {
+          "enum": [
+            "foundation_review",
+            "deep_application",
+            "application",
+            "basic_understanding",
+            "quick_check"
+          ]
+        },
+        "needs_reference_review": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "concept_id",
+        "label",
+        "importance",
+        "importance_basis",
+        "judgement",
+        "teacher_context",
+        "material_node",
+        "material_relations",
+        "depth",
+        "needs_reference_review"
+      ],
+      "additionalProperties": false
+    },
+    "study_task": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activity_type": {
+          "enum": [
+            "understand",
+            "apply"
+          ]
+        },
+        "estimated_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "activity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_output": {
+          "type": "string",
+          "minLength": 1
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^study_[a-f0-9]{24}$"
+        },
+        "depth": {
+          "enum": [
+            "foundation_review",
+            "deep_application",
+            "application",
+            "basic_understanding",
+            "quick_check"
+          ]
+        },
+        "priority": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "material_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          },
+          "minItems": 1
+        },
+        "teacher_concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "teacher_hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "teacher_context_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "needs_reference_review": {
+          "type": "boolean"
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed"
+          ]
+        },
+        "scheduled_minutes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unscheduled_minutes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "concept_id",
+        "activity_type",
+        "estimated_minutes",
+        "activity",
+        "objective",
+        "expected_output",
+        "success_criteria",
+        "conditions",
+        "id",
+        "depth",
+        "priority",
+        "material_evidence",
+        "teacher_concept_ids",
+        "teacher_hypothesis_ids",
+        "teacher_context_hash",
+        "needs_reference_review",
+        "content_hash",
+        "status",
+        "scheduled_minutes",
+        "unscheduled_minutes"
+      ],
+      "additionalProperties": false
+    },
+    "plan_event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^event_[a-f0-9]{24}$"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "type": {
+          "enum": [
+            "progress",
+            "conversation",
+            "additional_data",
+            "constraint"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "task_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "anyOf": [
+            {
+              "enum": [
+                "pending",
+                "in_progress",
+                "completed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "at",
+        "type",
+        "text",
+        "task_id",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

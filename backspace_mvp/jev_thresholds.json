@@ -1,0 +1,11 @@
+{
+  "version": "conservative-1",
+  "noul_yes": 0.8,
+  "noul_no": 0.2,
+  "choice_probability": 0.8,
+  "choice_confidence": 0.65,
+  "graph_yes": 0.8,
+  "graph_no": 0.2,
+  "max_state_chars": 18000,
+  "max_related_notes": 3
+}
