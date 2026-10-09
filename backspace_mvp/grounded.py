@@ -167,10 +167,10 @@ def extract_material(ex, page):
     visual = ex.source.get('visual_context', {}).get(page['locator'])
     vision_provider = None
     if visual and ex.visual_inputs.get(page['locator']):
-        from .nvidia import NvidiaProvider
-        if isinstance(ex.provider, NvidiaProvider):
-            vision_provider = NvidiaProvider(env_file=ex.provider.env_file, task='vision',
-                timeout=max(90, ex.provider.timeout), usage_path=ex.provider.usage_path)
+        from .llm_provider import create_provider, production_provider
+        if production_provider(ex.provider):
+            vision_provider = create_provider(env_file=ex.provider.env_file, task='vision',
+                timeout=max(90, ex.provider.timeout), usage_path=ex.provider.usage_path,like=ex.provider)
             vision_provider.image_inputs = ex.visual_inputs[page['locator']]
     definitions = ('from → to 방향을 지키세요. part_of: from은 to의 구성 부분. requires: from에 to가 필요. '
         'produces: from 과정이 to를 생성. causes: from 변화가 to 변화를 유발. role_in: from이 to에서 역할을 함. '

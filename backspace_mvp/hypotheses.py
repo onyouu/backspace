@@ -233,8 +233,8 @@ def build_teacher_hypotheses(state, out=None, patterns_path=None, material_path=
     candidates, abstention = [], '선택 가능한 반복 패턴이 없어 가설 생성을 유보했습니다.'
     if pattern_aliases:
         if provider is None:
-            from .nvidia import NvidiaProvider
-            provider = NvidiaProvider(task='hypothesis', usage_path=state.parent / 'usage_log.json')
+            from .llm_provider import create_provider
+            provider = create_provider(task='hypothesis', usage_path=state.parent / 'usage_log.json')
         config = {'model': provider.model, 'fallback': getattr(provider, 'fallback', provider.model),
                   'reasoning_effort': getattr(provider, 'reasoning_effort', None),
                   'max_tokens': min(4096, getattr(provider, 'max_tokens', 4096))}

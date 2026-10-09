@@ -15,8 +15,8 @@ REASONING=obj({'reasoning':{'type':'array','maxItems':4,'items':obj({'operation'
 
 
 def enabled(ex):
-    from .nvidia import NvidiaProvider
-    return isinstance(ex.provider,NvidiaProvider) or getattr(ex.provider,'source_span_support',False)
+    from .llm_provider import create_provider, production_provider
+    return production_provider(ex.provider) or getattr(ex.provider,'source_span_support',False)
 
 
 def cached_concepts(ex,spans):
@@ -53,9 +53,9 @@ def extract_material(ex,page):
         'visual_context':ex.source.get('visual_context',{}).get(locator)}
     vision_provider=None
     if packet['visual_context'] and ex.visual_inputs.get(locator):
-        from .nvidia import NvidiaProvider
-        if isinstance(ex.provider,NvidiaProvider):
-            vision_provider=NvidiaProvider(env_file=ex.provider.env_file,task='vision',usage_path=ex.provider.usage_path)
+        from .llm_provider import create_provider, production_provider
+        if production_provider(ex.provider):
+            vision_provider=create_provider(env_file=ex.provider.env_file,task='vision',usage_path=ex.provider.usage_path,like=ex.provider)
             vision_provider.image_inputs=ex.visual_inputs[locator]
     diagnostic={'locator':locator,'start':start,'end':end,'subtasks':{},'invalid_entries':[]}
     rows=[]

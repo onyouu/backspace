@@ -246,7 +246,7 @@ class IntegrationTests(unittest.TestCase):
         state = self.root / 'cli/dataset.json'
         fixture = str(ROOT / 'data/question_graph_v02/offline_fixture.json')
         with contextlib.redirect_stdout(io.StringIO()), \
-                patch('backspace_mvp.nvidia.NvidiaProvider', return_value=self.llm), \
+                patch('backspace_mvp.llm_provider.create_provider', return_value=self.llm), \
                 patch('backspace_mvp.scoring.JevProvider', wraps=JevProvider) as jev_class, \
                 patch('urllib.request.urlopen', side_effect=AssertionError('Offline tests must never use the network')):
             # Keep the real response validator while replacing network construction.

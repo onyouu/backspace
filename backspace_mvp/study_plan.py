@@ -281,8 +281,8 @@ def generate_study_plan(model_path, materials_state, out=None, material_path=Non
                 'success_criteria': ['원문 위치와 적용 조건 명시', '근거가 없는 내용은 미확인으로 표시'], 'conditions': []})
     else:
         if llm is None:
-            from .nvidia import NvidiaProvider
-            llm = NvidiaProvider(task='planning', usage_path=out.parent / 'usage_log.json')
+            from .llm_provider import create_provider
+            llm = create_provider(task='planning', usage_path=out.parent / 'usage_log.json')
         config = {'model': llm.model, 'fallback': getattr(llm, 'fallback', llm.model),
                   'reasoning_effort': getattr(llm, 'reasoning_effort', None), 'max_tokens': min(8192, getattr(llm, 'max_tokens', 8192))}
         path = out.parent / 'plan_checkpoints' / ('llm-' + _hash([VERSION, CONTEXT_VERSION, packet, contract, config]) + '.json')

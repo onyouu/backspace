@@ -19,7 +19,7 @@ from backspace_mvp.hypotheses import build_teacher_hypotheses
 from backspace_mvp.scoring import build_teacher_scores
 from backspace_mvp.teacher_model import build_teacher_model
 from backspace_mvp.study_plan import generate_study_plan
-from backspace_mvp.nvidia import NvidiaProvider
+from backspace_mvp.llm_provider import create_provider
 from backspace_mvp.jev import JevProvider
 
 
@@ -64,7 +64,7 @@ def main():
     except ValueError as exc:
         record('jev_live_contract', {'status': 'failed', 'error': str(exc), 'requests': 1})
         # Verify NVIDIA independently; unavailable Jev must not be replaced by fixtures.
-    llm = NvidiaProvider(task='hypothesis', usage_path=folder / 'usage_log.json')
+    llm = create_provider(task='hypothesis', usage_path=folder / 'usage_log.json')
     llm.fallback = llm.model  # One attempt per stage keeps this smoke run bounded.
     try:
         hypotheses = build_teacher_hypotheses(state, provider=llm, max_hypotheses=1,
@@ -83,7 +83,7 @@ def main():
         record('live_scores_and_model', {'status': 'passed', 'hypotheses_scored': len(scores['hypothesis_scores']),
             'concepts_scored': len(scores['concept_scores']), 'concepts_total': len(model['concept_importance']),
             'jev_requests_including_probe': len(jev.attempts)})
-        planner = NvidiaProvider(task='planning', usage_path=folder / 'usage_log.json')
+        planner = create_provider(task='planning', usage_path=folder / 'usage_log.json')
         planner.fallback = planner.model
         plan = generate_study_plan(folder / 'teacher_model.json', state, max_concepts=1, days=2,
             daily_minutes=30, jev=jev, llm=planner)

@@ -58,11 +58,19 @@ def verify_model(path):
     checked_artifact(path, 'teacher_model.schema.json', model['scope'])
     records = {e['id']: e for e in model['evidence_registry']}
     from .teacher_incremental import evidence_verifier
-    verify = evidence_verifier({'sources': model['material_sources']})
+    # Historical teacher-model views embed material sources only. Question
+    # evidence still points to exam sources in the saved dataset snapshot.
+    sources = {s['id']: s for s in model['material_sources']}
+    dataset = path.parent / 'dataset.json'
+    if dataset.exists():
+        for source in read_json(dataset).get('sources', []):
+            sources[source['id']] = source
+    verify = evidence_verifier({'sources': list(sources.values())})
     for e in records.values(): verify(e)
     cited = any(h['supporting_evidence'] and h['applicable_context']['conditions'] and
         all(e['evidence_id'] in records for e in h['supporting_evidence']) for h in model['assessment_ideals'])
     explicit_shortfall = model.get('result', {}).get('kind') == 'insufficient_evidence'
-    return model, {'MATERIAL_INGEST_SUCCESS': bool(model['coverage']['understanding']['completed']),
+    understood = model['coverage'].get('understanding', {}).get('completed')
+    return model, {'MATERIAL_INGEST_SUCCESS': bool(understood if understood is not None else sources),
         'TEACHER_MODEL_PERSISTED': True, 'TEACHER_MODEL_USABLE': bool(cited or explicit_shortfall),
         'interpretation': '근거 부족 설명도 확인 가능한 결과이며, 검증된 가설이 있다는 뜻은 아닙니다.'}

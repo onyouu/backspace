@@ -153,7 +153,7 @@ class SemanticControl:
 
 
 def automatic_control(provider, folder):
-    from .nvidia import NvidiaProvider
-    if isinstance(NvidiaProvider,type) and isinstance(provider,NvidiaProvider) and os.environ.get('BACKSPACE_JEV_CONTROL_ENABLED','1') != '0':
+    from .llm_provider import production_provider
+    if production_provider(provider) and os.environ.get('BACKSPACE_JEV_CONTROL_ENABLED','1') != '0':
         return SemanticControl(folder)
     return None

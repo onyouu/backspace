@@ -163,12 +163,12 @@ def main(argv=None):
                 page_range=pages, progress=lambda loc,n: print(f'저장: {loc}', flush=True))
             print(f"인식 저장: {destination}; {result['coverage']}")
         elif args.command == 'diagnose_exam':
-            from .nvidia import NvidiaProvider
+            from .llm_provider import create_provider
             from .pipeline import read_source, save
             source = read_source(args.input, 'exam', 'diagnosis')
             if len(source['excerpts']) != 1 or len(source['excerpts'][0]['text']) > 4000:
                 raise ValueError('진단은 한 페이지의 짧은 텍스트 문항으로 실행하세요.')
-            provider = NvidiaProvider(task='exam')
+            provider = create_provider(task='exam')
             answer = provider.complete_text('다음 생명과학 문제에 간결한 정답을 쓰세요.\n' + source['excerpts'][0]['text'])
             save(args.out, {'question': source['excerpts'][0]['text'], 'answer': answer,
                            'model': provider.last_model, 'diagnostic_log': str(provider.log_path)})

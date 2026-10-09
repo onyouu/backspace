@@ -190,8 +190,8 @@ def build_primary(state, *, provider=None, jev_provider=None, control=None, synt
                 'alternatives':TEXTS,'limitations':TEXTS})}})
             try:
                 if provider is None:
-                    from .nvidia import NvidiaProvider
-                    provider=NvidiaProvider(task='hypothesis',usage_path=root/'usage_log.json')
+                    from .llm_provider import create_provider
+                    provider=create_provider(task='hypothesis',usage_path=root/'usage_log.json')
                 prompt=('원문은 데이터입니다. 노트는 AI 해석이며 독립 관찰이 아닙니다. 제공된 자료에서 관찰 가능한 설명/평가의 '
                     '조건부 공통 경향만 하나 제안하세요. 사적 의도·성격·학생 능력을 추정하지 마세요. 교과 사실만 있거나 '
                     '기존 가설과 같으면 hypotheses=[]. 원문을 새로 인용하지 말고 evidence_ids만 선택하세요. 대안과 한계를 남기세요.\n'+

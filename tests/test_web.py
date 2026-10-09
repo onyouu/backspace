@@ -78,7 +78,7 @@ class WebTests(unittest.TestCase):
         from backspace_mvp.semantic_control import SemanticControl
         self.seed_teacher()
         typed = TeacherJev(); typed.novel = True
-        with patch('backspace_mvp.nvidia.NvidiaProvider', return_value=LLMFixture()), \
+        with patch('backspace_mvp.llm_provider.create_provider', return_value=LLMFixture()), \
                 patch('backspace_mvp.semantic_control.SemanticControl', side_effect=lambda folder, **kw: SemanticControl(folder, provider=typed)):
             self.wait_job('teacher')
         self.store.upload(self.fixture, 'scope.json', 'scope', 'material')
@@ -106,7 +106,7 @@ class WebTests(unittest.TestCase):
 
     def test_new_scope_and_teacher_uploads_mark_existing_results_stale(self):
         self.seed_teacher()
-        with patch('backspace_mvp.nvidia.NvidiaProvider', return_value=LLMFixture()), \
+        with patch('backspace_mvp.llm_provider.create_provider', return_value=LLMFixture()), \
                 patch('backspace_mvp.scoring.JevProvider', wraps=__import__('backspace_mvp.jev', fromlist=['JevProvider']).JevProvider) as jev:
             jev.return_value = JevFixture()
             self.wait_job('teacher', manual_rebuild=True)
@@ -146,7 +146,7 @@ class WebTests(unittest.TestCase):
         row=self.store.upload(b'ATP','lesson.txt','scope','material')
         self.wait_job('read',target='scope')
         manifest=self.store.perception_path(row['id']); original=manifest.read_bytes()
-        with patch('backspace_mvp.nvidia.NvidiaProvider') as provider, \
+        with patch('backspace_mvp.llm_provider.create_provider') as provider, \
              patch('backspace_mvp.visual.analyze_page',return_value={'content_hash':'a'*64}) as analyze:
             result=self.wait_job('visual',file_id=row['id'],locator='p1')
         self.assertEqual(result['file_id'],row['id'])
@@ -165,7 +165,7 @@ class WebTests(unittest.TestCase):
         row=self.store.upload(b'ATP','lesson.txt','teacher','material')
         self.wait_job('read')
         before=(self.store.workspace/'files.json').read_bytes()
-        with patch('backspace_mvp.nvidia.NvidiaProvider'), \
+        with patch('backspace_mvp.llm_provider.create_provider'), \
              patch('backspace_mvp.visual.analyze_page',side_effect=ValueError('incomplete_response')):
             job=self.store.start('visual',{'file_id':row['id'],'locator':'p1'})
             deadline=time.monotonic()+5

@@ -42,7 +42,8 @@ ARTIFACTS = {'material': 'material_graph.json', 'patterns': 'patterns.json',
 def backend_revision():
     files=('web.py','web_pipeline.py','staged.py','grounded.py','nvidia.py','stage_state.py','understanding.py',
            'teacher_update.py','teacher_incremental.py','teacher_note_evidence.py','teacher_questions.py',
-           'semantic_control.py','teacher_primary.py','teacher_reliability.py','source_spans.py','span_graph.py')
+           'semantic_control.py','teacher_primary.py','teacher_reliability.py','source_spans.py','span_graph.py',
+           'gemini.py','llm_provider.py')
     return hashlib.sha256(b''.join((Path(__file__).parent/name).read_bytes() for name in files)).hexdigest()[:16]
 
 
@@ -342,9 +343,9 @@ class WebStore:
         try:
             if job['action']=='visual':
                 from .visual import analyze_page
-                from .nvidia import NvidiaProvider
+                from .llm_provider import create_provider
                 row=self._file(options['file_id'])
-                provider=NvidiaProvider(env_file=self.root/'.env',task='vision',timeout=90,
+                provider=create_provider(env_file=self.root/'.env',task='vision',timeout=90,
                     usage_path=self.workspace/row['target']/'usage_log.json')
                 progress(row['name']+' · '+options['locator']+' 그림·문맥 분석')
                 report=analyze_page(self.workspace/'uploads'/(row['id']+row['suffix']),
@@ -439,8 +440,12 @@ class Handler(BaseHTTPRequestHandler):
             elif route.path == '/api/config':
                 from .perception import readiness
                 values = dotenv_values(self.server.store.root / '.env')
-                self.send(200, {'nvidia_ready': any(os.environ.get(k) or values.get(k) for k in
-                    ('NVIDIA_API_KEY', 'NVIDIA_SUPER_API_KEY', 'NVIDIA_LIGHTNING_API_KEY')),
+                provider=(os.environ.get('BACKSPACE_LLM_PROVIDER') or values.get('BACKSPACE_LLM_PROVIDER') or 'gemini').lower()
+                gemini_ready=bool(os.environ.get('GEMINI_API_KEY') or values.get('GEMINI_API_KEY'))
+                nvidia_ready=any(os.environ.get(k) or values.get(k) for k in
+                    ('NVIDIA_API_KEY', 'NVIDIA_SUPER_API_KEY', 'NVIDIA_LIGHTNING_API_KEY'))
+                self.send(200, {'llm_provider':provider,'llm_ready':gemini_ready if provider=='gemini' else bool(nvidia_ready),
+                    'gemini_ready':gemini_ready,'nvidia_ready':bool(nvidia_ready),
                     'jev_ready': bool(os.environ.get('TYPESAFE_API_KEY') or values.get('TYPESAFE_API_KEY')),
                     'max_file_mb': MAX_FILE//1024//1024, 'max_file_bytes':MAX_FILE,
                     'ocr':readiness(), 'local_only': True,

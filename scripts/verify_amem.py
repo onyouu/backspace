@@ -23,7 +23,7 @@ def main():
     from backspace_mvp.pipeline import save,empty_dataset,digest
     from backspace_mvp.perception import source_from_document
     from backspace_mvp.understanding import UnderstandingWorkspace,list_saved_notes
-    from backspace_mvp.nvidia import NvidiaProvider
+    from backspace_mvp.llm_provider import create_provider
     base=ROOT/'state/web/workspace'
     row=next(r for r in read_json(base/'files.json') if r['id']==args.file_id)
     original=base/'uploads'/(row['id']+row['suffix'])
@@ -34,7 +34,7 @@ def main():
     from backspace_mvp.visual import attach_reports
     source=attach_reports(source_from_document(original,document,'learning_material'),document,normalized)
     source['title']=row['name']
-    provider=NvidiaProvider(env_file=ROOT/'.env',task='understanding',timeout=60,usage_path=args.out/'usage_log.json')
+    provider=create_provider(env_file=ROOT/'.env',task='understanding',timeout=60,usage_path=args.out/'usage_log.json')
     provider.fallback=provider.model;provider.preferred_model=provider.model;provider.max_tokens=1536
     with UnderstandingWorkspace(args.out/'memory',provider=provider) as workspace:
         manifest=workspace.ingest_source(source,locators=[args.locator],
@@ -53,7 +53,7 @@ def main():
             'Understanding Note는 원문에 대한 AI 해석이며 사람의 검토가 필요하다.']}
     if args.project_graph:
         from backspace_mvp.staged import StagedExtractor
-        graph=NvidiaProvider(env_file=ROOT/'.env',task='learning_material',timeout=60,usage_path=args.out/'usage_log.json')
+        graph=create_provider(env_file=ROOT/'.env',task='learning_material',timeout=60,usage_path=args.out/'usage_log.json')
         graph.fallback=graph.model;graph.preferred_model=graph.model;graph.max_tokens=3072
         ex=StagedExtractor(graph,empty_dataset(),source,args.out/'graph_checkpoints',understanding_units=manifest['units'])
         page=next(ex.pages())

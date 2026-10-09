@@ -63,8 +63,8 @@ class UnderstandingWorkspace:
         self.folder=writable(folder);self.subject=subject
         from .amem_adapter import BackspaceMemorySystem,NvidiaMemoryController
         if provider is None:
-            from .nvidia import NvidiaProvider
-            provider=NvidiaProvider(task='understanding',usage_path=self.folder.parent/'usage_log.json')
+            from .llm_provider import create_provider
+            provider=create_provider(task='understanding',usage_path=self.folder.parent/'usage_log.json')
         self.provider=provider
         from .semantic_control import automatic_control
         self.control=control if control is not None else automatic_control(provider,self.folder.parent/'jev_decisions')
@@ -219,9 +219,9 @@ class UnderstandingWorkspace:
                                 'visual_context':source.get('visual_context',{}).get(page['locator'],{}).get('result')},ensure_ascii=False))
                         provider=self.provider
                         if visual_inputs and visual_inputs.get(page['locator']):
-                            from .nvidia import NvidiaProvider
-                            if isinstance(NvidiaProvider,type) and isinstance(provider,NvidiaProvider):
-                                provider=NvidiaProvider(env_file=provider.env_file,task='vision',timeout=provider.timeout,usage_path=provider.usage_path)
+                            from .llm_provider import create_provider, production_provider
+                            if production_provider(provider):
+                                provider=create_provider(env_file=provider.env_file,task='vision',timeout=provider.timeout,usage_path=provider.usage_path,like=provider)
                                 provider.image_inputs=visual_inputs[page['locator']]
                         try:raw=provider.complete_text(prompt,stage='understanding:'+page['locator'],max_tokens=1024)
                         except SemanticReductionRequired as exc:

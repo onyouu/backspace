@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from backspace_mvp.model import read_json
 from backspace_mvp.pipeline import digest, save
 from backspace_mvp.contracts import obj, TEXT
-from backspace_mvp.nvidia import NvidiaProvider
+from backspace_mvp.llm_provider import create_provider
 from backspace_mvp.jev import JevProvider
 from backspace_mvp.semantic_control import SemanticControl
 from backspace_mvp.teacher_update import TeacherModelUpdateEngine
@@ -70,7 +70,7 @@ def main():
     save(args.out / 'probe_inputs.json', {'scope': scope, 'evidence': evidence, 'hypotheses': hypotheses, 'pairs': pairs})
     if not args.live:
         save(args.out / 'benchmark.json', report); return
-    llm = NvidiaProvider(task='hypothesis', usage_path=args.out / 'baseline_usage.json')
+    llm = create_provider(task='hypothesis', usage_path=args.out / 'baseline_usage.json')
     contract = obj({'interpretations': {'type': 'array', 'items': obj({'hypothesis_id': TEXT,
         'statement': TEXT, 'evidence_ids': {'type': 'array', 'items': TEXT}}), 'maxItems': 3}})
     import json

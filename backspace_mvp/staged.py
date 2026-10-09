@@ -65,18 +65,18 @@ class StagedExtractor:
                 break
         if self.progress:
             self.progress(stage, path.exists())
-        from .nvidia import NvidiaProvider
+        from .llm_provider import create_provider, production_provider
         if path.exists():
             entry = read_json(path)
             value = entry['result']
             cached = True
-            if isinstance(provider, NvidiaProvider) and entry.get('model') in (provider.model, provider.fallback):
+            if production_provider(provider) and entry.get('model') in (provider.model, provider.fallback):
                 provider.last_model = entry['model']
                 provider.preferred_model = entry['model']
         else:
             current_prompt = prompt
             for attempt in range(2):
-                if isinstance(provider, NvidiaProvider):
+                if production_provider(provider):
                     value = self.bounded_span_call(provider, current_prompt, schema, stage + (':repair' if attempt else ''), tokens)
                 else:
                     value = provider.complete(current_prompt, schema)
@@ -138,17 +138,17 @@ class StagedExtractor:
         save(self.folder / 'manifest.json', self.manifest)
 
     def review_call(self, *args):
-        from .nvidia import NvidiaProvider
+        from .llm_provider import create_provider, production_provider
         if not hasattr(self, '_review_provider'):
-            self._review_provider = (NvidiaProvider(env_file=self.provider.env_file,
-                timeout=self.provider.timeout, task='review', usage_path=self.provider.usage_path)
-                if isinstance(self.provider, NvidiaProvider) else self.provider)
+            self._review_provider = (create_provider(env_file=self.provider.env_file,
+                timeout=self.provider.timeout, task='review', usage_path=self.provider.usage_path,like=self.provider)
+                if production_provider(self.provider) else self.provider)
         return self.call(*args, provider=self._review_provider)
 
     def evidence_review_call(self, stage, prompt, schema, tokens, check, *, evidence):
         """Text evidence verdicts are decisions, never an extra NVIDIA generation."""
-        from .nvidia import NvidiaProvider
-        if not isinstance(self.provider, NvidiaProvider):
+        from .llm_provider import create_provider, production_provider
+        if not production_provider(self.provider):
             return self.review_call(stage, prompt, schema, tokens, check)
         from .semantic_control import SemanticControl
         from .jev_questions import choice

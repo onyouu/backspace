@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from backspace_mvp.model import read_json,validate
 from backspace_mvp.pipeline import save,digest,empty_dataset
 from backspace_mvp.staged import StagedExtractor
-from backspace_mvp.nvidia import NvidiaProvider
+from backspace_mvp.llm_provider import create_provider
 from backspace_mvp.teacher_primary import collect,build_primary
 
 
@@ -68,7 +68,7 @@ def main():
     def repair(source):
         sid=source['id'];manifest=read_json(root/'memory/source_manifests'/(sid+'.json'))
         images=read_json(root/'pipeline_state/source_snapshots'/(sid+'.json')).get('visual_inputs',{})
-        provider=NvidiaProvider(task='learning_material',usage_path=out/(sid+'_usage.json'))
+        provider=create_provider(task='learning_material',usage_path=out/(sid+'_usage.json'))
         if args.cached_only:
             def no_generation(*a,**k):raise ValueError('uncached_generation_deferred')
             provider.complete=no_generation

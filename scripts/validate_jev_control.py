@@ -15,7 +15,7 @@ from backspace_mvp.model import read_json
 from backspace_mvp.pipeline import digest,save
 from backspace_mvp.understanding import write_text
 from backspace_mvp.amem_adapter import BackspaceMemorySystem,NvidiaMemoryController
-from backspace_mvp.nvidia import NvidiaProvider
+from backspace_mvp.llm_provider import create_provider
 from backspace_mvp.jev import JevProvider
 from backspace_mvp.semantic_control import SemanticControl
 
@@ -52,7 +52,7 @@ def run(note_path,out):
         save(folder/'source_manifests'/('benchmark.json'),{
             'source_id':record['provenance']['source_id'],'source_fingerprint':record['source_fingerprint'],
             'note_ids':[record['id']]})
-        nv=NvidiaProvider(task='memory_metadata',usage_path=out/mode/'usage_log.json')
+        nv=create_provider(task='memory_metadata',usage_path=out/mode/'usage_log.json')
         controller=NvidiaMemoryController(nv,folder/'metadata_checkpoints')
         system=BackspaceMemorySystem(folder,controller)
         metadata={k:copy.deepcopy(v) for k,v in record.items() if k not in ('amem','upstream','content_hash')}

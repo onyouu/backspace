@@ -120,10 +120,10 @@ def ingest(state, input_path, kind, exam_id=None, provider=None, refresh=False, 
                 raise ValueError('자료 유형 변경은 --refresh로 명시하세요.')
             if memory_workspace is not None:
                 from .understanding import UnderstandingWorkspace
-                from .nvidia import NvidiaProvider
-                notes_provider=(NvidiaProvider(task='understanding',usage_path=Path(state).parent/'usage_log.json')
-                    if provider is None else NvidiaProvider(env_file=provider.env_file,task='understanding',usage_path=provider.usage_path)
-                    if isinstance(provider,NvidiaProvider) else provider)
+                from .llm_provider import create_provider, production_provider
+                notes_provider=(create_provider(task='understanding',usage_path=Path(state).parent/'usage_log.json')
+                    if provider is None else create_provider(env_file=provider.env_file,task='understanding',usage_path=provider.usage_path,like=provider)
+                    if production_provider(provider) else provider)
                 with UnderstandingWorkspace(memory_workspace,provider=notes_provider,subject=base['scope']['subject']) as workspace:
                     workspace.ingest_source(source,visual_inputs=visual_inputs,progress=analysis_progress)
             if kind == 'learning_material':
@@ -134,14 +134,14 @@ def ingest(state, input_path, kind, exam_id=None, provider=None, refresh=False, 
                 export_question_graphs(base, Path(state).parent / 'question_graphs')
             return base
         if provider is None:
-            from .nvidia import NvidiaProvider
-            provider = NvidiaProvider(task=kind, usage_path=Path(state).parent / 'usage_log.json')
+            from .llm_provider import create_provider, production_provider
+            provider = create_provider(task=kind, usage_path=Path(state).parent / 'usage_log.json')
         understanding_units=prepared_manifest['units'] if prepared_manifest is not None else None
         if memory_workspace is not None and prepared_manifest is None:
             from .understanding import UnderstandingWorkspace
-            from .nvidia import NvidiaProvider
-            note_provider=(NvidiaProvider(env_file=provider.env_file,task='understanding',
-                usage_path=provider.usage_path) if isinstance(provider,NvidiaProvider) else provider)
+            from .llm_provider import create_provider, production_provider
+            note_provider=(create_provider(env_file=provider.env_file,task='understanding',
+                usage_path=provider.usage_path,like=provider) if production_provider(provider) else provider)
             with UnderstandingWorkspace(memory_workspace,provider=note_provider,subject=base['scope']['subject']) as workspace:
                 note_manifest=workspace.ingest_source(source,visual_inputs=visual_inputs,progress=analysis_progress)
                 if any(read_json(Path(memory_workspace)/'notes'/(nid+'.json')).get('review_status')=='rejected' for nid in note_manifest['note_ids']):

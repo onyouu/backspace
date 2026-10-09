@@ -110,7 +110,7 @@ class WebStageTests(StagePipelineTests):
             if extractor.source['title'] in fail_sources:raise TimeoutError('graph timeout')
             value=empty_dataset();value['sources']=[extractor.source];return value
         def workspace(folder,**kw):return UnderstandingWorkspace(folder,provider=self.llm,system=LocalMemory(folder))
-        return (patch('backspace_mvp.nvidia.NvidiaProvider',return_value=self.llm),
+        return (patch('backspace_mvp.llm_provider.create_provider',return_value=self.llm),
                 patch('backspace_mvp.understanding.UnderstandingWorkspace',side_effect=workspace),
                 patch.object(StagedExtractor,'extract',extract),
                 patch('backspace_mvp.teacher_incremental.update_teacher_model',return_value={'incremental':{}}))
@@ -160,7 +160,7 @@ class WebStageTests(StagePipelineTests):
         files=store.files();files[0]['perception_hash']='changed'
         from backspace_mvp.pipeline import save
         save(store.workspace/'files.json',files)
-        with patch('backspace_mvp.nvidia.NvidiaProvider',side_effect=AssertionError('No stale API')):
+        with patch('backspace_mvp.llm_provider.create_provider',side_effect=AssertionError('No stale API')):
             result=self.run_job(store,'resume',target='teacher')
         self.assertTrue(any(t['status']=='failed_terminal' for t in result['stage_tasks']))
 

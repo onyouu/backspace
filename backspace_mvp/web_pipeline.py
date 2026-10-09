@@ -155,9 +155,9 @@ def execute(store, job, options, progress):
         needs_notes=not resume or needs_initial_understanding or bool(resume_stages & {'UNDERSTANDING','MEMORY_PERSIST','JEV_ROUTING','MEMORY_ENRICHMENT'})
         if needs_notes:
             # Construction itself must be audited without preventing later files.
-            from .nvidia import NvidiaProvider
+            from .llm_provider import create_provider
             try:
-                provider=NvidiaProvider(env_file=store.root/'.env',task='understanding',usage_path=root/'usage_log.json')
+                provider=create_provider(env_file=store.root/'.env',task='understanding',usage_path=root/'usage_log.json')
                 with UnderstandingWorkspace(root/'memory',provider=provider) as workspace:
                     manifest=workspace.ingest_source(source,visual_inputs=images,
                         downstream_only=resume and not needs_initial_understanding and not bool(resume_stages & {'UNDERSTANDING','MEMORY_PERSIST'}),
@@ -192,8 +192,8 @@ def execute(store, job, options, progress):
             provider=None
             def project():
                 nonlocal provider
-                from .nvidia import NvidiaProvider
-                provider=NvidiaProvider(env_file=store.root/'.env',task=KINDS[row['kind']],usage_path=root/'usage_log.json')
+                from .llm_provider import create_provider
+                provider=create_provider(env_file=store.root/'.env',task=KINDS[row['kind']],usage_path=root/'usage_log.json')
                 # prepared_source is authoritative; do not repeat OCR or note generation on graph resume.
                 return ingest(state,path,KINDS[row['kind']],row['exam_id'] or None,provider=provider,
                     refresh=True,material_type=row['material_type'] if row['kind']=='material' else None,
@@ -206,7 +206,7 @@ def execute(store, job, options, progress):
                     ledger.set(graph,'failed_retryable',reason='graph_subtasks_pending');row['status']='needs_review';save_row(row)
             # Provider is lazily initialized inside the stage; include its audit in task diagnostics.
             if not ok and provider and graph.get('last_error'):
-                graph['last_error'].update(provider='NvidiaProvider',model=provider.model,
+                graph['last_error'].update(provider=type(provider).__name__,model=provider.model,
                     provider_attempts=getattr(provider,'attempts',[]),checkpoint=str(getattr(provider,'log_path',state)),
                     input_size=sum(len(p['text']) for p in source['excerpts']))
                 ledger.set(graph,graph['status'],last_error=graph['last_error'])
@@ -282,6 +282,17 @@ def execute(store, job, options, progress):
     task_rows=[r for r in ledger.rows() if r['source_id'] in sources and
                (r['source_id'] not in current or r['input_hash']==current[r['source_id']]) and
                (not r['source_id'].startswith('_') or r['task_id'] in touched or r['input_hash']==global_hash)]
+    # The aggregate teacher input hash can change during this one run as
+    # pending graphs are committed. Only the latest aggregate task describes
+    # the final snapshot; older not_started entries must not keep it partial.
+    aggregate_latest={}
+    for task in task_rows:
+        if task['source_id']=='_teacher':
+            key=task['stage']
+            if key not in aggregate_latest or task['created_at']>aggregate_latest[key]['created_at']:
+                aggregate_latest[key]=task
+    task_rows=[task for task in task_rows if task['source_id']!='_teacher' or
+               aggregate_latest[task['stage']]['task_id']==task['task_id']]
     if action=='read':task_rows=[r for r in task_rows if r['stage']=='PERCEPTION']
     structured=any(t['stage']=='GRAPH_PROJECTION' and t['status']=='complete' for t in task_rows)
     final=outcome(task_rows,structured=structured)

@@ -6,7 +6,11 @@ Jev가 먼저 **기존 내용 재사용 / 추가 추론 / 그래프 필요 여�
 
 자료 이해 메모리를 **[AGI Research A-MEM](https://github.com/agiresearch/A-mem)**으로 연결했습니다. 기존 OCR 캐시 → 짧은 자연어 Understanding Note → A-MEM 검색·연결·메타데이터 갱신을 먼저 저장하고, 기존 그래프·Teacher Model·Jev·계획을 후속 단계로 유지합니다. 파일의 **이해 노트** 버튼으로 결과를 확인합니다. [쉽게 읽는 변경 보고서](docs/amem_integration.md) · [개발 상세 문서](docs/amem_technical_reference.md).
 
-설치는 `./.venv-ocr/Scripts/python.exe -m pip install -e '.[ocr,memory,dev]'`입니다. 메모리 검색은 다국어 MiniLM의 로컬 ONNX 모델을 사용하며 최초 실행에 약 118MB 모델을 내려받습니다. 새로운 이해 노트는 NVIDIA, 후속 분류·추가 분석 필요 판단은 Jev를 사용합니다. 저장된 노트 조회·검색은 NVIDIA/Jev 호출 없이 동작합니다.
+설치는 `./.venv-ocr/Scripts/python.exe -m pip install -e '.[ocr,memory,dev]'`입니다. 메모리 검색은 다국어 MiniLM의 로컬 ONNX 모델을 사용하며 최초 실행에 약 118MB 모델을 내려받습니다. 새 이해 노트·그림 분석·가설·AI 계획은 기본적으로 Google AI Studio의 Gemini를 사용하고, 후속 분류·추가 분석 필요 판단은 Jev를 사용합니다. 저장된 노트 조회·검색은 외부 AI 호출 없이 동작합니다.
+
+### 현재 AI 연결
+
+프로젝트 루트의 `.env`에 `GEMINI_API_KEY=...`를 저장하세요. 키를 채팅이나 소스 코드에 넣지 마세요. 기본 모델은 `gemini-3.7-flash`이며 `GEMINI_MODEL`로 바꿀 수 있습니다. `BACKSPACE_LLM_PROVIDER=gemini`가 기본값입니다. 기존 NVIDIA 연결은 `BACKSPACE_LLM_PROVIDER=nvidia`를 명시할 때만 사용합니다. 자료·그림 분석, 시험 분석, 교사 가설, AI 계획은 같은 제공자 선택을 따릅니다. Jev와 로컬 OCR·저장 자료는 그대로 유지됩니다. API 키가 없으면 새 AI 분석을 실행할 수 있지만 실패로 표시되며 기존 저장 결과는 보존됩니다. 웹 `/api/config`에서 `llm_provider`와 `llm_ready`로 준비 상태를 확인할 수 있습니다.
 
 자료·그림 이해 개선: 원문 검토에서 페이지별 **그림 분석**을 실행할 수 있습니다. 이미지와 주변 글자를 함께 분석하고 관찰·관계 해석·불확실성·근거 영역을 저장합니다. 저장된 시각 자료는 이후 학습자료 의미 분석과 관계 검수에도 전달됩니다. [동작·근거·검증 범위](docs/visual_understanding.md).
 

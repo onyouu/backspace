@@ -218,8 +218,8 @@ def update_teacher_model(state, *, provider=None, jev_provider=None, control=Non
             if len(json.dumps(small, ensure_ascii=False)) > config['max_context_chars']:
                 raise ValueError('candidate_context_budget_exceeded')
             if provider is None:
-                from .nvidia import NvidiaProvider
-                provider = NvidiaProvider(task='hypothesis', usage_path=root / 'usage_log.json')
+                from .llm_provider import create_provider
+                provider = create_provider(task='hypothesis', usage_path=root / 'usage_log.json')
             contract = response_contract(1)
             prompt = ('제공된 기존 가설로 설명되지 않는 교사 요구 사고/평가기준의 조건부 가설을 한국어로 정확히 하나만 제안하세요. '
                 '전체 모델과 점수를 생성하지 마세요. 교사의 사적 의도/성격/미래를 추정하지 마세요. '
