@@ -307,7 +307,7 @@ def build_primary(state, *, provider=None, jev_provider=None, control=None, synt
                 'unrelated_pairs':sum(r['relation']=='unrelated' for r in engine.state['relations'].values() if (r['evidence_id'],r['hypothesis_id']) in applied)},
             'clusters':[{'id':k,**v} for k,v in current_clusters.items()]},
         'incremental':{'version':engine.state['version'],'state_hash':engine.state['state_hash'],
-            'pending_count':sum(not p['resolved'] for p in engine.state['pending'].values()),'candidate_generation_pending':sum(x['status'] in ('pending_review','failed_retryable','integration_pending') for x in current_clusters.values()),
+            'pending_count':sum(not p['resolved'] for p in engine.state['pending'].values()),'candidate_generation_pending':sum(x['status'] in ('failed_retryable','integration_pending','budget_deferred') for x in current_clusters.values()),
             'lifecycle_counts':{s:sum(h['lifecycle_status']==s for h in engine.state['hypotheses'].values()) for s in ('candidate','active','weak','contested','retired','rejected')},
             'graph_support_pending':sum(h['graph_support']=='pending' for h in ideals)}}
     write_artifact(root/'teacher_model.json',body,'teacher_model.schema.json')

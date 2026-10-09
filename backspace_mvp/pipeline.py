@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -27,7 +28,16 @@ def save(path, value):
             json.dump(value, f, ensure_ascii=False, indent=2)
             f.flush()
             os.fsync(f.fileno())
-        os.replace(name, path)
+        for attempt in range(6):
+            try:
+                os.replace(name, path)
+                break
+            except PermissionError as exc:
+                if os.name != 'nt' or getattr(exc, 'winerror', None) not in (5, 32) or attempt == 5:
+                    raise
+                # A browser or antivirus can briefly hold the old JSON open.
+                # Keep the atomic replace and retry only this transient lock.
+                time.sleep(0.025 * 2 ** attempt)
     finally:
         if os.path.exists(name):
             os.unlink(name)

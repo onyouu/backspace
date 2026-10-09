@@ -5,7 +5,7 @@ from .pipeline import digest
 from .model import read_json
 
 VERSION = 'one-run-1'
-CLOSED = {'processed', 'generic_evidence_preserved', 'represented_by_existing', 'no_new_pattern'}
+CLOSED = {'processed', 'generic_evidence_preserved', 'represented_by_existing', 'no_new_pattern', 'pending_review'}
 
 
 def note_bundles(notes, routes, scope):
@@ -35,15 +35,17 @@ def note_bundles(notes, routes, scope):
 def result_summary(registry, hypotheses, clusters, selection):
     counts = Counter(c.get('status') for c in clusters.values())
     pending = sum(counts[k] for k in ('pending_review', 'failed_retryable', 'integration_pending', 'budget_deferred'))
+    retry_pending = sum(counts[k] for k in ('failed_retryable', 'integration_pending', 'budget_deferred'))
     cited = [h for h in hypotheses if h['supporting_evidence'] and h['applicable_context']['conditions']]
     if cited:
         kind = 'hypotheses_available'; message = '근거가 연결된 교사 가설을 저장했습니다. 적용 범위와 검토 상태를 확인하세요.'
     elif not registry:
         kind = 'insufficient_evidence'; message = '현재 원문과 일치하는 근거가 없습니다. 자료와 원문 검토 상태를 확인하세요.'
-    elif pending:
+    elif retry_pending:
         kind = 'generation_pending'; message = '자료 근거는 저장됐지만 교사 가설 판정이 보류돼 있습니다. 아래 사유를 확인하세요.'
     else:
-        kind = 'insufficient_evidence'; message = '확인한 자료에서 교사 고유의 설명·평가 경향을 뒷받침할 근거가 부족합니다.'
+        kind = 'insufficient_evidence'; message = ('현재 자료의 교사 단서가 불확실해 가설을 확정하지 않았습니다. 원문과 시험문항을 검토하세요.'
+            if counts['pending_review'] else '확인한 자료에서 교사 고유의 설명·평가 경향을 뒷받침할 근거가 부족합니다.')
     return {'kind': kind, 'message': message, 'scope': '현재 등록된 자료 범위',
             'cited_hypotheses': len(cited), 'pending_clusters': pending,
             'cluster_counts': dict(counts), 'selection': selection,

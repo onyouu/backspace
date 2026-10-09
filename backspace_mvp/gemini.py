@@ -38,7 +38,11 @@ def gemini_schema(value):
         return value
     result = {k: gemini_schema(v) for k, v in value.items() if k in SCHEMA_KEYS}
     if 'const' in value:
-        result['enum'] = [value['const']]
+        constant = value['const']
+        if isinstance(constant, (str, int, float)) and not isinstance(constant, bool):
+            result['enum'] = [constant]
+        else:
+            result['type'] = 'null' if constant is None else 'boolean'
     if 'properties' in value:
         result['properties'] = {k: gemini_schema(v) for k, v in value['properties'].items()}
     if '$defs' in value:
@@ -107,7 +111,10 @@ class GeminiProvider:
             config = {'maxOutputTokens': event['max_tokens'],
                       'thinkingConfig': {'thinkingLevel': self.reasoning_effort}}
             if schema is not None:
-                config['responseFormat'] = {'text': {'mimeType': 'application/json', 'schema': gemini_schema(schema)}}
+                # The v1beta generateContent endpoint currently accepts these
+                # JSON-schema fields; responseFormat is rejected by 3.7 Flash.
+                config['responseMimeType'] = 'application/json'
+                config['responseJsonSchema'] = gemini_schema(schema)
             payload = {'systemInstruction': {'parts': [{'text': instruction}]},
                        'contents': [{'role': 'user', 'parts': parts}], 'generationConfig': config}
             request = urllib.request.Request(

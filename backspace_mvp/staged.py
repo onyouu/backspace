@@ -44,10 +44,10 @@ class StagedExtractor:
 
     def call(self, stage, prompt, schema, tokens, check, provider=None):
         provider = provider or self.provider
-        identity = digest([self.VERSION, prompt, schema, tokens,
-            getattr(provider, 'model', 'fixture'), getattr(provider, 'fallback', None), getattr(provider, 'max_tokens', None),
-            getattr(provider, 'reasoning_effort', None)])
+        identity = self.checkpoint_identity(prompt, schema, tokens, provider)
         path = self.folder / (identity + '.json')
+        if not path.exists():
+            self.recover_nvidia_checkpoint(path, prompt, schema, tokens, check, provider)
         if not path.exists():
             # A previously received candidate may now pass a deterministic
             # repair. Revalidate every field and citation before reusing it.
@@ -101,6 +101,45 @@ class StagedExtractor:
             'checkpoint': path.name, 'model': entry.get('model') if cached else getattr(provider, 'last_model', None)})
         self.persist_manifest()
         return value
+
+    def checkpoint_identity(self, prompt, schema, tokens, provider):
+        return digest([self.VERSION, prompt, schema, tokens,
+            getattr(provider, 'model', 'fixture'), getattr(provider, 'fallback', None),
+            getattr(provider, 'max_tokens', None), getattr(provider, 'reasoning_effort', None)])
+
+    def recover_nvidia_checkpoint(self, path, prompt, schema, tokens, check, provider):
+        """Reuse only an exact old request that still passes the current contract.
+
+        Provider switching changes the cache key. Replaying every successful
+        page would spend credits without improving its validated result.
+        """
+        from .gemini import GeminiProvider
+        from .nvidia import NvidiaProvider
+        if not isinstance(provider, GeminiProvider):
+            return
+        if not hasattr(self, '_legacy_nvidia_providers'):
+            self._legacy_nvidia_providers = {}
+        for task in ('learning_material', 'exam', 'review', 'vision'):
+            if task not in self._legacy_nvidia_providers:
+                self._legacy_nvidia_providers[task] = NvidiaProvider(
+                    env_file=provider.env_file, task=task, require_key=False)
+            old = self._legacy_nvidia_providers[task]
+            previous_path = self.folder / (self.checkpoint_identity(prompt, schema, tokens, old) + '.json')
+            if previous_path == path or not previous_path.exists():
+                continue
+            try:
+                entry = read_json(previous_path)
+                if entry.get('model') not in (old.model, old.fallback):
+                    continue
+                value = entry['result']
+                Draft202012Validator(schema).validate(value)
+                check(value)
+                Draft202012Validator(schema).validate(value)
+            except (ValueError, ValidationError, KeyError, TypeError):
+                continue
+            save(path, {'result': value, 'model': entry['model'],
+                        'recovered_from': previous_path.name})
+            return
 
     def bounded_span_call(self, provider, prompt, schema, stage, tokens):
         """Retry only this small span task; successful siblings remain checkpointed."""

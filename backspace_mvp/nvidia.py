@@ -30,7 +30,7 @@ class NvidiaProvider:
     GLM = 'z-ai/glm-5.3-flash'
     VISION = 'meta/muse-glimmer-30b'
 
-    def __init__(self, env_file=Path('.env'), timeout=None, task=None, usage_path=None):
+    def __init__(self, env_file=Path('.env'), timeout=None, task=None, usage_path=None, require_key=True):
         self.env_file = env_file
         load_dotenv(env_file, override=False)
         configured = os.environ.get('NVIDIA_MODEL') or self.SUPER
@@ -50,7 +50,7 @@ class NvidiaProvider:
             configured = os.environ.get('NVIDIA_MEMORY_MODEL') or self.LIGHTNING
         self.model = configured
         self.key = self.key_for(self.model)
-        if not self.key:
+        if require_key and not self.key:
             raise ValueError('.env에 NVIDIA_API_KEY를 설정하세요.')
         self.timeout = timeout if timeout is not None else int(os.environ.get('NVIDIA_TIMEOUT_SECONDS', '45'))
         self.max_tokens = int(os.environ.get('NVIDIA_MAX_TOKENS', '16000'))
