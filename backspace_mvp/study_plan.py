@@ -92,7 +92,7 @@ def _teacher_context(model, node, relations, all_new_nodes):
     if not anchors:
         anchors = [c for c in model['concept_importance'] if c['teacher_importance'] is not None][:5]
     anchor_ids = {c['concept_id'] for c in anchors}
-    usable = [h for h in model['assessment_ideals'] if h.get('lifecycle_status', 'active') == 'active'
+    usable = [h for h in model['assessment_ideals'] if (h.get('lifecycle_status', 'active') == 'active' or h.get('readiness') in ('usable','well_supported'))
         and not any(c.get('status') == 'pending_review' for c in h.get('incremental_state', {}).get('scope_candidates', []))]
     ideals = [h for h in usable if anchor_ids.intersection(h['applicable_context']['concept_ids'])]
     if not ideals:

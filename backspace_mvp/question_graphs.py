@@ -23,12 +23,12 @@ def projection(data, question):
         for ref in refs:
             source = sources[ref['source_id']]
             text = next(p['text'] for p in source['excerpts'] if p['locator'] == ref['locator'])
-            start = text.index(ref['quote'])
+            start = ref.get('start_offset',text.index(ref['quote']))
             page = re.fullmatch(r'(?:p|slide)(\d+)', ref['locator'])
             result.append({'source': source['id'], 'source_title': source['title'], 'source_kind': source['kind'],
                 'source_sha256': source['sha256'], 'page': int(page[1]) if page else None,
                 'locator': ref['locator'], 'question_id': qid, 'raw_evidence': ref['quote'],
-                'char_start': start, 'char_end': start + len(ref['quote']), 'offset_policy': 'first_exact_match',
+                'char_start': start, 'char_end': start + len(ref['quote']), 'offset_policy': 'source_span' if ref.get('span_id') else 'first_exact_match',
                 'confidence': confidence,
                 'transcription':transcription_refs(source,ref['locator'],start,start+len(ref['quote']))})
         return list({digest(r): r for r in result}.values())

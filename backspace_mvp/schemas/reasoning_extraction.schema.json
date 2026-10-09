@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "reasoning": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_span_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "operation",
+          "evidence_span_ids"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "reasoning"
+  ],
+  "additionalProperties": false
+}

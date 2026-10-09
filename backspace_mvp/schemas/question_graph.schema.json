@@ -696,7 +696,10 @@
           "minimum": 1
         },
         "offset_policy": {
-          "const": "first_exact_match"
+          "enum": [
+            "first_exact_match",
+            "source_span"
+          ]
         },
         "confidence": {
           "type": "number",

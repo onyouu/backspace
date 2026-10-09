@@ -34,13 +34,15 @@ def execute(store, job, options, progress):
                 ledger.set(task,'failed_terminal',reason='stale_input: source version changed')
             else:valid.append(task)
         initial=valid
-    touched=set(); sources=set()
+    touched=set(); sources=set(); synthesized_primary_hash=None
 
     def run(stage,sid,ih,fn,*,provider=None,checkpoint=None,payload=None):
-        task=ledger.ensure(stage,sid,ih,checkpoint=checkpoint,payload=payload)
+        teacher_stage=stage in ('TEACHER_UPDATE','TEACHER_SYNTHESIS') and sid.startswith('_')
+        task=ledger.ensure(stage,sid,ih,checkpoint=checkpoint,payload=payload,
+            version_key='one-run-1' if teacher_stage else None)
         touched.add(task['task_id']);sources.add(sid)
         progress(LABELS[stage])
-        ok,result=ledger.run(task,fn,provider=provider)
+        ok,result=ledger.run(task,fn,provider=provider,force=teacher_stage)
         if ok and LABELS[stage] not in job['completed_steps']:job['completed_steps'].append(LABELS[stage])
         return ok,result,task
 
@@ -49,6 +51,17 @@ def execute(store, job, options, progress):
         for f in files:
             if f['id']==row['id']:f.update(row)
         save(store.workspace/'files.json',files)
+
+    if target=='teacher' and action in ('teacher','resume') and (root/'memory/source_manifests').exists():
+        from .teacher_primary import build_primary, primary_fingerprint
+        # Publish available note evidence BEFORE any optional slow graph retry.
+        ih=digest([digest(read_json(state)) if state.exists() else None,primary_fingerprint(root)])
+        run('TEACHER_UPDATE','_teacher',ih,lambda:build_primary(state,synthesize=False),checkpoint=root/'teacher_model.json')
+        ok,model,task=run('TEACHER_SYNTHESIS','_teacher',ih,lambda:build_primary(state),checkpoint=root/'teacher_model.json')
+        if ok:
+            synthesized_primary_hash=primary_fingerprint(root)
+            if model.get('incremental',{}).get('candidate_generation_pending') or model.get('incremental',{}).get('pending_count'):
+                ledger.set(task,'pending',reason='teacher_candidates_pending')
 
     def valid_snapshot(row):
         p=root/'pipeline_state/source_snapshots'/(row['pipeline_source_id']+'.json')
@@ -173,8 +186,7 @@ def execute(store, job, options, progress):
         if not manifest or not manifest['coverage']['complete']:
             if graph['status'] not in DONE:ledger.set(graph,'pending',reason='remaining_understanding_units')
             continue
-        if any(read_json(root/'memory/notes'/(nid+'.json')).get('review_status')=='rejected' for nid in manifest['note_ids']):
-            ledger.set(graph,'rejected',reason='rejected_understanding_note');row['status']='needs_review';save_row(row);continue
+        # Rejected notes are isolated by the extractor; valid neighbouring notes remain usable.
         if resume and selected_tasks and graph['task_id'] not in selected_tasks:continue
         if graph['status'] not in DONE:
             provider=None
@@ -187,7 +199,11 @@ def execute(store, job, options, progress):
                     refresh=True,material_type=row['material_type'] if row['kind']=='material' else None,
                     source_title=row['name'],prepared_source=source,prepared_manifest=manifest,prepared_visual_inputs=images,
                     analysis_progress=lambda label,cached:progress(row['name']+' · '+label))
-            ok,_,graph=run('GRAPH_PROJECTION',sid,ih,project,checkpoint=state,payload={'file_id':row['id']})
+            ok,addition,graph=run('GRAPH_PROJECTION',sid,ih,project,checkpoint=state,payload={'file_id':row['id']})
+            if ok:
+                committed=next((s for s in read_json(state)['sources'] if s['id']==sid),None)
+                if committed and committed.get('graph_enrichment',{}).get('pending_count'):
+                    ledger.set(graph,'failed_retryable',reason='graph_subtasks_pending');row['status']='needs_review';save_row(row)
             # Provider is lazily initialized inside the stage; include its audit in task diagnostics.
             if not ok and provider and graph.get('last_error'):
                 graph['last_error'].update(provider='NvidiaProvider',model=provider.model,
@@ -215,25 +231,36 @@ def execute(store, job, options, progress):
                 else:ledger.set(pattern,'pending',reason='graph_view_unavailable');pattern_ok=False
                 if action=='teacher' or resume:
                     from .teacher_incremental import update_teacher_model
-                    update=ledger.ensure('TEACHER_UPDATE',sid,ih,checkpoint=root/'teacher_model/state.json')
-                    synthesis=ledger.ensure('TEACHER_SYNTHESIS',sid,ih,checkpoint=root/'teacher_model/state.json')
+                    teacher_ih=ih
+                    if (root/'memory/source_manifests').exists():
+                        from .teacher_primary import primary_fingerprint
+                        teacher_ih=digest([ih,primary_fingerprint(root)])
+                    update=ledger.ensure('TEACHER_UPDATE',sid,teacher_ih,checkpoint=root/'teacher_model/state.json')
+                    synthesis=ledger.ensure('TEACHER_SYNTHESIS',sid,teacher_ih,checkpoint=root/'teacher_model/state.json')
                     touched.update([update['task_id'],synthesis['task_id']])
-                    if pattern_ok:
-                        ok,result,update=run('TEACHER_UPDATE',sid,ih,lambda:update_teacher_model(state,synthesize=False),checkpoint=root/'teacher_model/state.json')
+                    if pattern_ok or (root/'memory/source_manifests').exists():
+                        ok,result,update=run('TEACHER_UPDATE',sid,teacher_ih,lambda:update_teacher_model(state,synthesize=False),checkpoint=root/'teacher_model/state.json')
                         if ok:
-                            ok,result,synthesis=run('TEACHER_SYNTHESIS',sid,ih,lambda:update_teacher_model(state,synthesize=True,
+                            ok,result,synthesis=run('TEACHER_SYNTHESIS',sid,teacher_ih,lambda:update_teacher_model(state,synthesize=not ((root/'memory/source_manifests').exists() and primary_fingerprint(root)==synthesized_primary_hash),
                                 manual_rebuild=options.get('manual_rebuild',False)),checkpoint=root/'teacher_model/state.json')
-                            if ok and result and (result.get('incremental',{}).get('pending_count') or result.get('incremental',{}).get('pending_concept_ids')):
+                            if ok and result and (result.get('incremental',{}).get('pending_count') or result.get('incremental',{}).get('pending_concept_ids') or result.get('incremental',{}).get('candidate_generation_pending')):
                                 ledger.set(synthesis,'pending',reason='incremental_judgements_pending')
                         else:ledger.set(synthesis,'pending',reason='teacher_update_unavailable')
                     else:
                         ledger.set(update,'pending',reason='usable_patterns_required');ledger.set(synthesis,'pending',reason='teacher_update_unavailable')
         elif action in ('teacher','resume'):
             sid='_'+target;sources.add(sid)
-            for stage in ('PATTERN_MINING','TEACHER_UPDATE','TEACHER_SYNTHESIS'):
-                task=ledger.ensure(stage,sid,digest(sorted(sources)),checkpoint=root/'teacher_model/state.json')
-                ledger.set(task,'pending',reason='usable_graph_evidence_required');touched.add(task['task_id'])
-            if not sources - {sid}:raise ValueError('학습자료를 먼저 추가하세요.')
+            if target=='teacher' and (root/'memory/source_manifests').exists():
+                from .teacher_primary import build_primary
+                ih=digest(sorted(sources))
+                _,_,u=run('TEACHER_UPDATE',sid,ih,lambda:build_primary(state,synthesize=False),checkpoint=root/'teacher_model.json')
+                _,_,s=run('TEACHER_SYNTHESIS',sid,ih,lambda:build_primary(state,synthesize=primary_fingerprint(root)!=synthesized_primary_hash),checkpoint=root/'teacher_model.json')
+                touched.update([u['task_id'],s['task_id']])
+            else:
+                for stage in ('PATTERN_MINING','TEACHER_UPDATE','TEACHER_SYNTHESIS'):
+                    task=ledger.ensure(stage,sid,digest(sorted(sources)),checkpoint=root/'teacher_model/state.json')
+                    ledger.set(task,'pending',reason='usable_graph_evidence_required');touched.add(task['task_id'])
+            if not sources - {sid} and not (root/'teacher_model.json').exists():raise ValueError('학습자료를 먼저 추가하세요.')
 
     if action=='plan' or resume and any(t['stage']=='PLANNING' for t in initial):
         from .study_plan import generate_study_plan
@@ -269,6 +296,12 @@ def execute(store, job, options, progress):
         pending_count=sum(t['status'] not in DONE for t in task_rows),target=target,
         step='저장 완료' if final=='complete' else '저장한 이해 노트는 바로 볼 수 있습니다. 미완료 단계만 재개하세요.')
     if action=='plan' and final!='complete':job['step']='기존 결과는 보존됐습니다. 계획 생성에 필요한 자료·설정을 확인하고 재개하세요.'
+    if target=='teacher' and action in ('teacher','resume') and (root/'teacher_model.json').exists():
+        from .teacher_reliability import verify_model
+        model,flags=verify_model(root/'teacher_model.json')
+        job.update(result_flags=flags,model_result=model.get('result'),model_revision=model['revision'],
+            hypothesis_count=len(model['assessment_ideals']))
+        job['step']=model.get('result',{}).get('message','교사 모델을 저장했습니다.')
     if action=='read':job['step']='텍스트·이미지 읽기 완료' if final=='complete' else '일부 자료를 읽지 못했습니다. 자료별 상태를 확인하세요.'
     if final=='failed_before_understanding':
         failures=[t for t in task_rows if t['status'].startswith('failed')]

@@ -33,12 +33,12 @@ def projection(data):
         source = sources[ref['source_id']]
         text = next(p['text'] for p in source['excerpts'] if p['locator'] == ref['locator'])
         # Explicitly choose the first identical span; source/page, not literal count, is our unit.
-        start = text.index(ref['quote'])
+        start = ref.get('start_offset',text.index(ref['quote']))
         page = re.fullmatch(r'(?:p|slide)(\d+)', ref['locator'])
         return {'source': source['id'], 'source_title': source['title'], 'source_sha256': source['sha256'],
                 'page': int(page[1]) if page else None, 'locator': ref['locator'], 'question_id': None,
                 'raw_evidence': ref['quote'], 'char_start': start, 'char_end': start + len(ref['quote']),
-                'offset_policy': 'first_exact_match', 'confidence': confidence, 'confidence_basis': basis,
+                'offset_policy': 'source_span' if ref.get('span_id') else 'first_exact_match', 'confidence': confidence, 'confidence_basis': basis,
                 'transcription':transcription_refs(source,ref['locator'],start,start+len(ref['quote']))}
 
     for row in observations:

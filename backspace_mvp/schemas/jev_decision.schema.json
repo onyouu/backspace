@@ -36,7 +36,13 @@
         "teacher_prefilter",
         "teacher_novelty",
         "teacher_integration",
-        "teacher_sufficient"
+        "teacher_sufficient",
+        "teacher_notes_prefilter",
+        "teacher_notes_novelty",
+        "teacher_notes_integration",
+        "teacher_notes_sufficient",
+        "graph_emphasis",
+        "teacher_notes_ambiguity"
       ]
     },
     "state_hash": {

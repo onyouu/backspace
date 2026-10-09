@@ -46,7 +46,15 @@ def validate(data):
             excerpts = {p["locator"]: p["text"] for p in source["excerpts"]}
             if ref["locator"] not in excerpts:
                 raise ValueError(f"Unknown evidence location: {ref}")
-            if ref["quote"] not in excerpts[ref["locator"]]:
+            if ref.get('span_id'):
+                from .source_spans import source_version
+                from .pipeline import digest
+                start,end=ref['start_offset'],ref['end_offset']
+                expected='sp_'+digest([source['id'],source_version(source),ref['locator'],start,end])[:28]
+                if (ref['span_id']!=expected or ref['source_version']!=source_version(source) or
+                    excerpts[ref['locator']][start:end]!=ref['quote']):
+                    raise ValueError('Unknown or stale source span')
+            elif ref["quote"] not in excerpts[ref["locator"]]:
                 raise ValueError(f"Quote absent from stored excerpt: {ref}")
 
     for source in sources.values():
@@ -100,8 +108,10 @@ def validate(data):
         if key in observed_pages:
             raise ValueError('Duplicate material concept on one source/page')
         observed_pages.add(key)
-        if observation['surface_form'] not in ref['quote']:
+        if observation.get('grounding_method')!='source_span' and observation['surface_form'] not in ref['quote']:
             raise ValueError('Material concept surface form is absent from quote')
+        if observation.get('grounding_method')=='source_span' and not all(r.get('span_id') for r in observation['evidence']):
+            raise ValueError('Span-grounded concepts require current source spans')
         from .staged import normalize
         concept = concepts[observation['concept_id']]
         if normalize(observation['surface_form']) not in {normalize(s) for s in [concept['label'], *concept['aliases']]}:

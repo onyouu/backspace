@@ -105,7 +105,8 @@ def scan_files():
     return result
 
 
-def update_history(title=None, summary=None, files=()):
+def update_history(title=None, summary=None, files=(), *, kind='IMPLEMENTED', module='Program',
+                   why=None, before=None, after=None, result=None, next_step=None):
     history = read_json(HISTORY) if HISTORY.exists() else seed_history()
     current = scan_files()
     previous = read_json(SNAPSHOT)['files'] if SNAPSHOT.exists() else None
@@ -120,13 +121,15 @@ def update_history(title=None, summary=None, files=()):
                 raise ValueError('추적 대상 코드 파일이 아닙니다: ' + file)
         at = datetime.now(KST).isoformat(timespec='seconds')
         history['entries'].append({'id': 'change-' + uuid4().hex, 'at': at, 'category': '업데이트',
+            'origin': 'code_record', 'type': kind, 'module': module,
+            'change_context': {'why': why, 'before': before, 'after': after, 'result': result, 'next': next_step},
             'title': title or f'코드 {len(changed)}개 파일 변경',
             'summary': summary or '이전 기록과 비교해 변경된 코드를 발견했습니다. 파일별 수정 시각은 아래에서 확인할 수 있습니다.',
             'time_basis': '변경 기록 시각 · 파일별 수정 시각 별도',
             'files': [{'path': file, **(current.get(file) or previous[file]),
                        'change': 'removed' if file not in current else 'modified' if previous and file in previous else 'recorded'}
                       for file in selected]})
-    history['entries'].sort(key=lambda entry: entry['at'])
+    history['entries'].sort(key=lambda entry: (entry.get('sort_at') or entry['at'], entry.get('sequence',999)))
     history['updated_at'] = datetime.now(KST).isoformat(timespec='seconds')
     save(HISTORY, history)
     save(SNAPSHOT, {'files': current, 'recorded_at': history['updated_at']})
@@ -139,5 +142,8 @@ if __name__ == '__main__':
     parser.add_argument('--summary')
     parser.add_argument('--files', nargs='*', default=[])
     parser.add_argument('--scan', action='store_true', help='Record detected changes since the saved snapshot')
+    parser.add_argument('--type', dest='kind', default='IMPLEMENTED', choices=['IDEA','DESIGN','IMPLEMENTED','VALIDATED','FAILURE','PIVOT','NEXT','PRODUCT','RESEARCH'])
+    parser.add_argument('--module', default='Program')
+    for name in ('why', 'before', 'after', 'result', 'next'): parser.add_argument('--'+name)
     args = parser.parse_args()
-    print(f'{update_history(args.title, args.summary, args.files)} timeline entries saved')
+    print(f'{update_history(args.title, args.summary, args.files, kind=args.kind, module=args.module, why=args.why, before=args.before, after=args.after, result=args.result, next_step=args.next)} timeline entries saved')

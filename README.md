@@ -1,36 +1,3 @@
-# Backspace — Teacher Learning Studio
-
-선생님의 자료와 시험에서 개념·사고·평가기준을 추출하고, 이번 시험범위의 학습계획으로 연결하는 로컬 프로토타입입니다.
-
-## 새 설치에서 실행
-
-Python 3.11과 Node.js가 필요합니다. 아래 명령은 이 저장소 폴더에서 실행하세요.
-
-```powershell
-python -m venv .venv-ocr
-.\.venv-ocr\Scripts\python.exe -m pip install -e '.[ocr,memory,dev]'
-npm ci
-if (!(Test-Path .env)) { Copy-Item .env.example .env }
-# .env의 NVIDIA_API_KEY와 TYPESAFE_API_KEY를 본인의 키로 설정하세요.
-.\.venv-ocr\Scripts\python.exe -m backspace_mvp.web --port 8779
-```
-
-브라우저에서 http://127.0.0.1:8779 를 열고 ‘내 자료’를 선택하세요. 모델·OCR·메모리의 최초 사용에는 모델 다운로드와 로컬 연산 시간이 필요합니다. Surya는 선택 사항이며 별도 설치·조건 확인이 필요합니다.
-
-이 저장소에는 코드·합성 샘플·화면 자산·설명서·변경 연표만 포함합니다. API 키, 실제 학습자료, 학생 정보, 로컬 OCR 결과·이해 노트·교사 모델·계획·호출 로그는 포함하지 않습니다. 기존 개발 문서의 로컬 `state/`·`output/` 링크는 개발 당시 기록이며 이 저장소에서는 제공되지 않습니다.
-
-## 코드 변경 기록
-
-화면 상단 ‘변경 이력’에서 연표를 확인합니다. 초기 이력은 문서·파일 시각을 바탕으로 복원했으며 정확한 과거 커밋 이력과 다릅니다. 코드 수정 뒤 아래 명령으로 기록을 이어갈 수 있습니다.
-
-```powershell
-.\.venv-ocr\Scripts\python.exe -m scripts.update_change_history --title "변경 제목" --summary "사용자에게 달라진 점"
-```
-
-자세한 구조와 검증 범위는 아래 개발 문서를 참고하세요. 실제 교사 자료의 분석 정확도와 모든 실패 사례가 해결됐다는 의미는 아닙니다.
-
----
-
 # Backspace Teacher Intelligence Architecture v0.1
 
 ## 웹 작업공간
@@ -307,3 +274,10 @@ queue는 각 자료 공간의 `pipeline_state/tasks`, 상세 오류는 `pipeline
 진행상황 창은 분석 중에도 **× 닫기 / − 최소화**할 수 있습니다. 닫아도 분석은 계속되며 상단 **진행상황**에서 다시 열 수 있습니다. 같은 작업의 닫기·최소화 선택은 갱신과 새로고침 후에도 유지됩니다. 긴 단계 목록은 펼쳐서 창 안에서 스크롤합니다.
 
 교사 가설 갱신에서는 그래프·이해 노트 모두 Jev 사전 선별을 거칩니다. 일반 교과 설명은 보존하고 관계 요청을 생략하며, 불확실한 판단은 확인 대기로 남깁니다. [쉽게 읽는 최신 개선 보고서](docs/teacher_update_followup_report.md)에 변경 내용·203개 테스트 결과·실제 자료 실험의 한계를 정리했습니다.
+# 교사 모델과 지도 실패 분리
+
+이해 노트가 저장된 작업공간에서는 지도나 반복 패턴이 실패해도 교사 모델을 먼저 저장합니다. 자료·근거 등록과 가설 검증을 구분하며, 검증되지 않은 해석은 잠정 상태로 남깁니다. 지도는 나중에 증분 근거로 보강합니다.
+
+새 그래프 요청은 원문 문장을 모델이 복사하는 대신 Python이 만든 구절 ID를 선택합니다. 개념·관계·사고 절차·강조 판정을 별도로 저장하므로 실패한 작은 단계만 다시 진행합니다. 이전 JSON과 CLI도 계속 읽을 수 있습니다.
+
+실제 자료 재검증과 남은 한계는 [검증 보고서](docs/teacher_graph_grounding_report.md)에 정리했습니다. 기존 OCR·노트를 재생성하지 않는 검증 도구는 `python -m scripts.validate_graph_optional`이며 `--source-id`와 `--cached-only`를 지원합니다.

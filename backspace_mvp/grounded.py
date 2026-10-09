@@ -389,7 +389,12 @@ def extract_question(ex, locator, segment):
                              '관련 주장·답안 기준에 인용하세요. 관련 없는 인용을 붙이지 마세요.')
 
     stage = 'question:' + locator + ':' + segment['number']
-    candidate = audit_step_outputs(ex.call(stage, prompt, schema, 4096, check), segment['text'])
+    call=ex.call
+    from .span_graph import enabled
+    if enabled(ex):
+        from .span_question import QuestionSpanCall
+        call=QuestionSpanCall(ex,locator,segment,blocks)
+    candidate = audit_step_outputs(call(stage, prompt, schema, 4096, check), segment['text'])
     history = []
     for attempt in range(2):
         def check_review(value):
@@ -445,7 +450,7 @@ def extract_question(ex, locator, segment):
             ex.manifest.setdefault('semantic_reviews', []).append({'stage': stage, 'history': history})
             ex.persist_manifest()
             raise ValueError('문항의 의미 검토에 실패했습니다. 체크포인트의 검토 사유를 확인하세요.')
-        candidate = audit_step_outputs(ex.call(stage + ':content_revision', prompt + '\n기존 결과의 구체적인 오류를 수정하세요. '
+        candidate = audit_step_outputs(call(stage + ':content_revision', prompt + '\n기존 결과의 구체적인 오류를 수정하세요. '
             '틀린 과학 주장, 관계 방향, 빈 채점 기준, 누락된 필수 요소를 검토 피드백에 따라 수정하세요. '
             '없는 인용을 만들지 말고 자료 밖 기작은 무인용으로 명시하세요.\n' + payload({
                 'previous': candidate, 'feedback': review}), schema, 4096, check), segment['text'])
@@ -458,6 +463,8 @@ def extract_question(ex, locator, segment):
     def resolve_refs(references):
         result = []
         for ref in references:
+            if hasattr(call,'persisted') and (ref['block_id'],ref['quote']) in call.persisted:
+                result.append(call.persisted[(ref['block_id'],ref['quote'])]);continue
             if ref['block_id'] == 'question':
                 result.append(ex.evidence(locator, ref['quote']))
             else:
@@ -493,7 +500,7 @@ def extract_question(ex, locator, segment):
         'analysis_version': 'grounded-2.3', 'implementation_milestone': '0.2',
         'actual_student_behavior': 'not_observed', 'confidence': candidate['confidence'],
         'task': {'description': candidate['task']['description'], 'confidence': candidate['task']['confidence'],
-                 'evidence': [ex.evidence(locator, candidate['task']['quote'])]},
+                 'evidence': resolve_refs([{'block_id':'question','quote':candidate['task']['quote']}])},
         'concept_confidences': [{'concept_id': c, 'step_id': f"s{row['step']}", 'value': row['confidence']}
                                 for c, row in zip(concept_ids, candidate['concepts'])],
         'answer_key_context': {'status': 'provided' if answer_blocks else 'not_provided',

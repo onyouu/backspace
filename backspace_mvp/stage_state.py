@@ -33,6 +33,10 @@ def now():
 def error_type(exc):
     reason = getattr(exc, 'reason', '')
     message = str(exc).lower()
+    if isinstance(exc, __import__('jsonschema').ValidationError) or 'schema_invalid' in message: return 'schema_invalid'
+    if 'invalid_json' in message: return 'invalid_json'
+    if 'span' in message and any(s in message for s in ('invalid','stale','missing','unknown')): return 'source_span_invalid'
+    if 'explicit_marker' in message or 'emphasis' in message: return 'emphasis_validation_error'
     if reason in ('timeout', 'output_limit','network_error','invalid_output','provider_error'): return reason
     if isinstance(exc, TimeoutError) or 'timeout' in message: return 'timeout'
     if isinstance(exc, (ConnectionError, OSError)) or any(s in message for s in

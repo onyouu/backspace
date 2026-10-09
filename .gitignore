@@ -7,14 +7,3 @@ output/
 node_modules/
 .venv-ocr/
 .playwright-cli/
-
-# Private local inputs and generated files
-.env.*
-!.env.example
-/sources/
-/학습자료/
-/시험지/
-*.pdf
-*.pptx
-.pytest_cache/
-.DS_Store

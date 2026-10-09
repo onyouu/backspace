@@ -90,16 +90,25 @@ class VisualTests(unittest.TestCase):
             seen.append((kwargs['stage'],bool(provider.image_inputs)))
             if 'verdicts' in schema['properties']:
                 return {'verdicts':[{'index':0,'status':'supported','reason':'합성 연결 검수'}]}
-            return {'concepts':[{'label':s,'surface_form':s,'quote':s,'confidence':.8,'explicit_emphasis':[]} for s in ['ATP','산소']],
-                'relations':[{'from_label':'산소','to_label':'ATP','relation':'related_to','quote':'ATP',
+            if 'reasoning' in schema['properties']:return {'reasoning':[]}
+            sid=prompt.split('"span_id": "')[1].split('"')[0]
+            if 'concepts' in schema['properties']:
+                return {'concepts':[{'label':s,'evidence_span_ids':[sid],'confidence':.8} for s in ['ATP','산소']]}
+            return {'relations':[{'source':'C1','target':'C0','relation':'related_to','evidence_span_ids':[sid],
                               'statement':'합성 이미지 연결 검증','conditions':[],'confidence':.8}]}
         with patch.dict(os.environ,{'NVIDIA_API_KEY':'fixture','NVIDIA_LOG_DIR':str(self.root/'logs')},clear=True):
             provider=NvidiaProvider(env_file=self.root/'missing.env')
             with patch.object(NvidiaProvider,'complete',complete):
-                data=StagedExtractor(provider,empty_dataset(),source,self.root/'checkpoints',visual_inputs=inputs).extract()
-        self.assertEqual(seen,[('material:p1',True),('material_review:p1',True)])
+                from backspace_mvp.semantic_control import SemanticControl
+                from test_teacher_update import TeacherJev
+                ex=StagedExtractor(provider,empty_dataset(),source,self.root/'checkpoints',visual_inputs=inputs)
+                ex.span_control=SemanticControl(self.root/'span_decisions',provider=TeacherJev())
+                data=ex.extract()
+        self.assertEqual([stage.split(':p1')[0] for stage,_ in seen[:3]],['span:A','span:B','span:B_visual_review'])
+        self.assertTrue(all(has_images for _,has_images in seen[:3]))
         self.assertEqual(data['sources'][0]['visual_context']['p1'],report)
-        self.assertEqual(data['material_observations'][0]['evidence'][0]['quote'],'ATP')
+        self.assertEqual(data['material_observations'][0]['evidence'][0]['quote'],source['excerpts'][0]['text'])
+        self.assertTrue(data['material_observations'][0]['evidence'][0]['span_id'])
         self.assertEqual(data['material_relations'][0]['visual_context_hash'],report['content_hash'])
         from backspace_mvp.materials import export_material_graph
         graph=export_material_graph(data,self.root/'graph.json')

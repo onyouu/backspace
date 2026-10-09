@@ -1,320 +1,1030 @@
 {
-  "version": 1,
+  "version": 2,
   "timezone": "Asia/Seoul",
   "entries": [
     {
-      "id": "restored-c506c2122ec0f585",
-      "at": "2026-10-06T08:03:31+09:00",
-      "category": "시작",
-      "title": "로컬 Teacher Agent의 첫 코드",
-      "summary": "자료와 문항을 구조화해 저장하는 Python 프로토타입을 시작했습니다.",
-      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
-      "reference": "backspace_mvp/analysis.py",
-      "files": [
-        "backspace_mvp/analysis.py",
-        "backspace_mvp/model.py"
-      ]
+      "id": "supplied-152f2b1c6be99183",
+      "sort_at": "2026-04-01T00:00:00+09:00",
+      "date_label": "2026.04",
+      "time_label": "월 단위 기록",
+      "time_precision": "month",
+      "sequence": 0,
+      "type": "IDEA",
+      "statuses": [
+        "IDEA"
+      ],
+      "origin": "supplied_history",
+      "category": "최초 Backspace 설계",
+      "title": "개인 AI 학습 시스템의 시작",
+      "summary": "성적과 학습 데이터를 오래 기억하는 Teacher·Student·Coach 구조를 구상했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 19
+      },
+      "detail": "Backspace의 초기 형태가 만들어짐.\n\n초기 목적:\n\n> 학생의 성적과 학습 데이터를 장기간 기억하고 관리하는 개인 AI 학습 시스템\n\n초기 구조:\n\n```text\nTeacher Agent\nStudent Agent\nCoach Agent\n```\n\n입력 후보:\n\n```text\n시험지\nPPT\nNotion\n성적\n백지복습\n이해도\n학습 습관\n개념 네트워크\n```\n\n초기 시스템 구상에는 다음도 포함됨.\n\n```text\nTelegram 중심 상호작용\n웹 대시보드\n\n03:00\n에이전트 자율 분석\n\n07:00\n학생에게 아침 브리핑\n```\n\n초기 개발 로드맵:\n\n```text\nPhase 1\n서버 + Bot + 시험지 OCR\n\nPhase 2\nStudent Agent + Notion\n\nPhase 3\nTeacher Agent + RAG + 출제 패턴\n\nPhase 4\nCoach Agent + 자율 루프\n```\n\n이 시기의 Backspace는 지금보다 훨씬 큰 **개인 AI 교육 운영체제**에 가까웠음."
     },
     {
-      "id": "restored-9584c62b232f25dd",
-      "at": "2026-10-06T08:04:02+09:00",
-      "category": "AI 연결",
-      "title": "NVIDIA API와 작은 CLI 연결",
-      "summary": "로컬에서 자료 분석을 실행하고 결과를 저장하는 흐름을 마련했습니다. API 키는 환경 파일에서 읽습니다.",
-      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
-      "reference": "backspace_mvp/nvidia.py",
-      "files": [
-        "backspace_mvp/nvidia.py",
-        "backspace_mvp/cli.py"
-      ]
+      "id": "supplied-af624be2033411cc",
+      "sort_at": "2026-07-03T00:00:00+09:00",
+      "date_label": "2026.07.03",
+      "time_label": "날짜만 기록",
+      "time_precision": "day",
+      "sequence": 1,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "초기 기획안 고정",
+      "title": "초기 기획안 정리",
+      "summary": "OCR·RAG·계획·성적 분석·자율 에이전트를 포함한 큰 기획안을 정리했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 83
+      },
+      "detail": "초기 Backspace 기획 문서가 정리됨.\n\n아직 실제 제품보다:\n\n```text\nTeacher\nStudent\nCoach\nRAG\nOCR\n자동 계획\n성적 분석\n자율 Agent\n```\n\n가 한 번에 들어간 대규모 구조에 가까웠음.\n\n이후 실제 개발에서는 범위가 너무 크다는 문제가 지속적으로 등장함."
     },
     {
-      "id": "restored-1ae6695508fb388d",
-      "at": "2026-10-06T09:14:16+09:00",
-      "category": "안정화",
-      "title": "분석을 나눠 저장하는 구조",
-      "summary": "자료 분석을 작은 단계로 나누고, 저장된 중간 결과를 재사용하는 기반을 추가했습니다.",
-      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
-      "reference": "backspace_mvp/staged.py",
-      "files": [
-        "backspace_mvp/staged.py"
-      ]
+      "id": "supplied-4efe2be0ff0aa796",
+      "sort_at": "2026-08-30T16:05:00+09:00",
+      "date_label": "2026.08.30",
+      "time_label": "16:05",
+      "time_precision": "minute",
+      "at": "2026-08-30T16:05:00+09:00",
+      "sequence": 2,
+      "type": "IDEA",
+      "statuses": [
+        "IDEA"
+      ],
+      "origin": "supplied_history",
+      "category": "Backspace 핵심 재정의",
+      "title": "나를 아는 성적관리 AI",
+      "summary": "시험·수업자료·성적·습관·개념망을 장기간 누적하는 방향을 다시 확인했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 108
+      },
+      "detail": "초기 구상을 다시 설명.\n\n핵심:\n\n```text\n나를 아는 AI 성적관리 시스템\n```\n\nTeacher / Student / Coach 구조를 유지하면서:\n\n- 시험지\n- 수업자료\n- Notion\n- 성적\n- 이해도\n- 습관\n- 개념망\n\n을 장기간 누적하는 방향.\n\nRaspberry Pi 서버 운영도 고려함."
     },
     {
-      "id": "restored-5002e3f61ea65413",
-      "at": "2026-10-06T10:28:51+09:00",
-      "category": "v0.1",
-      "title": "자료를 누적 개념 지도로",
-      "summary": "학습자료는 하나의 누적 지도, 시험은 문항별 사고 지도로 나누는 구조를 고정했습니다. Teacher Intelligence 70 / Planning 30 방향을 잡았습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/teacher_intelligence_architecture_v0.1.md",
-      "files": [
-        "backspace_mvp/materials.py",
-        "docs/teacher_intelligence_architecture_v0.1.md"
-      ]
+      "id": "supplied-a99d7438b44aef61",
+      "sort_at": "2026-08-30T16:05:00+09:00",
+      "date_label": "2026.08.30",
+      "time_label": "16:05",
+      "time_precision": "minute",
+      "at": "2026-08-30T16:05:00+09:00",
+      "sequence": 3,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "Backspace 핵심 재정의",
+      "title": "전체 플랫폼에서 작은 MVP로",
+      "summary": "개념·이해도·시험·오답을 통한 약점 추적으로 범위를 줄이는 안이 등장했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 134
+      },
+      "detail": "전체 플랫폼을 한 번에 구현하는 것은 너무 크다고 판단.\n\nMVP를:\n\n```text\n개념\n이해도\n시험\n오답\n↓\n약점 추적\n```\n\n중심으로 축소하는 안이 등장."
     },
     {
-      "id": "restored-6e84539dc6b63477",
-      "at": "2026-10-06T11:49:17+09:00",
-      "category": "v0.2",
-      "title": "문항별 요구 사고 분석",
-      "summary": "각 문제의 개념·요구 행동·사고 과정·답안 기준·출제 의도 후보를 별도 지도로 저장합니다. 학생이 실제로 한 행동과 문제에서 요구하는 행동을 구분합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.2.md",
-      "files": [
-        "backspace_mvp/question_graphs.py"
-      ]
+      "id": "supplied-1e99ac4244fc0c5f",
+      "sort_at": "2026-08-30T16:06:00+09:00",
+      "date_label": "2026.08.30",
+      "time_label": "16:06",
+      "time_precision": "minute",
+      "at": "2026-08-30T16:06:00+09:00",
+      "sequence": 4,
+      "type": "IDEA",
+      "statuses": [
+        "IDEA"
+      ],
+      "origin": "supplied_history",
+      "category": "Backspace 핵심 재정의",
+      "title": "과거의 나를 기억하는 AI",
+      "summary": "성적관리에서 장기 기억·작은 습관·놓치는 패턴을 관찰하는 시스템으로 초점을 옮겼다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 153
+      },
+      "detail": "Backspace의 본질이 다시 한 번 바뀜.\n\n단순 성적관리보다:\n\n> 인간이 스스로 놓치는 패턴과 작은 습관을 장기간 관찰하고, 과거의 나를 기억하는 AI\n\n라는 개념이 중심이 됨.\n\n구조 후보:\n\n```text\nObserver\nMemory\nAnalyst\nCoach\n```\n\n이때부터 **장기 기억과 패턴 발견**이 Backspace의 핵심 문제로 자리 잡음."
     },
     {
-      "id": "restored-1d85757f335a3f60",
-      "at": "2026-10-06T12:08:32+09:00",
-      "category": "v0.3",
-      "title": "여러 문제에서 반복되는 사고 찾기",
-      "summary": "Python이 반복되는 노드·연결·경로·분기 구조를 집계하도록 했습니다. 같은 문항 안의 반복과 여러 문항의 지지를 구분합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.3.md",
-      "files": [
-        "backspace_mvp/patterns.py"
-      ]
+      "id": "supplied-6fe35fcf0d4722ac",
+      "sort_at": "2026-09-04T20:34:00+09:00",
+      "date_label": "2026.09.04",
+      "time_label": "20:34",
+      "time_precision": "minute",
+      "at": "2026-09-04T20:34:00+09:00",
+      "sequence": 5,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "장기 프로젝트로 확정",
+      "title": "다음 학습 행동을 결정하는 구조",
+      "summary": "문제 패턴과 학생 상태를 함께 분석해 다음에 할 일을 정하는 구조를 설계했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 178
+      },
+      "detail": "초기 학습 분석 구조:\n\n```text\n학생 학습 데이터\n      ↓\n문제 패턴 분석 Agent\n\n학생 상태 / 학습 패턴 분석 Agent\n      ↓\n종합 Agent\n      ↓\n학생 모델 지속 업데이트\n```\n\n핵심 목적은 문제를 대신 푸는 것이 아니라:\n\n> 다음에 학생이 무엇을 해야 하는지를 결정하는 것\n\n으로 정리됨."
     },
     {
-      "id": "restored-394c16983ead7410",
-      "at": "2026-10-06T12:08:32+09:00",
-      "category": "검증",
-      "title": "v0.1~v0.7 통합 검증 기록",
-      "summary": "합성 자료로 전체 파이프라인을 연결하고 실제 NVIDIA·Jev 호출을 제한적으로 확인했습니다. 실제 교사 시험 정확도 평가는 별도 과제로 남겼습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/implementation_status.md",
-      "files": [
-        "docs/implementation_status.md"
-      ]
+      "id": "supplied-d00b81a870214386",
+      "sort_at": "2026-09-04T20:34:00+09:00",
+      "date_label": "2026.09.04",
+      "time_label": "20:34",
+      "time_precision": "minute",
+      "at": "2026-09-04T20:34:00+09:00",
+      "sequence": 6,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "장기 프로젝트로 확정",
+      "title": "답변 도구에서 사고 파트너로",
+      "summary": "질문과 대화로 학생이 자신의 사고를 다시 살펴보는 장기 프로젝트로 전환했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 202
+      },
+      "detail": "Backspace의 철학적 방향이 크게 바뀜.\n\n기존:\n\n```text\nAI\n→ 답 제공\n```\n\n변경:\n\n```text\n학습 행동\n→ AI 분석\n→ 질문 / 대화\n→ 자기 사고 성찰\n→ 다음 행동\n```\n\n즉 AI를:\n\n> 답변 도구가 아니라 학생의 사고를 다시 보게 만드는 사고 파트너\n\n로 정의.\n\n이 시점부터 Backspace를 단기 대회용 아이디어가 아니라 **약 3년 이상 계속 발전시킬 메인 프로젝트**로 보기 시작함."
     },
     {
-      "id": "restored-ad5fc37a0534178a",
-      "at": "2026-10-06T12:14:18+09:00",
-      "category": "v0.4",
-      "title": "교사의 평가 방식에 대한 가설",
-      "summary": "반복 패턴과 자료 근거를 바탕으로 교사 가설을 만듭니다. 지지 근거·반례·적용 조건·다른 설명을 함께 남깁니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.4.md",
-      "files": [
-        "backspace_mvp/hypotheses.py"
-      ]
+      "id": "supplied-a4ac3ac49ee73fca",
+      "sort_at": "2026-09-16T15:03:00+09:00",
+      "date_label": "2026.09.16",
+      "time_label": "15:03",
+      "time_precision": "minute",
+      "at": "2026-09-16T15:03:00+09:00",
+      "sequence": 7,
+      "type": "IDEA",
+      "statuses": [
+        "IDEA"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent가 핵심으로 부상",
+      "title": "학습 맥락을 기억해야 하는 이유",
+      "summary": "장기 데이터와 사고 과정, 시간에 따른 변화를 누적하는 정체성을 강화했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 235
+      },
+      "detail": "Backspace 아이디어의 출발점을 다시 확인.\n\n문제:\n\n```text\nAI를 오래 사용해도\n이전 학습 맥락과 사고 패턴을 충분히 기억하지 못함\n```\n\n따라서:\n\n```text\n장기 데이터\n+\n사용자의 사고 과정\n+\n시간에 따른 변화\n```\n\n를 누적하는 시스템이라는 정체성이 강화됨."
     },
     {
-      "id": "restored-82a5af9a433fb7d8",
-      "at": "2026-10-06T12:21:26+09:00",
-      "category": "v0.5",
-      "title": "Jev로 중요도와 근거 점수화",
-      "summary": "개념 중요도와 가설 지지·반박을 Jev가 판단하도록 연결했습니다. 요약 점수와 함께 원 점수·분포·판단 근거를 보관합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.5.md",
-      "files": [
-        "backspace_mvp/jev.py",
-        "backspace_mvp/scoring.py"
-      ]
+      "id": "supplied-dfd2a554dbcfe89d",
+      "sort_at": "2026-09-16T21:32:00+09:00",
+      "date_label": "2026.09.16",
+      "time_label": "21:32",
+      "time_precision": "minute",
+      "at": "2026-09-16T21:32:00+09:00",
+      "sequence": 8,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent가 핵심으로 부상",
+      "title": "시험 예측보다 교사의 평가 방식",
+      "summary": "반복 강조·요구 사고·평가 기준을 찾고 교사 모델은 충분한 근거가 필요한 가설로 다루기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 260
+      },
+      "detail": "Teacher Agent 목적이 달라짐.\n\n기존:\n\n```text\n시험 문제 예측\n```\n\n중심에서:\n\n```text\n교사가 반복해서 강조하는 것\n교사가 중요하게 판단하는 것\n교사가 요구하는 사고 과정\n교사가 채점할 때 보는 기준\n```\n\n을 발견하는 방향으로 이동.\n\n또한 적은 자료 하나로 교사를 단정하면 안 된다고 판단.\n\n초기 Teacher Model은 최소 한 학기 정도의 evidence를 기반으로 하는 **가설**로 취급하기로 함."
     },
     {
-      "id": "restored-796e0bf92aad5514",
-      "at": "2026-10-06T12:27:23+09:00",
-      "category": "v0.6",
-      "title": "구조화된 Teacher Model",
-      "summary": "개념 중요도·주요 사고 패턴·평가 가설을 하나의 교사 모델로 묶었습니다. 아직 산정하지 않은 점수는 빈 값으로 남깁니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.6.md",
-      "files": [
-        "backspace_mvp/teacher_model.py"
-      ]
+      "id": "supplied-7ab468d875fdd521",
+      "sort_at": "2026-09-16T21:52:00+09:00",
+      "date_label": "2026.09.16",
+      "time_label": "21:52",
+      "time_precision": "minute",
+      "at": "2026-09-16T21:52:00+09:00",
+      "sequence": 9,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent가 핵심으로 부상",
+      "title": "Teacher Agent부터 만드는 폐쇄 루프",
+      "summary": "Teacher → Student → Coach → 행동 → 결과 → 모델 갱신 구조를 설계했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 287
+      },
+      "detail": "전체 폐쇄 루프:\n\n```text\nTeacher Agent\n     ↓\nStudent Agent\n     ↓\nCoach Agent\n     ↓\n학생 행동\n     ↓\n실제 결과\n     ↓\n다시 Student/Teacher state 업데이트\n```\n\nTeacher Agent부터 MVP를 만드는 방향으로 결정."
     },
     {
-      "id": "restored-e6724e75e05fa559",
-      "at": "2026-10-06T12:38:38+09:00",
-      "category": "v0.7",
-      "title": "새 시험범위로 학습계획 만들기",
-      "summary": "교사 모델과 이번 시험범위 자료를 따로 연결해 공부 깊이와 일정을 만듭니다. 완료 상태·메모·계획 변경 이력을 저장합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/milestone_v0.7.md",
-      "files": [
-        "backspace_mvp/study_plan.py"
-      ]
+      "id": "supplied-21059beb7972611a",
+      "sort_at": "2026-09-17T18:56:00+09:00",
+      "date_label": "2026.09.17",
+      "time_label": "18:56",
+      "time_precision": "minute",
+      "at": "2026-09-17T18:56:00+09:00",
+      "sequence": 10,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Reasoning 분석 시작",
+      "title": "교사의 반복 사고 구조 분석",
+      "summary": "관찰 → 조건 확인 → 원인 역추론 → 조건 변경 검증이라는 생명과학 수업 사례를 정리했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 311
+      },
+      "detail": "Backspace가 참고할 장기 자료 범위를 확장.\n\n```text\nChat\n문서\nNotion\nGoogle Drive\n```\n\n등을 장기 분석 대상으로 고려.\n\n교사 수업 녹취 분석도 본격적으로 진행.\n\n생명과학 교사의 반복 사고 구조가 추출됨.\n\n```text\n결과 관찰\n→ 필연적 조건 확인\n→ 원인 / 구조 역추론\n→ 조건 변경으로 검증\n→ 결론\n```\n\n이후 Teacher Model 설계의 실제 사례가 됨."
     },
     {
-      "id": "restored-37c743f718df8905",
-      "at": "2026-10-06T13:48:22+09:00",
-      "category": "웹",
-      "title": "학생용 웹 작업공간",
-      "summary": "선생님 모델을 만드는 과거 자료 공간과 이번 시험 준비 공간을 나눴습니다. 업로드부터 모델 탐색·계획까지 브라우저에서 사용할 수 있게 했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/web_app.md",
-      "files": [
-        "backspace_mvp/web.py",
-        "backspace_mvp/web_static/app.js"
-      ]
+      "id": "supplied-a2ac3aa8f3ca0904",
+      "sort_at": "2026-09-22T00:00:00+09:00",
+      "date_label": "2026.09.22",
+      "time_label": "날짜만 기록",
+      "time_precision": "day",
+      "sequence": 11,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "최초 수동 Backspace 시뮬레이션",
+      "title": "첫 수동 Backspace 실험",
+      "summary": "실제 공부·시험 데이터에 교사 특성·오답·학습 행동을 연결하는 수동 실험을 진행했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 342
+      },
+      "detail": "초기 Backspace 모델을 실제 공부/시험 데이터에 수동 적용.\n\n이 시점에는 완성된 프로그램이라기보다:\n\n```text\n교사 특성\n학생 오답\n인출 상태\n학습 행동\n시험 결과\n```\n\n을 하나의 모델로 연결하는 실험에 가까웠음."
     },
     {
-      "id": "restored-485cf37a27927fb3",
-      "at": "2026-10-06T14:20:46+09:00",
-      "category": "자료 읽기",
-      "title": "로컬 OCR과 원문 검토",
-      "summary": "PDF·PPT의 텍스트와 이미지 읽기를 의미 분석 앞에 분리했습니다. 원본·최초 인식·수정 이력을 보존하고, 파일당 업로드 제한을 100MB로 늘렸습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/perception.md",
-      "files": [
-        "backspace_mvp/perception.py",
-        "backspace_mvp/web_static/perception.js"
-      ]
+      "id": "supplied-1e06bb7329c7306b",
+      "sort_at": "2026-09-27T11:53:00+09:00",
+      "date_label": "2026.09.27",
+      "time_label": "11:53",
+      "time_precision": "minute",
+      "at": "2026-09-27T11:53:00+09:00",
+      "sequence": 12,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Student State / Behavior Model",
+      "title": "Student State와 과목별 사고",
+      "summary": "예측·결과·오차·갱신의 루프와 과목마다 다른 사고 구조를 구분했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 362
+      },
+      "detail": "Backspace v0.1 형태가 구체화.\n\n```text\nStudent State / Behavior Model\n\n예측\n↓\n실제 결과\n↓\n오차 분석\n↓\n모델 업데이트\n```\n\n과목별 사고 구조도 따로 보기 시작함.\n\n예:\n\n```text\n화학\n상태\n→ 조건\n→ 불변량 / 남은 종\n→ 공식\n→ 계산\n\n물리\n접점 / 불변량 판단\n\n생명\nTeacher Model\n\n지구\n관계망\n\n정보\n탐색량 축소\n```\n\n하나의 범용 학습법으로 모든 과목을 처리하는 것은 어렵다는 점이 드러남."
     },
     {
-      "id": "restored-bd5c4b7d1846b8de",
-      "at": "2026-10-06T17:53:09+09:00",
-      "category": "디자인",
-      "title": "Black & Lime 작업공간",
-      "summary": "블랙·라임 디자인과 GSAP 전환, 인터랙티브 사고 지도를 적용했습니다. 모바일 화면과 원문 검토·계획 작업 흐름을 확인했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/design_validation.md",
-      "files": [
-        "backspace_mvp/web_static/motion.js",
-        "backspace_mvp/web_static/graph.js"
-      ]
+      "id": "supplied-73712272d14b8fba",
+      "sort_at": "2026-09-27T18:59:00+09:00",
+      "date_label": "2026.09.27",
+      "time_label": "18:59",
+      "time_precision": "minute",
+      "at": "2026-09-27T18:59:00+09:00",
+      "sequence": 13,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "Student State / Behavior Model",
+      "title": "예측에 불확실성과 근거 포함",
+      "summary": "시험 결과와 판단을 연결하며 예상 범위·근거·불확실성·다음 행동을 함께 제공하기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 407
+      },
+      "detail": "시험 결과/등수와 Backspace 판단을 연결하는 실험.\n\n예측에는 단순 숫자 하나가 아니라:\n\n```text\n예상 범위\n불확실성\n근거\n다음 행동\n```\n\n을 같이 제공해야 한다는 원칙이 생김."
     },
     {
-      "id": "restored-fa7720042d0fa879",
-      "at": "2026-10-06T19:07:36+09:00",
-      "category": "안정화",
-      "title": "원문 인용 오류 조사",
-      "summary": "원문에 없는 인용과 개념 추출 실패 기록을 조사했습니다. 인용을 임의로 만들어 통과시키지 않고, 실제 원문과의 대응을 확인하도록 했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/error_audit_2026-10-06.md",
-      "files": [
-        "docs/error_audit_2026-10-06.md"
-      ]
+      "id": "supplied-73b9dc23d2b2aa62",
+      "sort_at": "2026-10-02T14:09:00+09:00",
+      "date_label": "2026.10.02",
+      "time_label": "14:09",
+      "time_precision": "minute",
+      "at": "2026-10-02T14:09:00+09:00",
+      "sequence": 14,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "MVP 다시 축소",
+      "title": "MVP 범위 다시 축소",
+      "summary": "범위가 여전히 크다는 문제를 확인하고 Backspace를 계속 진행하기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 426
+      },
+      "detail": "Backspace의 범위가 여전히 너무 크다고 판단.\n\n다른 사업 아이디어와 비교했지만 Backspace를 계속 진행하기로 함."
     },
     {
-      "id": "restored-723a0d6bbce7ed24",
-      "at": "2026-10-06T19:33:50+09:00",
-      "category": "디자인",
-      "title": "더 간결한 AI 작업 화면",
-      "summary": "기술 기업의 AI UI를 참고해 설명을 줄이고, 정돈된 자료 목록과 작업 중심의 화면으로 방향을 다듬었습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/UI_REFERENCES.md",
-      "files": [
-        "backspace_mvp/web_static/studio.css",
-        "docs/UI_REFERENCES.md"
-      ]
+      "id": "supplied-0bd2fd930fdc19cd",
+      "sort_at": "2026-10-02T14:12:00+09:00",
+      "date_label": "2026.10.02",
+      "time_label": "14:12",
+      "time_precision": "minute",
+      "at": "2026-10-02T14:12:00+09:00",
+      "sequence": 15,
+      "type": "IDEA",
+      "statuses": [
+        "IDEA"
+      ],
+      "origin": "supplied_history",
+      "category": "MVP 다시 축소",
+      "title": "왜 그렇게 생각했는지를 기억",
+      "summary": "학생의 풀이 과정과 사고 오류를 장기 Thinking Memory로 남기는 MVP를 정의했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 434
+      },
+      "detail": "MVP를 다음처럼 재정의.\n\n> 학생이 무엇을 틀렸는지가 아니라 왜 그렇게 생각했는지를 기억하는 AI\n\n흐름:\n\n```text\n문제\n↓\n학생 풀이 과정\n↓\n사고 오류 분석\n↓\nThinking Memory\n↓\n다음 문제에서 피드백\n```\n\nMemory가 단순 학습 기록이 아니라 **사고 과정의 장기 기억**으로 자리 잡음."
     },
     {
-      "id": "restored-4ea79b0f28213f4f",
-      "at": "2026-10-07T11:46:36+09:00",
-      "category": "그림 이해",
-      "title": "글자뿐 아니라 도식과 그림도 분석",
-      "summary": "자료의 그림·표·도식에 이미지 분석을 연결하고, 어느 영역을 이해했는지 원문 좌표와 함께 저장합니다. 이미지 해석과 원문 인용을 구분합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/visual_understanding.md",
-      "files": [
-        "backspace_mvp/visual.py"
-      ]
+      "id": "supplied-45f4414682b737ee",
+      "sort_at": "2026-10-02T14:23:00+09:00",
+      "date_label": "2026.10.02",
+      "time_label": "14:23",
+      "time_precision": "minute",
+      "at": "2026-10-02T14:23:00+09:00",
+      "sequence": 16,
+      "type": "PRODUCT",
+      "statuses": [
+        "PRODUCT"
+      ],
+      "origin": "supplied_history",
+      "category": "MVP 다시 축소",
+      "title": "미팅 준비와 예비선정",
+      "summary": "미팅 자료 제작과 모두의 창업 예비선정으로 실제 결과물 준비가 중요해졌다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 458
+      },
+      "detail": "Backspace 미팅 준비 및 PPT 제작 시작.\n\n이 시기 Backspace가 `모두의 창업` 예비선정을 통과하면서 프로젝트의 상황이 급변함."
     },
     {
-      "id": "restored-4f74e47b9441bdb5",
-      "at": "2026-10-07T12:23:59+09:00",
-      "category": "메모리",
-      "title": "자료를 이해 노트로 기억",
-      "summary": "자료에서 이해한 내용을 출처가 있는 짧은 노트로 저장하고 관련 노트를 다시 찾도록 A-MEM을 연결했습니다. 요약만으로 교사의 중요도를 확정하지 않습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/amem_integration.md",
-      "files": [
-        "backspace_mvp/understanding.py",
-        "backspace_mvp/amem_adapter.py"
-      ]
+      "id": "supplied-e5bee2fd2cb32287",
+      "sort_at": "2026-10-04T12:00:00+09:00",
+      "date_label": "2026.10.04",
+      "time_label": "12:00",
+      "time_precision": "minute",
+      "at": "2026-10-04T12:00:00+09:00",
+      "sequence": 17,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent MVP 확정",
+      "title": "Teacher Agent를 MVP 중심으로",
+      "summary": "기출·수업자료·녹취에서 교사의 사고·출제·평가·채점 방식을 찾는 방향을 선택했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 468
+      },
+      "detail": "Teacher Agent를 MVP의 중심으로 결정.\n\n입력:\n\n```text\n기존 시험지\n수업자료\n수업 녹취\n```\n\n출력:\n\n```text\n교사의 사고 방식\n출제 방식\n평가 기준\n채점 방식\n```"
     },
     {
-      "id": "restored-3596f3dbdc88c508",
-      "at": "2026-10-07T13:37:42+09:00",
-      "category": "AI 연결",
-      "title": "Jev 호출 위치 점검",
-      "summary": "어느 단계에서 Jev가 호출되고, 언제 점수화가 생략되거나 대기하는지 연결 구조를 정리했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/jev_call_mapping.md",
-      "files": [
-        "docs/jev_call_mapping.md"
-      ]
+      "id": "supplied-337f4e18f57c0a28",
+      "sort_at": "2026-10-04T12:16:00+09:00",
+      "date_label": "2026.10.04",
+      "time_label": "12:16",
+      "time_precision": "minute",
+      "at": "2026-10-04T12:16:00+09:00",
+      "sequence": 18,
+      "type": "PRODUCT",
+      "statuses": [
+        "PRODUCT"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent MVP 확정",
+      "title": "실제 결과물을 보여줄 단계",
+      "summary": "언젠가 만들 프로젝트에서 지금 결과물을 보여줘야 하는 프로젝트로 상황이 바뀌었다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 491
+      },
+      "detail": "Backspace 예비선정 이후:\n\n```text\n언젠가 만들 프로젝트\n```\n\n에서\n\n```text\n지금 실제 결과물을 보여줘야 하는 메인 프로젝트\n```\n\n로 상태가 변경됨."
     },
     {
-      "id": "restored-ca415d953f081d76",
-      "at": "2026-10-07T14:10:21+09:00",
-      "category": "비용·속도",
-      "title": "Jev가 느린 분석의 필요성을 먼저 판단",
-      "summary": "Jev를 점수화뿐 아니라 분류·중복·추가 분석 필요성 판단에도 사용합니다. 큰 요청을 그대로 반복하거나 NVIDIA 시간 제한부터 늘리는 방식을 줄였습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/jev_control_update.md",
-      "files": [
-        "backspace_mvp/semantic_control.py",
-        "docs/jev_control_update.md"
-      ]
+      "id": "supplied-98b5a895e95a0984",
+      "sort_at": "2026-10-04T12:56:00+09:00",
+      "date_label": "2026.10.04",
+      "time_label": "12:56",
+      "time_precision": "minute",
+      "at": "2026-10-04T12:56:00+09:00",
+      "sequence": 19,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Agent MVP 확정",
+      "title": "개인별 Teacher Model 설계",
+      "summary": "교사의 기준에 따른 답안 평가와 교사 스타일의 연습을 핵심 차별점으로 정리했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 509
+      },
+      "detail": "Teacher Agent MVP:\n\n```text\n수업 녹취\n+\n기존 시험지\n+\n수업 자료\n       ↓\nTeacher Model\n       ↓\n이 선생님의 기준으로 답안 평가\n       +\n이 선생님 스타일에 맞는 연습\n```\n\n개인별 Teacher Model이 핵심 차별점으로 정리됨."
     },
     {
-      "id": "restored-e7b76ce60c049d9b",
-      "at": "2026-10-07T15:09:30+09:00",
-      "category": "교사 모델",
-      "title": "Teacher Model을 조금씩 갱신",
-      "summary": "새 자료마다 가설 전체를 다시 쓰는 대신 지지·반례를 기존 가설에 붙입니다. 기존 가설로 설명되지 않는 반복 패턴이 있을 때 새 가설을 제안합니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/teacher_incremental_update.md",
-      "files": [
-        "backspace_mvp/teacher_incremental.py",
-        "backspace_mvp/teacher_update.py"
-      ]
+      "id": "supplied-f1fbfa881314ff31",
+      "sort_at": "2026-10-06T18:40:00+09:00",
+      "date_label": "2026.10.06",
+      "time_label": "18:40",
+      "time_precision": "minute",
+      "at": "2026-10-06T18:40:00+09:00",
+      "sequence": 20,
+      "type": "PRODUCT",
+      "statuses": [
+        "PRODUCT"
+      ],
+      "origin": "supplied_history",
+      "category": "현재 Backspace 철학 확정",
+      "title": "자아성찰형 학습 파트너",
+      "summary": "현재 이해 상태·약한 부분·질문과 힌트·다시 사고·개인 모델 갱신의 경험을 정의했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 533
+      },
+      "detail": "Backspace를 다음처럼 다시 정의.\n\n> 내가 무엇을 알고 무엇을 모르는지를 이해하게 해주는 자아성찰형 개인 AI 학습 파트너\n\n주요 경험 흐름:\n\n```text\n대화 / 학습\n↓\n현재 이해 상태\n↓\n약한 부분 발견\n↓\n질문 / 힌트\n↓\n다시 사고\n↓\n개인 모델 갱신\n```"
     },
     {
-      "id": "restored-375aba3e0c8c7832",
-      "at": "2026-10-07T17:43:13+09:00",
-      "category": "복구",
-      "title": "후속 실패가 저장된 노트를 지우지 않도록",
-      "summary": "노트 저장과 검색·Jev·지도·모델·계획의 완료 상태를 분리했습니다. 일부 단계가 실패해도 저장 결과를 남기고, 미완료 단계부터 이어갑니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/pipeline_recovery_report.md",
-      "files": [
-        "backspace_mvp/stage_state.py",
-        "backspace_mvp/web_pipeline.py"
-      ]
+      "id": "supplied-f2380622c0b2365a",
+      "sort_at": "2026-10-07T09:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "오전",
+      "time_precision": "period",
+      "sequence": 21,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "2026년 10월 6일 ~ 7일 — JSON 중심 Teacher 분석의 한계",
+      "title": "긴 구조화 JSON의 반복 실패",
+      "summary": "Nemotron 분석에서 output_limit·timeout이 발생하며 큰 구조 분석이 병목으로 드러났다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 559
+      },
+      "detail": "기존 구조:\n\n```text\nPDF\n↓\nOCR\n↓\n큰 구조화 JSON\n↓\nGraph\n↓\nPattern\n↓\nTeacher Model\n```\n\n에서 NVIDIA Nemotron이 긴 구조 분석을 처리하며 반복적으로 실패.\n\n대표 오류:\n\n```text\noutput_limit\ntimeout\n```\n\n특히:\n\n```text\nnvidia/nemotron-3-super-120b-a12b\n```\n\n의 긴 structured output이 병목이 됨.\n\n단순 모델 교체로 해결되지 않는다고 판단."
     },
     {
-      "id": "restored-403070d6e6951ed4",
-      "at": "2026-10-07T19:01:46+09:00",
-      "category": "안정화",
-      "title": "실패 기록과 응답 시간 처리 개선",
-      "summary": "이전 실패 기록에서 즉시 멈추던 작은 분석 구간을 다시 시도하도록 했습니다. 응답 전체의 시간 예산을 적용하고 읽기 완료와 분석 완료 안내를 구분했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/error_recovery_followup.md",
-      "files": [
-        "backspace_mvp/staged.py",
-        "backspace_mvp/nvidia.py"
-      ]
+      "id": "supplied-48027f6c74861ab1",
+      "sort_at": "2026-10-07T09:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "오전",
+      "time_precision": "period",
+      "sequence": 22,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "Text-first 전환",
+      "title": "Text-first 이해 노트로 전환",
+      "summary": "이해를 먼저 자연어 노트로 저장하고 구조화는 필요한 때 수행하는 방향으로 바꿨다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 600
+      },
+      "detail": "핵심 발상 전환:\n\n```text\n자료를 이해한다\n≠\n거대한 JSON을 만든다\n```\n\n따라서:\n\n```text\n원문\n↓\n자연어 Understanding Note\n↓\nMemory\n↓\n필요할 때만 구조화\n```\n\n방식으로 이동.\n\n핵심 개념:\n\n```text\nText = 원자재\nTopic = 조직 구조\nSummary = 파생물\nTeacher Model = 최종 추론\n```"
     },
     {
-      "id": "restored-0569e319061095db",
-      "at": "2026-10-07T19:15:55+09:00",
-      "category": "검증",
-      "title": "실제 실행 화면과 저장 상태 점검",
-      "summary": "실제 서버와 저장 노트를 확인하고, 진행상황 창의 닫기·최소화·재열기를 점검했습니다. 테스트 통과와 실제 자료의 분석 완료를 구분해 기록했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/runtime_verification_2026-10-07.md",
-      "files": [
-        "docs/runtime_verification_2026-10-07.md"
-      ]
+      "id": "supplied-dfdbe6fb4612c8b4",
+      "sort_at": "2026-10-07T09:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "오전",
+      "time_precision": "period",
+      "sequence": 23,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM 선택",
+      "title": "A-MEM을 메모리 기반으로 선택",
+      "summary": "여러 프레임워크를 동시에 섞지 않고 A-MEM의 노트·검색·연결을 먼저 사용하기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 637
+      },
+      "detail": "여러 Memory/RAG framework를 동시에 섞지 않고 **A-MEM 하나를 먼저 실제 기반으로 사용**하기로 결정.\n\n선택 upstream:\n\n```text\nagiresearch/A-mem\n```\n\n핵심:\n\n```text\nMemoryNote\nAgenticMemorySystem\nChroma retrieval\nmemory linking\nmetadata evolution\n```\n\n을 최대한 실제 upstream 코드 기반으로 사용."
     },
     {
-      "id": "restored-a5affef3a2439a08",
-      "at": "2026-10-07T20:06:44+09:00",
-      "category": "안정화",
-      "title": "수정된 서버 적용과 안내자료 제외",
-      "summary": "수정 전 서버로 반복 분석하던 문제를 확인해 새 실행 주소에 수정본을 적용했습니다. 요청한 영어 안내자료를 목록·활성 근거에서 제외하고 원본은 보관했습니다.",
-      "time_basis": "복원 기록 · 문서 생성 시각",
-      "reference": "docs/retry_runtime_and_file_exclusion_2026-10-07.md",
-      "files": [
-        "backspace_mvp/web.py",
-        "scripts/exclude_unprojected_file.py"
-      ]
+      "id": "supplied-1abf732bc8f00194",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 24,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM 통합 완료",
+      "title": "A-MEM 통합 보고",
+      "summary": "이해 노트 → 영속 메모리 → 검색과 연결 → 보조 그래프 흐름을 연결했다고 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 663
+      },
+      "detail": "A-MEM 기반 자료 이해 메모리가 Backspace에 통합됨.\n\n고정 upstream commit:\n\n```text\nceffb860f0712bbae97b184d440df62bc910ca8d\n```\n\n새 흐름:\n\n```text\nOCR cache\n↓\n자연어 Understanding Note\n↓\nA-MEM MemoryNote\n↓\nPersistent Chroma\n↓\nrelated note linking\n↓\nsecondary graph\n↓\nTeacher Model\n```\n\n기존 기능은 유지:\n\n```text\nOCR\nGraph\nJev\nTeacher Model\nPlanning\n원문 quote validation\n```"
+    },
+    {
+      "id": "supplied-ccabcecfd974a857",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 25,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM 통합 완료",
+      "title": "메모리 어댑터 보완",
+      "summary": "영속 Chroma·주제 구분·원문 출처·체크포인트·거절 노트를 연결했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 704
+      },
+      "detail": "추가 변경:\n\n```text\npersistent Chroma\nNVIDIA metadata adapter\nTopic namespace\nsource provenance\ncheckpoint\nrejected-note state\n```\n\nA-MEM 원본의 collection reset/OpenAI initialization 문제를 adapter로 우회."
+    },
+    {
+      "id": "supplied-fdebedd3b22056f0",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 26,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM 통합 완료",
+      "title": "다국어 ONNX 임베딩 도입",
+      "summary": "PyTorch 실행 문제를 우회해 384차원 다국어 ONNX 임베딩을 사용했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 721
+      },
+      "detail": "PyTorch `c10.dll` 정책 문제로 sentence-transformers 기본 실행이 어려워짐.\n\n대안:\n\n```text\nparaphrase-multilingual-MiniLM-L12-v2\nONNX\n384 dimensions\nnormalized embedding\n```\n\n사용."
+    },
+    {
+      "id": "supplied-883e3ce0153abb61",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 27,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM 통합 완료",
+      "title": "A-MEM 포함 112개 테스트 보고",
+      "summary": "노트 영속성·재시작·검색·연결·부분 범위·원문 불변성을 검증했다고 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 738
+      },
+      "detail": "Python 테스트:\n\n```text\n112 passed\n```\n\n기존 104 regression + A-MEM 8 tests.\n\n검증한 것:\n\n```text\nnote persistence\nrestart restore\ntopic\nlinking\nneighbor update\nTeacher context integration\ngraph failure reuse\npartial ranges\nrejected note exclusion\nbody immutability\n```"
+    },
+    {
+      "id": "supplied-42852711651e64a4",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 28,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "p6 실자료 성공",
+      "title": "실제 PDF p6 이해 노트 성공",
+      "summary": "이해 노트 4.203초·NVIDIA 2회·검색·재시작 재사용·원 PDF 해시 보존이 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 767
+      },
+      "detail": "실제 생명과학 PDF p6:\n\n```text\n(3) 02. 기관계의 통합적 작용~\n```\n\n검증.\n\n결과:\n\n```text\nUnderstanding Note 생성\n4.203 sec\n\nNVIDIA calls\n2\n\nChroma search\n성공\n\nrestart reuse\n성공\n\n원 PDF hash\n변화 없음\n```"
+    },
+    {
+      "id": "supplied-14c079b70506897a",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 29,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "p7 표 해석 실패",
+      "title": "p7 표 해석 오류",
+      "summary": "Albumin을 지방 검출 시약으로 잘못 해석했다. 노트는 삭제하지 않고 rejected로 제외했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 800
+      },
+      "detail": "p7에서 표 구조를 잘못 해석.\n\n예:\n\n```text\nalbumin\n→ 지방 검출 시약으로 잘못 해석\n```\n\nsecondary graph도 timeout 발생.\n\n결론:\n\n```text\nA-MEM 문제 X\nTeacher Model 문제 X\n\nPerception / table reconstruction 문제 O\n```\n\n잘못된 Understanding Note는 삭제하지 않고:\n\n```text\nrejected\n```\n\n처리하여 Teacher evidence에서 제외."
+    },
+    {
+      "id": "supplied-86c391eedd87fa44",
+      "sort_at": "2026-10-07T13:17:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "13:17",
+      "time_precision": "minute",
+      "at": "2026-10-07T13:17:00+09:00",
+      "sequence": 30,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Embedding truncation 문제 발견",
+      "title": "노트와 임베딩 단위 분리 필요",
+      "summary": "128토큰 임베딩에서 긴 노트의 뒷부분이 빠질 수 있어 여러 청크 인덱싱을 제안했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 834
+      },
+      "detail": "현재 embedding max token:\n\n```text\n128\n```\n\n반면 Understanding Note source unit은 최대 약:\n\n```text\n1800 chars\n```\n\n따라서 note 뒤쪽 의미가 embedding에 반영되지 않을 위험 발견.\n\n향후 원칙:\n\n```text\nMemory unit\n≠\nEmbedding unit\n```\n\n하나의 note를 여러 embedding chunk로 인덱싱하는 방안 제안."
+    },
+    {
+      "id": "supplied-0f1157879313956f",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14시대",
+      "time_precision": "period",
+      "sequence": 36,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM Metadata NVIDIA 의존성 발견",
+      "title": "메모리 메타데이터의 추가 호출 실패",
+      "summary": "이해 노트는 저장됐지만 메타데이터 NVIDIA 호출 실패로 전체 파이프라인이 실패로 표시됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1010
+      },
+      "detail": "Understanding Note 생성은 성공했지만 이후:\n\n```text\nA-MEM metadata generation\n```\n\n단계가 NVIDIA를 다시 호출.\n\n실패:\n\n```text\nnemotron-3.5-lightning-30b-a3b\nnetwork_error\n1.203 sec\n\nnemotron-3-super-120b-a12b\nnetwork_error\n38.922 sec\n```\n\n결과:\n\n```text\n자연어 note는 보존\n하지만 전체 pipeline은 실패 표시\n```"
+    },
+    {
+      "id": "supplied-96ddbc17d3942227",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14시대",
+      "time_precision": "period",
+      "sequence": 37,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "A-MEM Metadata NVIDIA 의존성 발견",
+      "title": "메타데이터의 대형 LLM 의존 축소",
+      "summary": "노트를 먼저 저장하고 로컬 메타데이터·검색·Jev 관계 판단을 활용하는 방향으로 전환했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1041
+      },
+      "detail": "A-MEM metadata에서 NVIDIA 의존성을 제거하는 방향 결정.\n\n새 원칙:\n\n```text\nUnderstanding Note\n↓\n즉시 저장\n↓\nlocal metadata\n↓\nA-MEM retrieval\n↓\nJev relation decisions\n```\n\n즉:\n\n```text\nkeywords\ntags\ntopic\nduplicate\nrelation\n```\n\n등을 위해 대형 reasoning LLM을 호출하지 않는 방향."
+    },
+    {
+      "id": "supplied-968f7b1379fa00a1",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14~15시",
+      "time_precision": "period",
+      "sequence": 38,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Model 자체도 Jev 중심으로 변경",
+      "title": "Jev 중심의 증분 Teacher Model",
+      "summary": "모델을 새 JSON으로 재작성하기보다 증거·typed 판단·Python 상태 갱신의 누적으로 다루기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1075
+      },
+      "detail": "GitHub Jev 프로젝트 조사 후 새로운 구조 결정.\n\nTeacher Model을:\n\n```text\nNVIDIA가 한 번에 만들어내는 JSON\n```\n\n이 아니라:\n\n```text\nevidence\n+\nJev typed decisions\n+\nPython state update\n```\n\n의 누적 결과로 취급."
+    },
+    {
+      "id": "supplied-43bef128a0043469",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14~15시",
+      "time_precision": "period",
+      "sequence": 39,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Model 자체도 Jev 중심으로 변경",
+      "title": "TeacherModelUpdateEngine 설계",
+      "summary": "강화·약화·반박·범위 변화·무관·판단 유보를 구분해 가설별 상태를 갱신한다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1099
+      },
+      "detail": "새 evidence와 기존 hypothesis 관계:\n\n```text\nreinforces\nweakens\ncontradicts\nnarrows_scope\nbroadens_scope\nunrelated\ninsufficient\n```\n\n를 Jev가 판단.\n\nPython이 실제 모델 상태 수정.\n\n새로운 teacher-specific meaning이 필요한 경우에만 NVIDIA 호출."
+    },
+    {
+      "id": "supplied-9ee9502e33aee4ab",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14~15시",
+      "time_precision": "period",
+      "sequence": 40,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Teacher Model 자체도 Jev 중심으로 변경",
+      "title": "EvidenceRelation을 독립 기록으로",
+      "summary": "증거와 가설의 연결을 별도 데이터로 남겨 모델의 판단을 추적할 수 있게 설계했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1121
+      },
+      "detail": "Teacher Model을 설명 가능하게 만들기 위해:\n\n```text\nEvidence\n↔\nHypothesis\n```\n\n관계를 first-class data로 저장하는 방향 확정."
+    },
+    {
+      "id": "supplied-b0bc66b91aeee066",
+      "sort_at": "2026-10-07T14:00:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "오후",
+      "time_precision": "period",
+      "sequence": 44,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED",
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "Partial Success 실제 반영",
+      "title": "부분 성공 상태의 화면 반영 보고",
+      "summary": "메모리·이해·Jev 결과는 완료로 남고, 그래프 1/9처럼 미완료 단계는 별도로 보이기 시작했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1241
+      },
+      "detail": "후속 화면에서 단계별 상태가 실제로 표시됨.\n\n```text\n기본 메모리 저장\n119 / 119 ✓\n\n메모리 검색·연결\n135 / 135 ✓\n\n이해 노트 저장\n127 / 127 ✓\n\nJev 판단\n134 / 134 ✓\n\n텍스트·이미지 읽기\n8 / 8 ✓\n\n개념·사고 지도\n1 / 9 △\n\n교사 근거 갱신\n9 / 9 ✓\n\n새 교사 가설\n1 / 1 ✓\n\n반복 패턴\n1 / 1 ✓\n```\n\n즉 이전과 달리 graph가 실패해도:\n\n```text\nMemory\nUnderstanding\nJev\nTeacher evidence\n```\n\n가 성공 상태로 남게 됨.\n\nPartial-success architecture가 실제 UI 상태로 나타나기 시작."
+    },
+    {
+      "id": "supplied-5a4977d447cc3f00",
+      "sort_at": "2026-10-07T14:18:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14:18",
+      "time_precision": "minute",
+      "at": "2026-10-07T14:18:00+09:00",
+      "sequence": 31,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "Jev Semantic Control Plane 구현",
+      "title": "Jev를 시스템 제어로 확대",
+      "summary": "최종 점수화뿐 아니라 주제·중복·관계·추가 해석 필요성도 한 요청에 묶어 판단하게 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 864
+      },
+      "detail": "Jev 역할을 최종 scoring에서 시스템 제어까지 확대.\n\n기존:\n\n```text\nUnderstanding\n↓\nNVIDIA\n↓\nGraph\n↓\nTeacher\n↓\nJev score\n```\n\n변경:\n\n```text\nUnderstanding Note\n↓\nA-MEM\n↓\nJev\n↓\n필요한 경우만 NVIDIA\n```\n\nJev 판단:\n\n```text\ntopic\nduplicate\nrelation\nteacher signal\nexam relevance\nneeds slow reasoning\ngraph needed\n```\n\n같은 state에 대한 질문은 **한 request에 batch**."
+    },
+    {
+      "id": "supplied-afffd7840321cc07",
+      "sort_at": "2026-10-07T14:18:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14:18",
+      "time_precision": "minute",
+      "at": "2026-10-07T14:18:00+09:00",
+      "sequence": 32,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "Jev Semantic Control Plane 구현",
+      "title": "필요한 노트만 그래프로",
+      "summary": "새 관계·교사 모델 영향·평가 사고 구조를 판단해 그래프가 필요 없으면 노트만 보존한다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 910
+      },
+      "detail": "모든 Understanding Note를 graph로 만들지 않음.\n\nJev가:\n\n```text\n새로운 관계가 있는가?\nTeacher Model에 영향을 주는가?\n평가 사고 구조가 있는가?\n```\n\n판단.\n\n필요성이 낮으면 note만 저장."
+    },
+    {
+      "id": "supplied-52049f4cc1e59e32",
+      "sort_at": "2026-10-07T14:18:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14:18",
+      "time_precision": "minute",
+      "at": "2026-10-07T14:18:00+09:00",
+      "sequence": 33,
+      "type": "IMPLEMENTED",
+      "statuses": [
+        "IMPLEMENTED"
+      ],
+      "origin": "supplied_history",
+      "category": "Jev Semantic Control Plane 구현",
+      "title": "지지하지 않음과 반박 분리",
+      "summary": "교사 가설 관계를 지지·반박·판단 부족·무관으로 나눴다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 928
+      },
+      "detail": "Teacher 가설과 evidence 관계를:\n\n```text\nsupports\ncontradicts\ninsufficient\nirrelevant\n```\n\n로 분리.\n\n특히:\n\n```text\n지지하지 않음\n≠\n반박\n```\n\n원칙을 코드 구조에 반영."
+    },
+    {
+      "id": "supplied-7f928df1e0ab6e76",
+      "sort_at": "2026-10-07T14:18:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14:18",
+      "time_precision": "minute",
+      "at": "2026-10-07T14:18:00+09:00",
+      "sequence": 34,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "Jev Semantic Control Plane 구현",
+      "title": "p6 재처리의 느린 호출 감소 보고",
+      "summary": "동일 자료에서 Jev 1회·0.297초·추가 NVIDIA 0회 결과가 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 953
+      },
+      "detail": "p6 동일 자료 재처리.\n\n기존:\n\n```text\nNVIDIA calls = 2\nNVIDIA wait = 36.984 sec\n```\n\n새 구조:\n\n```text\nJev calls = 1\nJev wait = 0.297 sec\nadditional NVIDIA calls = 0\n```\n\nJev 판단:\n\n```text\n기존 설명을 강화\nslow reasoning 불필요\ngraph는 필요\n```"
+    },
+    {
+      "id": "supplied-3d7958d803813091",
+      "sort_at": "2026-10-07T14:18:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "14:18",
+      "time_precision": "minute",
+      "at": "2026-10-07T14:18:00+09:00",
+      "sequence": 35,
+      "type": "VALIDATED",
+      "statuses": [
+        "VALIDATED"
+      ],
+      "origin": "supplied_history",
+      "category": "Jev Semantic Control Plane 구현",
+      "title": "Jev 제어 포함 128개 테스트 보고",
+      "summary": "중복·새 구조·반박·그래프 생략·실패·재개·낮은 확신을 검증했다고 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 982
+      },
+      "detail": "Python tests:\n\n```text\n128 passed\n```\n\n새 16 tests:\n\n```text\nduplicate\nnovel\ncontradiction\ngraph skip\nhypothesis support\nirrelevant\nJev failure\nresume\nlow confidence\n```\n\n등 검증."
+    },
+    {
+      "id": "supplied-0f5f1efac18e1475",
+      "sort_at": "2026-10-07T15:28:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "15:28",
+      "time_precision": "minute",
+      "at": "2026-10-07T15:28:00+09:00",
+      "sequence": 41,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "작은 구간까지 실패",
+      "title": "읽기는 끝났는데 전체 실패 표시",
+      "summary": "9개 자료 읽기가 완료돼도 후단 분석 실패 하나 때문에 전체 작업이 실패로 안내됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1137
+      },
+      "detail": "UI 메시지:\n\n```text\n작은 자료 구간도 분석을 완료하지 못했습니다.\n보존된 원문·이해 노트를 검토하세요.\n```\n\n하지만:\n\n```text\n9개 자료의 텍스트·이미지 읽기\n완료\n```\n\n즉 이미 상당 부분이 성공했는데 후단 오류 하나가 **전체 실패**로 표시되고 있었음."
+    },
+    {
+      "id": "supplied-7b2dd4f2136fe966",
+      "sort_at": "2026-10-07T15:31:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "15:31",
+      "time_precision": "minute",
+      "at": "2026-10-07T15:31:00+09:00",
+      "sequence": 42,
+      "type": "PIVOT",
+      "statuses": [
+        "PIVOT"
+      ],
+      "origin": "supplied_history",
+      "category": "Partial Success Pipeline 결정",
+      "title": "노트 저장을 자료 입력의 성공 기준으로",
+      "summary": "메모리 보강·Jev·그래프·교사 갱신·계획을 독립적으로 재개할 수 있게 분리하기로 했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1159
+      },
+      "detail": "핵심 성공 조건을 변경.\n\n기존:\n\n```text\nOCR\n+ Understanding\n+ Memory\n+ Graph\n+ Teacher\n전부 성공\n=\njob success\n```\n\n변경:\n\n```text\nUnderstanding Note 저장\n=\nMaterial ingest success\n```\n\n그 이후:\n\n```text\nMemory enrichment\nJev\nGraph\nTeacher update\nPlanning\n```\n\n은 독립적이고 재개 가능한 downstream stage."
+    },
+    {
+      "id": "supplied-10896f1e20b47e95",
+      "sort_at": "2026-10-07T15:31:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "15:31",
+      "time_precision": "minute",
+      "at": "2026-10-07T15:31:00+09:00",
+      "sequence": 43,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Partial Success Pipeline 결정",
+      "title": "단계 상태와 부분 성공 설계",
+      "summary": "읽기부터 계획까지 단계별 상태를 저장하고 전체 결과를 부분 성공·검토 필요 등으로 구분한다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1198
+      },
+      "detail": "```text\nPERCEPTION\nUNDERSTANDING\nMEMORY_PERSIST\nMEMORY_ENRICHMENT\nJEV_ROUTING\nGRAPH_PROJECTION\nPATTERN_MINING\nTEACHER_UPDATE\nTEACHER_SYNTHESIS\nPLANNING\n```\n\n상태:\n\n```text\nnot_started\nrunning\ncomplete\nskipped\npending\nfailed_retryable\nfailed_terminal\nrejected\n```\n\n전체 결과도:\n\n```text\ncomplete\npartial_success\nneeds_review\nfailed_before_understanding\n```\n\n으로 세분화."
     },
     {
       "id": "change-b922bb05f75f4fa2b60970e388de58ae",
@@ -348,7 +1058,78 @@
           "modified_at": "2026-10-07T20:11:03+09:00",
           "change": "recorded"
         }
-      ]
+      ],
+      "origin": "code_record",
+      "type": "IMPLEMENTED"
+    },
+    {
+      "id": "supplied-dcb12abb79f2fcd4",
+      "sort_at": "2026-10-07T20:15:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:15",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:15:00+09:00",
+      "sequence": 45,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "병목이 Graph/Perception으로 이동",
+      "title": "남은 병목이 그래프에 집중",
+      "summary": "개념·사고 지도 1/9, 재시도 4건과 검토 4건이 남은 상태가 보고됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1291
+      },
+      "detail": "남은 주요 실패가 `개념·사고 지도`에 집중됨.\n\n상태:\n\n```text\nGraph\n1 / 9\n```\n\n재시도 필요:\n\n```text\n4건\n```\n\n검토 필요:\n\n```text\n4건\n```"
+    },
+    {
+      "id": "supplied-9a3f7691c5e715c2",
+      "sort_at": "2026-10-07T20:15:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:15",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:15:00+09:00",
+      "sequence": 46,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "병목이 Graph/Perception으로 이동",
+      "title": "그래프 JSON 생성 실패",
+      "summary": "Graph 단계에서 schema_invalid·invalid_json이 계속 발생했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1316
+      },
+      "detail": "NVIDIA:\n\n```text\nschema_invalid\n11.86 sec\n```\n\n또는:\n\n```text\ninvalid_json\n16.047 sec\n```\n\n발생.\n\n즉 Graph 단계가 아직 구조화 JSON 생성에 의존하면서 failure point로 남아 있음."
+    },
+    {
+      "id": "supplied-aeeb21c707fea14f",
+      "sort_at": "2026-10-07T20:15:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:15",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:15:00+09:00",
+      "sequence": 47,
+      "type": "FAILURE",
+      "statuses": [
+        "FAILURE"
+      ],
+      "origin": "supplied_history",
+      "category": "병목이 Graph/Perception으로 이동",
+      "title": "원문 인용 검증 실패",
+      "summary": "생명과학·생태계 인용이 원문에 없다는 오류가 나타나 인식·표 복원·인용 대응을 점검하게 됐다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1338
+      },
+      "detail": "실제 오류:\n\n```text\n개념 '생명과학':\nquote가 원문에 없습니다.\n\n개념 '생태계':\nquote가 원문에 없습니다.\n```\n\n원인 후보가:\n\n```text\nLLM hallucinated quote\nOCR 오인식\n손글씨 인식 실패\nnormalized text 차이\n```\n\n등으로 좁혀짐."
     },
     {
       "id": "change-a8b48eae9e6540f49b9c5cf680f22b53",
@@ -364,7 +1145,101 @@
           "modified_at": "2026-10-07T20:14:38+09:00",
           "change": "modified"
         }
-      ]
+      ],
+      "origin": "code_record",
+      "type": "IMPLEMENTED"
+    },
+    {
+      "id": "supplied-926cb0c02ae41827",
+      "sort_at": "2026-10-07T20:16:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:16",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:16:00+09:00",
+      "sequence": 48,
+      "type": "RESEARCH",
+      "statuses": [
+        "RESEARCH"
+      ],
+      "origin": "supplied_history",
+      "category": "한국어 필기체 OCR 조사",
+      "title": "한국어 손글씨 OCR 조사",
+      "summary": "ko-hand-ocr 등 GitHub 후보를 살펴 손글씨 인식 보완 방안을 조사했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1365
+      },
+      "detail": "GitHub에서 한국어 handwriting OCR 후보 조사.\n\n주요 후보:\n\n```text\njysvai/ko-hand-ocr\napphia39/pghj-kocrnn\njkf87/korean-handwriting-ocr-benchmark\n```"
+    },
+    {
+      "id": "supplied-3938e8f2ddcf8c2f",
+      "sort_at": "2026-10-07T20:19:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:19",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:19:00+09:00",
+      "sequence": 49,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "ko-hand-ocr 선택",
+      "title": "ko-hand-ocr 후보 선택",
+      "summary": "한국어 한 줄 손글씨 OCR을 보완 후보로 선택했다. 구현 완료를 뜻하는 기록은 아니다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1381
+      },
+      "detail": "Backspace에 가장 적합한 후보:\n\n```text\nhttps://github.com/jysvai/ko-hand-ocr\n```\n\n선정.\n\n이유:\n\n```text\n한국어 손글씨 한 줄 OCR\n한글 + 영문 혼합\nViT + TrOCR\n41M\nApache-2.0\nCPU 가능\n사진 line segmentation 지원\n최근 유지보수\n```"
+    },
+    {
+      "id": "supplied-8f7788936064b0c8",
+      "sort_at": "2026-10-07T20:19:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:19",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:19:00+09:00",
+      "sequence": 50,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Handwriting fallback architecture 확정",
+      "title": "Paddle 유지 + 손글씨 fallback 설계",
+      "summary": "인쇄체는 기존 경로를 유지하고 손글씨·저신뢰 영역에만 별도 후보를 비교하도록 설계했다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1408
+      },
+      "detail": "PaddleOCR는 제거하지 않음.\n\n새 구조:\n\n```text\nNative Text\n       ↓\nPaddleOCR\n       ↓\nOCR quality / handwriting 판단\n       │\n       ├─ 일반 인쇄체\n       │      ↓\n       │  Paddle 유지\n       │\n       └─ 손글씨 / 저신뢰\n              ↓\n        ko-hand-ocr\n              ↓\n       candidate comparison\n              ↓\n      trusted transcription\n```"
+    },
+    {
+      "id": "supplied-537af7a54a13f1e6",
+      "sort_at": "2026-10-07T20:19:00+09:00",
+      "date_label": "2026.10.07",
+      "time_label": "20:19",
+      "time_precision": "minute",
+      "at": "2026-10-07T20:19:00+09:00",
+      "sequence": 51,
+      "type": "DESIGN",
+      "statuses": [
+        "DESIGN"
+      ],
+      "origin": "supplied_history",
+      "category": "Handwriting fallback architecture 확정",
+      "title": "표 구조와 글자 인식의 역할 분리",
+      "summary": "행·열 구조 복원과 셀의 손글씨 인식을 구분한다. 손글씨 OCR만으로 표 오류가 해결되지는 않는다.",
+      "time_basis": "사용자 제공 회고 · 대화 보고 기준 · 현재 상태 재검증 아님",
+      "source_reference": {
+        "path": "docs/backspace_development_history_supplied.md",
+        "line": 1436
+      },
+      "detail": "중요 원칙:\n\n```text\nLayout understanding\n≠\nCharacter recognition\n```\n\n따라서:\n\n```text\n표 구조 / 행 / 열\n→ 기존 layout/Paddle\n\n셀 안의 손글씨\n→ ko-hand-ocr\n```\n\n로 분리.\n\np7의 albumin 오류 같은 table reconstruction 문제를 handwriting OCR이 자동으로 해결한다고 가정하지 않음."
     },
     {
       "id": "change-af23619c5fae497f9a5735d1cc13650b",
@@ -380,7 +1255,9 @@
           "modified_at": "2026-10-07T20:26:47+09:00",
           "change": "recorded"
         }
-      ]
+      ],
+      "origin": "code_record",
+      "type": "IMPLEMENTED"
     },
     {
       "id": "change-5b58f440a5e5441e85cbf3427dcb9d35",
@@ -432,8 +1309,103 @@
           "modified_at": "2026-10-07T21:14:35+09:00",
           "change": "recorded"
         }
+      ],
+      "origin": "code_record",
+      "type": "IMPLEMENTED"
+    },
+    {
+      "id": "change-b6ae2fe8eca5401a89513787972d38c3",
+      "at": "2026-10-07T21:25:49+09:00",
+      "category": "업데이트",
+      "origin": "code_record",
+      "type": "IMPLEMENTED",
+      "module": "Timeline",
+      "change_context": {
+        "why": "기획·실패·구조 전환의 흐름을 처음부터 확인하기 위해",
+        "before": "문서·파일 생성 시각 기반의 복원 기록",
+        "after": "사용자 제공 회고 + 실제 코드 변경 기록",
+        "result": "웹 코드 검사, 52개 사건의 시간 정밀도·원문 해시·ID 검증 통과",
+        "next": "앞으로의 변경 배경·결과를 같은 형식으로 누적"
+      },
+      "title": "4월부터의 개발 변천사 반영",
+      "summary": "제공한 개발 회고 52개 사건을 반영하고 상태·출처별 보기와 상세 펼치기를 추가했습니다. 대략적인 시간은 그대로 표시하며 실제 코드 변경 기록도 보존합니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/web_static/history.css",
+          "sha256": "1b4e14492cc370ce2ee01c4fc4288c2bbc2599321c8514a52b007e03168a1ae4",
+          "modified_at": "2026-10-07T21:24:01+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/web_static/history.js",
+          "sha256": "8ef1e96bd9661781de19054d979fe38be9c5cb5377f9af132a886c0bdda99d18",
+          "modified_at": "2026-10-07T21:24:01+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/web_static/index.html",
+          "sha256": "546c418c45ea1a267a06cd58eb870d67541d5c83d46e1d62c05cef27efd2d250",
+          "modified_at": "2026-10-07T21:24:01+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "scripts/update_change_history.py",
+          "sha256": "7a121ed66e54b138eac42d99f2b266d937b29c977259776f2a68c7a3cfc2426d",
+          "modified_at": "2026-10-07T21:24:01+09:00",
+          "change": "modified"
+        }
+      ]
+    },
+    {
+      "id": "change-44ebdfc989ac473c8e116270d1a228b8",
+      "at": "2026-10-08T08:51:36+09:00",
+      "category": "업데이트",
+      "origin": "code_record",
+      "type": "VALIDATED",
+      "module": "Teacher Model · Grounding",
+      "change_context": {
+        "why": "지도 후속 실패가 교사 모델 생성을 막고 모델의 원문 복사가 자주 틀렸습니다.",
+        "before": "지도와 패턴 성공 후 교사 모델 생성, 한 번에 개념·관계·강조 요청",
+        "after": "노트 우선 모델, 개념·관계·강조 분리, 구절 ID 검증, 실패 항목 격리",
+        "result": "실제 노트 121개 보존, 지도 1/9에서 모델 생성, 실패 파일 4/8 복구",
+        "next": "남은 형식·JSON·응답 지연과 원문 인식 정확도 개선"
+      },
+      "title": "지도 실패와 교사 모델 분리, 구절 ID 기반 근거 저장",
+      "summary": "지도 1/9에서도 기존 이해 노트로 잠정 교사 모델을 만들었습니다. 원문 인용은 Python이 복원하며, 실패 자료 8개 중 4개를 파일 전체 기준으로 복구했습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/teacher_primary.py",
+          "sha256": "0c0c6a05b5ada66b91dd78f71f3e417afb0737d2d9a9a35ff897fe54e2d3ffdb",
+          "modified_at": "2026-10-08T08:49:26+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/source_spans.py",
+          "sha256": "57b230622f923a1e3651aa29d6a2a5560bfad3f0f1273816846c95bf2ed1db26",
+          "modified_at": "2026-10-08T08:15:46+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/span_graph.py",
+          "sha256": "899e9894d32ee85c4dbe90e43599940c85348e656ae0007bc27d1e944e8f0b73",
+          "modified_at": "2026-10-08T08:42:44+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/span_question.py",
+          "sha256": "e8deffb1d0a35c7cb32c859c4b2057fb06c9b4ae71847f9cf8d1d5c7e29f6894",
+          "modified_at": "2026-10-08T08:42:44+09:00",
+          "change": "recorded"
+        }
       ]
     }
   ],
-  "updated_at": "2026-10-07T21:16:41+09:00"
+  "source": {
+    "path": "docs/backspace_development_history_supplied.md",
+    "sha256": "57b6314753dc242538860603c0d12f9f878f9da726bdf923cfb76bc9e602d00a",
+    "basis": "사용자가 제공한 개발 회고. 코드 실행이나 테스트를 새로 검증한 기록은 아닙니다."
+  },
+  "updated_at": "2026-10-08T08:51:36+09:00"
 }

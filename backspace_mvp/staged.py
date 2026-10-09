@@ -3,6 +3,8 @@ import copy
 import json
 import unicodedata
 import re
+import os
+import time
 from pathlib import Path
 from jsonschema import Draft202012Validator, ValidationError
 from .pipeline import digest, save, empty_dataset
@@ -75,7 +77,7 @@ class StagedExtractor:
             current_prompt = prompt
             for attempt in range(2):
                 if isinstance(provider, NvidiaProvider):
-                    value = provider.complete(current_prompt, schema, stage=stage + (':repair' if attempt else ''), max_tokens=tokens)
+                    value = self.bounded_span_call(provider, current_prompt, schema, stage + (':repair' if attempt else ''), tokens)
                 else:
                     value = provider.complete(current_prompt, schema)
                 Draft202012Validator(schema).validate(value)
@@ -99,6 +101,38 @@ class StagedExtractor:
             'checkpoint': path.name, 'model': entry.get('model') if cached else getattr(provider, 'last_model', None)})
         self.persist_manifest()
         return value
+
+    def bounded_span_call(self, provider, prompt, schema, stage, tokens):
+        """Retry only this small span task; successful siblings remain checkpointed."""
+        if not stage.startswith('span:'):
+            return provider.complete(prompt, schema, stage=stage, max_tokens=tokens)
+        from .stage_state import error_type
+        attempts = max(1, min(3, int(os.environ.get('GRAPH_SUBTASK_MAX_ATTEMPTS', '2'))))
+        budget = max(1, float(os.environ.get('GRAPH_SUBTASK_RETRY_SECONDS', '90')))
+        started = time.monotonic(); contract = schema; request = prompt
+        for index in range(attempts):
+            try:
+                value = provider.complete(request, contract, stage=stage + (f':bounded_retry_{index}' if index else ''), max_tokens=tokens)
+                Draft202012Validator(contract).validate(value)
+                return value
+            except (ValueError, OSError, TimeoutError, ValidationError) as exc:
+                kind = error_type(exc)
+                remaining = budget - (time.monotonic()-started)
+                # Authentication, source identity and semantic rejection need review, not transport retries.
+                if index+1 >= attempts or remaining < getattr(provider, 'timeout', 45) or kind not in (
+                        'network_error','timeout','output_limit','invalid_json','schema_invalid','invalid_output'):
+                    raise
+                if kind in ('invalid_output',) and not any(x in str(exc).lower() for x in ('schema','json')): raise
+                action = 'retry_transport'
+                if kind != 'network_error':
+                    contract = copy.deepcopy(schema)
+                    for name, spec in contract.get('properties', {}).items():
+                        if spec.get('type') == 'array': spec['maxItems'] = min(spec.get('maxItems', 2), 6 if name == 'concepts' else 2)
+                    request = prompt + '\n이번 응답은 축소된 스키마의 개수 상한만 사용하세요. 가장 직접적인 근거의 항목만 선택하고 나머지 후보는 생략하세요. JSON 외 텍스트를 쓰지 마세요.'
+                    action = 'reduced_output_contract'
+                self.manifest.setdefault('automatic_retries', []).append({'stage':stage,'failure_type':kind,
+                    'attempt':index+2,'action':action})
+                self.persist_manifest()
 
     def persist_manifest(self):
         save(self.folder / 'manifest.json', self.manifest)
@@ -170,6 +204,9 @@ class StagedExtractor:
         if self.understanding_units is not None and self.source['kind']=='learning_material':
             from .understanding import split_units
             for unit in self.understanding_units:
+                note_path=self.folder.parent.parent/'memory/notes'/(unit['id']+'.json')
+                if note_path.exists() and read_json(note_path).get('review_status')=='rejected':
+                    continue
                 decision=unit.get('semantic_control',{})
                 if decision.get('status')=='success' and decision.get('final_route',{}).get('project_graph') is False:
                     self.manifest.setdefault('skipped_graph_units',[]).append({
@@ -179,8 +216,9 @@ class StagedExtractor:
                     self.persist_manifest()
                     if self.progress:self.progress('이해 노트 보존·그래프 생략 '+unit['locator'],True)
                     continue
-                for _,_,text in split_units(unit['text'],900):
+                for relative,_,text in split_units(unit['text'],900):
                     yield {'locator':unit['locator'],'text':text,'understanding_note':unit['content'],
+                           'source_start':unit['start']+relative,
                            'understanding_note_id':unit['id'],'understanding_content_hash':unit['content_hash']}
             return
         for page in self.source['excerpts']:
@@ -209,7 +247,11 @@ class StagedExtractor:
         relations, questions = [], []
         for page in self.pages():
             if self.source['kind'] == 'exam':
-                questions.extend(self.exam(page))
+                try:questions.extend(self.exam(page))
+                except Exception as exc:
+                    from .span_graph import enabled
+                    if not enabled(self):raise
+                    self.pending_question(page['locator'],'segment',exc)
             else:
                 relations.extend(self.material(page))
         if self.source['kind'] == 'learning_material':
@@ -221,7 +263,9 @@ class StagedExtractor:
                     'notes_only':len(skipped),'skipped_units':skipped,
                     'meaning':'Graph frequency covers projected notes only; all notes remain in memory.'}
         if set(self.answer_mapping) != self.used_answer_keys:
-            raise ValueError('정답·해설 매핑에 실제 분리된 문항과 대응하지 않는 항목이 있습니다.')
+            from .span_graph import enabled
+            if not enabled(self):raise ValueError('정답·해설 매핑에 실제 분리된 문항과 대응하지 않는 항목이 있습니다.')
+            self.pending_question('answer_mapping','mapping',ValueError('unmatched_answer_keys_preserved'))
         materials = [s for s in self.base['sources'] if s['kind'] == 'learning_material'] if self.source['kind'] == 'exam' else []
         addition = {**empty_dataset(), 'scope': self.base['scope'], 'sources': [*materials, *self.answer_sources, self.source],
             'concepts': list(self.used.values()), 'material_relations': list({r['id']:r for r in relations}.values()), 'questions': questions,
@@ -230,6 +274,14 @@ class StagedExtractor:
         return validate(addition)
 
     def material(self, page):
+        from .span_graph import enabled, extract_material as extract_span_material
+        if enabled(self):
+            result=extract_span_material(self,page)
+            rows=list(self.manifest.get('span_subtasks',{}).values())
+            self.source['graph_enrichment']={'version':'source-span-1','subtasks':rows,
+                'pending_count':sum(v in ('failed_retryable','pending_review') for r in rows for v in r['subtasks'].values()),
+                'invalid_entry_count':sum(len(r['invalid_entries']) for r in rows)}
+            return result
         from .grounded import extract_material
         from .nvidia import SemanticReductionRequired
         marker=self.folder/(digest([self.VERSION,'material_reduction',page,getattr(self.provider,'model','fixture')])+'.reduction.json')
@@ -299,8 +351,27 @@ class StagedExtractor:
             requested = {number for (loc, number) in self.answer_mapping if loc == page['locator']}
             if not requested <= numbers:
                 raise ValueError('정답·해설의 문항 번호와 분리 결과가 대응하지 않습니다.')
-        segments = self.call('segment:' + page['locator'], prompt, SEGMENT, 2048, check)
-        return [self.question(page['locator'], q) for q in segments['questions']]
+        from .span_graph import enabled
+        if enabled(self):
+            from .span_question import segment_question_spans
+            segments=segment_question_spans(self,page,check)
+        else:
+            segments = self.call('segment:' + page['locator'], prompt, SEGMENT, 2048, check)
+        results=[]
+        for q in segments['questions']:
+            try:results.append(self.question(page['locator'],q))
+            except Exception as exc:
+                if not enabled(self):raise
+                self.pending_question(page['locator'],q['number'],exc)
+        return results
+
+    def pending_question(self,locator,number,error):
+        record={'locator':locator,'question_number':number,'subtasks':{'question':'failed_retryable'},
+            'invalid_entries':[],'errors':[{'type':type(error).__name__,'reason':str(error)[:400]}]}
+        self.manifest.setdefault('question_subtasks',[]).append(record)
+        rows=self.manifest['question_subtasks']
+        self.source['graph_enrichment']={'version':'source-span-1','subtasks':rows,'pending_count':len(rows),'invalid_entry_count':0}
+        self.persist_manifest()
 
     def question(self, locator, segment):
         from .grounded import extract_question

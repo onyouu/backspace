@@ -37,12 +37,16 @@
   <section id="job-tray" class="job-tray" hidden aria-labelledby="job-title"></section>
   <section id="history-window" class="history-window" role="dialog" aria-modal="false" aria-labelledby="history-title" hidden>
     <header id="history-handle" class="history-head" tabindex="0" aria-label="변경 이력 창 이동. 방향키로 위치를 옮길 수 있습니다.">
-      <div><strong id="history-title">변경 이력</strong><span>BACKSPACE TIMELINE</span></div>
+      <div><strong id="history-title">개발 변천사</strong><span>BACKSPACE TIMELINE</span></div>
       <button id="history-close" class="icon-button" aria-label="변경 이력 닫기">×</button>
     </header>
     <div class="history-tools"><span id="history-count">불러오는 중…</span><div><button id="history-first">처음</button><button id="history-latest">최신</button></div></div>
+    <div class="history-filters">
+      <select id="history-type" aria-label="변천사 상태"><option value="">전체 상태</option><option value="IDEA">아이디어</option><option value="DESIGN">설계</option><option value="IMPLEMENTED">구현</option><option value="VALIDATED">검증</option><option value="FAILURE">실패</option><option value="PIVOT">구조 전환</option><option value="RESEARCH">조사</option><option value="PRODUCT">제품 방향</option><option value="NEXT">다음 단계</option></select>
+      <select id="history-origin" aria-label="기록 출처"><option value="">모든 기록</option><option value="supplied_history">제공한 변천사</option><option value="code_record">코드 변경 기록</option></select>
+    </div>
     <div id="history-content" class="history-content" tabindex="0" aria-label="날짜별 프로그램 변경 이력"></div>
-    <footer class="history-foot">한국 시간 · 초기 이력은 문서·파일 시각으로 복원했습니다.</footer>
+    <footer class="history-foot">한국 시간 · 제공한 회고와 실제 코드 변경 기록을 구분합니다.<br>구현·검증 표시는 당시 보고 기준이며, 정확하지 않은 시간은 그대로 표시합니다.</footer>
   </section>
 </body>
 </html>

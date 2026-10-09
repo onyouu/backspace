@@ -70,13 +70,17 @@ def evidence_catalog(data, patterns, material, graphs):
 def retrieve_memory(folder, data, query, *, max_chars=2200):
     from .understanding import teacher_memory_context, source_fingerprint
     try:
+        if not (Path(folder)/'chroma').exists():
+            raise ValueError('saved_search_index_absent')
         result = teacher_memory_context(folder, data, query, max_notes=3, max_chars=max_chars)
         return result or {'notes': [], 'selected': 0, 'eligible': 0}
     except Exception:
         # Search metadata/index failure never launches another LLM or blocks a teacher update.
         # Canonical already-written bodies and deterministic provenance are sufficient.
         current = {s['id']: source_fingerprint(s) for s in data['sources']}
-        result = []; eligible = 0; used = 0
+        result = []; eligible = 0; used = 0; candidates = []
+        import re
+        terms=set(re.findall(r'\w{2,}',query.casefold()))
         for path in sorted((Path(folder) / 'notes').glob('*.json')):
             try:
                 row = read_json(path); body = path.with_suffix('.md').read_text(encoding='utf-8')
@@ -87,11 +91,16 @@ def retrieve_memory(folder, data, query, *, max_chars=2200):
                 eligible += 1
                 note = {'id': row['id'], 'content': body, 'provenance': row['provenance'],
                     'metadata_status': 'local_fallback'}
-                size = len(json.dumps(note, ensure_ascii=False))
-                if len(result) < 3 and used + size <= max_chars:
-                    result.append(note); used += size
+                score=sum(t in (body+' '+str(row.get('topic',[]))).casefold() for t in terms)
+                candidates.append((score,note))
             except (ValueError, OSError, KeyError):
                 continue
+        for _,note in sorted(candidates,key=lambda x:(-x[0],x[1]['id'])):
+            # Bounded preview of saved text; preserve exact offsets of its cited excerpt.
+            note=copy.deepcopy(note);note['content']=note['content'][:300]
+            p=note['provenance'];p['quote']=p['quote'][:400];p['span']['end']=p['span']['start']+len(p['quote'])
+            size=len(json.dumps(note,ensure_ascii=False))
+            if len(result)<3 and used+size<=max_chars:result.append(note);used+=size
         return {'notes': result, 'selected': len(result), 'eligible': eligible,
             'retrieval_status': 'canonical_body_fallback', 'limitations': ['검색 장애: 선택된 범위만 사용하며 노트는 독립 관찰로 세지 않습니다.']}
 
@@ -104,6 +113,10 @@ def update_teacher_model(state, *, provider=None, jev_provider=None, control=Non
         build_teacher_hypotheses(state, provider=provider)
         build_teacher_scores(state, provider=jev_provider)
         return build_teacher_model(state)
+    if (root / 'memory/source_manifests').exists():
+        from .teacher_primary import build_primary
+        return build_primary(state, provider=provider, jev_provider=jev_provider, control=control,
+            policy=policy, synthesize=synthesize)
     data = validate(read_json(state))
     patterns = checked_artifact(root / 'patterns.json', 'patterns.schema.json', data['scope'])
     material = validate_material_graph(read_json(root / 'material_graph.json'), data)

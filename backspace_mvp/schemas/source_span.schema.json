@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "span_id",
+    "source_id",
+    "source_sha256",
+    "source_version",
+    "locator",
+    "page",
+    "region_id",
+    "start_offset",
+    "end_offset",
+    "text",
+    "source_type",
+    "ocr_provenance",
+    "perception_version",
+    "status"
+  ],
+  "properties": {
+    "span_id": {
+      "type": "string",
+      "pattern": "^sp_[a-f0-9]{28}$"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string"
+    },
+    "source_version": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "locator": {
+      "type": "string"
+    },
+    "page": {
+      "type": "string"
+    },
+    "region_id": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "start_offset": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "end_offset": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_type": {
+      "type": "string"
+    },
+    "ocr_provenance": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "perception_version": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "current",
+        "stale",
+        "remapped",
+        "superseded"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

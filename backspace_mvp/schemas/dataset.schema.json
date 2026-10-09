@@ -231,8 +231,7 @@
             "items": {
               "$ref": "#/$defs/evidence"
             },
-            "minItems": 1,
-            "maxItems": 1
+            "minItems": 1
           },
           "explicit_emphasis": {
             "type": "array",
@@ -240,6 +239,48 @@
               "$ref": "#/$defs/evidence"
             },
             "uniqueItems": true
+          },
+          "grounding_method": {
+            "const": "source_span"
+          },
+          "emphasis_classifications": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "emphasis_type",
+                "evidence_span_ids",
+                "status",
+                "decision_id"
+              ],
+              "properties": {
+                "emphasis_type": {
+                  "enum": [
+                    "explicit",
+                    "repeated",
+                    "structural",
+                    "inferred",
+                    "none"
+                  ]
+                },
+                "evidence_span_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "status": {
+                  "enum": [
+                    "inferred",
+                    "jev_classified"
+                  ]
+                },
+                "decision_id": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
           }
         },
         "required": [
@@ -714,6 +755,35 @@
             "meaning"
           ],
           "additionalProperties": false
+        },
+        "graph_enrichment": {
+          "type": "object",
+          "required": [
+            "version",
+            "subtasks",
+            "pending_count",
+            "invalid_entry_count"
+          ],
+          "properties": {
+            "version": {
+              "const": "source-span-1"
+            },
+            "subtasks": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "pending_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "invalid_entry_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
@@ -761,6 +831,20 @@
         "quote": {
           "type": "string",
           "minLength": 1
+        },
+        "span_id": {
+          "type": "string"
+        },
+        "source_version": {
+          "type": "string"
+        },
+        "start_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_offset": {
+          "type": "integer",
+          "minimum": 1
         }
       },
       "required": [

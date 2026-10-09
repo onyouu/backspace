@@ -42,7 +42,7 @@ ARTIFACTS = {'material': 'material_graph.json', 'patterns': 'patterns.json',
 def backend_revision():
     files=('web.py','web_pipeline.py','staged.py','grounded.py','nvidia.py','stage_state.py','understanding.py',
            'teacher_update.py','teacher_incremental.py','teacher_note_evidence.py','teacher_questions.py',
-           'semantic_control.py')
+           'semantic_control.py','teacher_primary.py','teacher_reliability.py','source_spans.py','span_graph.py')
     return hashlib.sha256(b''.join((Path(__file__).parent/name).read_bytes() for name in files)).hexdigest()[:16]
 
 
@@ -246,8 +246,11 @@ class WebStore:
                 source=next((s for s in dataset['sources'] if s['sha256']==row['sha256'] and s['kind']==KINDS[row['kind']]
                     and (row['kind']!='exam' or s.get('exam_id')==row['exam_id'])),None)
                 row['analysis_stale']=bool(source and row.get('perception_hash') and source.get('perception',{}).get('content_hash')!=row['perception_hash'])
-            result['model_stale'] |= bool(result['model']) and any(f['target']=='teacher' and
+            result['model_stale'] |= bool(result['model']) and result['model'].get('model_version')!='teacher-model-notes-1' and any(f['target']=='teacher' and
                 (f.get('analysis_stale') or f['status']=='pending') for f in result['files'])
+            if result['model'] and result['model'].get('model_version')=='teacher-model-notes-1':
+                from .teacher_primary import primary_fingerprint
+                result['model_stale'] |= result['model']['inputs']['primary_evidence_hash']!=primary_fingerprint(base/'teacher')
         path = base / 'scope/material_graph.json'
         if path.exists():
             result['scope_material'] = read_json(path)

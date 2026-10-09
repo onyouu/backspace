@@ -426,7 +426,7 @@ def source_from_document(path, document, kind, exam_id=None, material_type=None)
         'excerpts':excerpts,'page_count':max(1,len(document['pages'])),
         'perception':{'version':VERSION,'content_hash':document['content_hash'],'revision':document['revision'],
             'coverage':document['coverage'],'blocked_pages':blocked,
-            'blocks':[{'locator':p['locator'],**{k:b[k] for k in ('id','start','end','bbox','method','confidence','confidence_basis','status','asset_id') if k in b}}
+            'blocks':[{'locator':p['locator'],**{k:b[k] for k in ('id','start','end','bbox','method','confidence','confidence_basis','status','asset_id','candidates','selected_source','selected_text','initial_text') if k in b}}
                 for p in document['pages'] for b in p['blocks'] if 'start' in b and p['locator'] not in blocked]}}
     if kind in ('exam','answer_key'):
         if not exam_id:

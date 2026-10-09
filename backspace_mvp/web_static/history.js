@@ -6,6 +6,9 @@
   const content = document.getElementById('history-content');
   const close = document.getElementById('history-close');
   let loaded = false, loading = false, drag = null, position = null;
+  let entries = [];
+  const statusLabels = {IDEA:'아이디어', DESIGN:'설계', IMPLEMENTED:'구현', VALIDATED:'검증',
+    FAILURE:'실패', PIVOT:'구조 전환', NEXT:'다음 단계', PRODUCT:'제품 방향', RESEARCH:'조사'};
   try { position = JSON.parse(localStorage.getItem('backspace-history-position')); } catch (_) {}
   if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) position = null;
   const element = (tag, className, text) => {
@@ -18,6 +21,66 @@
     timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit',
     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
   }).format(new Date(date));
+  function render() {
+    const type = document.getElementById('history-type')?.value || '';
+    const origin = document.getElementById('history-origin')?.value || '';
+    const selected = entries.filter(e => (!type || (e.statuses || [e.type]).includes(type)) &&
+      (!origin || e.origin === origin));
+    const fragment = document.createDocumentFragment();
+    let day = '';
+    for (const entry of selected) {
+      const formatted = entry.at ? timestamp(entry.at) : '';
+      const nextDay = entry.date_label || formatted.slice(0, 10).replaceAll('-', '.');
+      if (nextDay !== day) {
+        day = nextDay; fragment.append(element('h3', 'history-day', day));
+      }
+      const card = element('article', 'history-entry');
+      card.dataset.origin = entry.origin || 'code_record';
+      card.dataset.status = entry.type || '';
+      const meta = element('div', 'history-meta');
+      const time = element('time', '', entry.time_label || formatted.slice(11));
+      if (entry.at) time.dateTime = entry.at;
+      meta.append(time);
+      for (const status of entry.statuses || [entry.type || entry.category || '업데이트']) {
+        const badge = element('span', 'history-kind', statusLabels[status] || status);
+        badge.dataset.status = status; meta.append(badge);
+      }
+      card.append(meta, element('h4', '', entry.title), element('p', '', entry.summary));
+      card.append(element('small', 'history-basis', entry.origin === 'supplied_history'
+        ? '제공한 회고 · 대화에서 보고된 내용' : entry.time_basis || '코드 변경 기록'));
+      if (entry.detail) {
+        const details = element('details', 'history-files');
+        details.append(element('summary', '', '당시 내용 보기'), element('div', 'history-detail-copy', entry.detail));
+        card.append(details);
+      }
+      if (entry.change_context && Object.values(entry.change_context).some(Boolean)) {
+        const details = element('details', 'history-files');
+        details.append(element('summary', '', '변경 배경·결과'));
+        const labels = {why:'이유', before:'이전', after:'이후', result:'결과', next:'다음'};
+        for (const [key, value] of Object.entries(entry.change_context)) {
+          if (value) details.append(element('p', '', `${labels[key] || key}: ${value}`));
+        }
+        card.append(details);
+      }
+      if (Array.isArray(entry.files) && entry.files.length) {
+        const details = element('details', 'history-files');
+        details.append(element('summary', '', `변경 파일 ${entry.files.length}개`));
+        const list = element('ul');
+        for (const file of entry.files) {
+          const row = element('li', '', typeof file === 'string' ? file : file.path);
+          if (typeof file !== 'string' && file.modified_at) {
+            row.append(element('small', '', `수정 시각 ${timestamp(file.modified_at)}`));
+          }
+          list.append(row);
+        }
+        details.append(list); card.append(details);
+      }
+      fragment.append(card);
+    }
+    content.replaceChildren(fragment); content.scrollTop = 0;
+    if (!selected.length) content.append(element('p', 'history-empty', '해당 조건의 기록이 없습니다.'));
+    document.getElementById('history-count').textContent = `${selected.length} / ${entries.length}개 · 처음 → 최신`;
+  }
   function place(x, y, persist = false) {
     const viewport = window.visualViewport;
     const left = viewport?.offsetLeft || 0, top = viewport?.offsetTop || 0;
@@ -37,40 +100,11 @@
       if (!response.ok) throw new Error('history unavailable');
       const data = await response.json();
       if (!Array.isArray(data.entries)) throw new Error('invalid history');
-      const entries = data.entries.filter(e => typeof e.title === 'string' &&
-        typeof e.summary === 'string' && Number.isFinite(Date.parse(e.at)))
-        .sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
-      const fragment = document.createDocumentFragment();
-      let day = '';
-      for (const entry of entries) {
-        const formatted = timestamp(entry.at), nextDay = formatted.slice(0, 10);
-        if (nextDay !== day) {
-          day = nextDay; fragment.append(element('h3', 'history-day', day.replaceAll('-', '.')));
-        }
-        const card = element('article', 'history-entry');
-        const meta = element('div', 'history-meta');
-        const time = element('time', '', formatted.slice(11)); time.dateTime = entry.at;
-        meta.append(time, element('span', 'history-kind', entry.category || '업데이트'));
-        card.append(meta, element('h4', '', entry.title), element('p', '', entry.summary));
-        if (entry.time_basis) card.append(element('small', 'history-basis', entry.time_basis));
-        if (Array.isArray(entry.files) && entry.files.length) {
-          const details = element('details', 'history-files');
-          details.append(element('summary', '', `변경 파일 ${entry.files.length}개`));
-          const list = element('ul');
-          for (const file of entry.files) {
-            const row = element('li', '', typeof file === 'string' ? file : file.path);
-            if (typeof file !== 'string' && file.modified_at) {
-              row.append(element('small', '', `수정 시각 ${timestamp(file.modified_at)}`));
-            }
-            list.append(row);
-          }
-          details.append(list); card.append(details);
-        }
-        fragment.append(card);
-      }
-      content.replaceChildren(fragment);
-      if (!entries.length) content.append(element('p', 'history-empty', '아직 기록된 변경 이력이 없습니다.'));
-      document.getElementById('history-count').textContent = `${entries.length}개 기록 · 처음 → 최신`;
+      entries = data.entries.filter(e => typeof e.title === 'string' &&
+        typeof e.summary === 'string' && Number.isFinite(Date.parse(e.sort_at || e.at)))
+        .sort((a, b) => Date.parse(a.sort_at || a.at) - Date.parse(b.sort_at || b.at) ||
+          (a.sequence || 0) - (b.sequence || 0));
+      render();
       loaded = true;
     } catch (_) {
       const message = element('p', 'history-empty', '변경 이력을 불러오지 못했어요.');
@@ -93,6 +127,8 @@
     close.focus(); load();
   });
   close.addEventListener('click', hide);
+  document.getElementById('history-type')?.addEventListener('change', render);
+  document.getElementById('history-origin')?.addEventListener('change', render);
   document.getElementById('history-first').addEventListener('click', () => {content.scrollTop = 0;});
   document.getElementById('history-latest').addEventListener('click', () => {content.scrollTop = content.scrollHeight;});
   handle.addEventListener('pointerdown', event => {

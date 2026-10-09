@@ -183,10 +183,10 @@ function drawJob(job) {
   jobPresentation.latest=job;
   if(job.action==='read'&&job.status==='running')for(const f of state.data.files){if(job.step.includes(f.name)){const badge=$(`[data-file-row="${CSS.escape(f.id)}"] .badge`);if(badge){badge.textContent='◷ 읽는 중';badge.classList.add('pending');}}}
   const partial=job.outcome==='partial_success',review=job.outcome==='needs_review',reading=job.action==='read';
-  const title=partial?(reading?'일부 자료의 읽기를 완료했어요.':job.action==='plan'?'기존 결과를 보존했어요. 계획은 재개할 수 있어요.':job.partial_understanding?'일부 자료의 이해 노트를 저장했어요.':'이해 노트를 저장했어요.'):review?'저장한 결과를 확인해 주세요.':job.status==='done'?(reading?'텍스트·이미지 읽기를 마쳤어요.':'분석 결과를 저장했어요.'):job.status==='failed'?(reading?'자료를 읽지 못했어요.':'이해 노트를 저장하지 못했어요.'):job.status==='interrupted'?'작업이 중단됐어요.':reading?'자료를 읽고 있어요.':'자료의 연결을 찾고 있어요.';
+  const title=job.status==='done'&&job.result_flags?.TEACHER_MODEL_PERSISTED?'교사 모델 결과를 저장했어요.':partial?(reading?'일부 자료의 읽기를 완료했어요.':job.action==='plan'?'기존 결과를 보존했어요. 계획은 재개할 수 있어요.':job.partial_understanding?'일부 자료의 이해 노트를 저장했어요.':'이해 노트를 저장했어요.'):review?'저장한 결과를 확인해 주세요.':job.status==='done'?(reading?'텍스트·이미지 읽기를 마쳤어요.':'분석 결과를 저장했어요.'):job.status==='failed'?(reading?'자료를 읽지 못했어요.':'이해 노트를 저장하지 못했어요.'):job.status==='interrupted'?'작업이 중단됐어요.':reading?'자료를 읽고 있어요.':'자료의 연결을 찾고 있어요.';
   const tasks=job.stage_tasks||[],pending=tasks.filter(t=>['pending','failed_retryable','not_started','running'].includes(t.status)),reviewTasks=tasks.filter(t=>['rejected','failed_terminal'].includes(t.status));
   const stages=[...new Set(tasks.map(t=>t.stage))];
-  const explanation=partial?(reading?job.step||'자료별 읽기 상태를 확인해 주세요.':job.action==='plan'?job.step||'기존 결과는 보존됐습니다. 계획 생성만 재개할 수 있습니다.':'후속 분석 일부가 남았습니다. 저장된 노트는 자료 목록에서 볼 수 있습니다.'):job.error||job.step||'작업 준비 중';
+  const explanation=job.model_result?.message|| (partial?(reading?job.step||'자료별 읽기 상태를 확인해 주세요.':job.action==='plan'?job.step||'기존 결과는 보존됐습니다. 계획 생성만 재개할 수 있습니다.':'후속 분석 일부가 남았습니다. 저장된 노트는 자료 목록에서 볼 수 있습니다.'):job.error||job.step||'작업 준비 중');
   const busy=['queued','running'].includes(job.status),steps=job.completed_steps||[];
   const phase=busy?(reading?'자료 읽는 중':'분석 중'):partial?(reading?'읽기 확인':'후속 분석 대기'):review?'검토 필요':job.status==='done'?(reading?'읽기 완료':'분석 완료'):'분석 확인';
   const completed=tasks.filter(t=>['complete','skipped'].includes(t.status)).length;
@@ -217,7 +217,7 @@ function trackJob(job) {
     const current=await api('/api/jobs/'+job.id);if(state.job&&state.job.id!==job.id)return;failures=0;state.job=current;drawJob(current);
     if(['done','failed','interrupted'].includes(current.status)){
       state.job=null;await reload(false);if(current.action==='visual')await refreshVisualReview(current);if(current.status==='done'&&!['partial_success','needs_review'].includes(current.outcome))hideJobTimer=setTimeout(()=>{if(!state.job&&jobPresentation.id===current.id&&jobPresentation.view==='expanded'&&!$('[data-job-details]',$('#job-tray'))?.open)setJobView('minimized');},5000);
-      if(current.status==='done')toast(current.action==='read'?(current.outcome==='partial_success'?'일부 자료 읽기 완료 · 자료별 상태를 확인해 주세요.':'자료 읽기 완료.'):current.outcome==='partial_success'?(current.action==='plan'?'계획 생성 대기 · 필요한 자료와 설정을 확인해 주세요.':'이해 노트 저장 · 미완료 단계만 재개할 수 있어요.'):'저장 완료. 결과에서 근거와 선택 범위를 확인해 주세요.');
+      if(current.status==='done')toast(current.result_flags?.TEACHER_MODEL_PERSISTED?current.model_result?.message||'교사 모델 저장 완료.':current.action==='read'?(current.outcome==='partial_success'?'일부 자료 읽기 완료 · 자료별 상태를 확인해 주세요.':'자료 읽기 완료.'):current.outcome==='partial_success'?(current.action==='plan'?'계획 생성 대기 · 필요한 자료와 설정을 확인해 주세요.':'이해 노트 저장 · 미완료 단계만 재개할 수 있어요.'):'저장 완료. 결과에서 근거와 선택 범위를 확인해 주세요.');
     }else pollTimer=setTimeout(poll,1400);
   }catch(e){failures++;toast('작업 상태 연결이 끊겼습니다. 저장된 작업을 다시 확인합니다.');pollTimer=setTimeout(poll,Math.min(15000,1500*failures));}};
   pollTimer=setTimeout(poll,800);
