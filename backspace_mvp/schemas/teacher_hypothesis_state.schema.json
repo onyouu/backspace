@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "statement",
+    "lifecycle_status",
+    "scope",
+    "readiness",
+    "graph_support",
+    "supporting_evidence",
+    "contradicting_evidence",
+    "statistics"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lifecycle_status": {
+      "enum": [
+        "candidate",
+        "active",
+        "weak",
+        "contested",
+        "retired",
+        "rejected"
+      ]
+    },
+    "readiness": {
+      "enum": [
+        "not_ready",
+        "provisional",
+        "usable",
+        "well_supported",
+        "needs_review"
+      ]
+    },
+    "graph_support": {
+      "enum": [
+        "pending",
+        "available"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "level",
+        "conditions",
+        "exam_ids"
+      ]
+    },
+    "supporting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contradicting_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statistics": {
+      "type": "object"
+    }
+  }
+}

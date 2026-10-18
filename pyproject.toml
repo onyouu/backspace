@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "backspace-nvidia-mvp"
+version = "0.2.0"
+requires-python = ">=3.11"
+dependencies = ["networkx>=3.4,<4", "jsonschema>=4.23,<5", "pypdf>=5,<7", "python-dotenv>=1,<2", "python-pptx>=1,<2", "pdfplumber>=0.11,<0.12", "pypdfium2>=4.30,<6", "Pillow>=10,<13", "PyJWT[crypto]>=2.10,<3"]
+
+[project.optional-dependencies]
+ocr = ["paddleocr==3.7.0", "paddlepaddle==3.3.0", "numpy==1.26.4", "pandas==2.2.3"]
+surya = ["surya-ocr>=0.17,<1"]
+dev = ["reportlab>=4,<5"]
+memory = ["chromadb>=1.5.9,<2", "onnxruntime>=1.20,<2", "tokenizers>=0.21,<1", "huggingface-hub>=0.30,<2", "numpy>=1.26,<2", "nltk>=3.8,<4", "PyYAML==6.0.2", "kubernetes>=28.1,<37"]
+
+[project.scripts]
+backspace = "backspace_mvp.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["backspace_mvp*"]
+
+[tool.setuptools.package-data]
+backspace_mvp = ["schemas/*.json", "web_static/*", "web_static/fonts/*", "jev_thresholds.json"]
+"backspace_mvp._vendor.amem" = ["LICENSE"]

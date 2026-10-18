@@ -1,0 +1,764 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "architecture_version": {
+      "const": "teacher-intelligence-0.1"
+    },
+    "implementation_milestone": {
+      "const": "0.5"
+    },
+    "scoring_version": {
+      "const": "teacher-scoring-1"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "teacher_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "teacher_identity_verified": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "teacher_id",
+        "subject",
+        "label",
+        "teacher_identity_verified"
+      ],
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "dataset_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "patterns_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "material_graph_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "hypotheses_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "teacher_model_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "dataset_hash",
+        "patterns_hash",
+        "material_graph_hash",
+        "hypotheses_hash",
+        "teacher_model_hash"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "max_concepts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_hypotheses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_evidence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_context_chars": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "max_concepts",
+        "max_hypotheses",
+        "max_evidence",
+        "batch_size",
+        "max_context_chars"
+      ],
+      "additionalProperties": false
+    },
+    "provider_configuration": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "endpoint": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "model",
+            "endpoint"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "hypothesis_scores": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hypothesis_score"
+      }
+    },
+    "concept_scores": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/concept_score"
+      }
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "omitted_hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "omitted_concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "hypothesis_ids",
+        "omitted_hypothesis_ids",
+        "concept_ids",
+        "omitted_concept_ids"
+      ],
+      "additionalProperties": false
+    },
+    "score_meaning": {
+      "const": "rubric_position_not_truth_probability"
+    },
+    "actual_student_behavior": {
+      "const": "not_observed"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "previous_hash": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pending_concept_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "architecture_version",
+    "implementation_milestone",
+    "scoring_version",
+    "scope",
+    "inputs",
+    "parameters",
+    "provider_configuration",
+    "hypothesis_scores",
+    "concept_scores",
+    "selection",
+    "score_meaning",
+    "actual_student_behavior",
+    "content_hash",
+    "revision",
+    "previous_hash",
+    "updated_at"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Backspace milestone v0.5 independent Jev scores",
+  "$defs": {
+    "raw_score": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "score"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "legend": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "probabilities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "required": [
+        "type",
+        "score",
+        "confidence",
+        "legend",
+        "probabilities"
+      ],
+      "additionalProperties": true
+    },
+    "dimension": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "scored"
+            },
+            "dimension": {
+              "type": "string",
+              "minLength": 1
+            },
+            "raw_answer": {
+              "$ref": "#/$defs/raw_score"
+            },
+            "normalized_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "rubric": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "const": "score"
+                },
+                "instructions": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "criteria": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 2,
+                  "maxItems": 10
+                }
+              },
+              "required": [
+                "type",
+                "instructions",
+                "criteria"
+              ],
+              "additionalProperties": false
+            },
+            "rubric_version": {
+              "const": "teacher-scoring-1"
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "request_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "context_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "quality_flag": {
+              "enum": [
+                "low_confidence",
+                "unvalidated_judgement"
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "dimension",
+            "raw_answer",
+            "normalized_score",
+            "rubric",
+            "rubric_version",
+            "model",
+            "request_hash",
+            "context_hash",
+            "quality_flag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "not_observed"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "normalized_score": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "status",
+            "reason",
+            "normalized_score"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "concept_score": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "recurrence": {
+              "$ref": "#/$defs/dimension"
+            },
+            "source_diversity": {
+              "$ref": "#/$defs/dimension"
+            },
+            "exam_relevance": {
+              "$ref": "#/$defs/dimension"
+            },
+            "reasoning_centrality": {
+              "$ref": "#/$defs/dimension"
+            },
+            "explicit_emphasis": {
+              "$ref": "#/$defs/dimension"
+            },
+            "evidence_quality": {
+              "$ref": "#/$defs/dimension"
+            }
+          },
+          "required": [
+            "recurrence",
+            "source_diversity",
+            "exam_relevance",
+            "reasoning_centrality",
+            "explicit_emphasis",
+            "evidence_quality"
+          ],
+          "additionalProperties": false
+        },
+        "statistics": {
+          "type": "object",
+          "properties": {
+            "material_source_page_frequency": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_support": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_denominator": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "exam_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "reasoning_connections": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "material_source_page_frequency",
+            "exam_support",
+            "exam_denominator",
+            "exam_ids",
+            "source_ids",
+            "source_types",
+            "reasoning_connections"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "teacher_salience": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "weight_version": {
+              "const": "salience-available-weight-v1"
+            },
+            "weights": {
+              "type": "object",
+              "properties": {
+                "recurrence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "source_diversity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "exam_relevance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "reasoning_centrality": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "explicit_emphasis": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "evidence_quality": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "recurrence",
+                "source_diversity",
+                "exam_relevance",
+                "reasoning_centrality",
+                "explicit_emphasis",
+                "evidence_quality"
+              ],
+              "additionalProperties": false
+            },
+            "available_weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1.000001
+            },
+            "status": {
+              "enum": [
+                "provisional",
+                "insufficient_observation"
+              ]
+            },
+            "meaning": {
+              "const": "weighted_available_normalized_scores_not_probability"
+            }
+          },
+          "required": [
+            "weight_version",
+            "weights",
+            "available_weight",
+            "status",
+            "meaning"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "concept_id",
+        "label",
+        "dimensions",
+        "statistics",
+        "evidence",
+        "teacher_salience",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "hypothesis_score": {
+      "type": "object",
+      "properties": {
+        "hypothesis_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "support": {
+              "$ref": "#/$defs/dimension"
+            },
+            "counter": {
+              "$ref": "#/$defs/dimension"
+            },
+            "evidence_quality": {
+              "$ref": "#/$defs/dimension"
+            },
+            "consistency": {
+              "$ref": "#/$defs/dimension"
+            }
+          },
+          "required": [
+            "support",
+            "counter",
+            "evidence_quality",
+            "consistency"
+          ],
+          "additionalProperties": false
+        },
+        "evidence_scores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "evidence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dimensions": {
+                "type": "object",
+                "properties": {
+                  "support": {
+                    "$ref": "#/$defs/dimension"
+                  },
+                  "counter": {
+                    "$ref": "#/$defs/dimension"
+                  },
+                  "evidence_quality": {
+                    "$ref": "#/$defs/dimension"
+                  }
+                },
+                "required": [
+                  "support",
+                  "counter",
+                  "evidence_quality"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "evidence_id",
+              "dimensions"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "selected_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "omitted_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status": {
+          "const": "judged_provisional_not_verified"
+        }
+      },
+      "required": [
+        "hypothesis_id",
+        "dimensions",
+        "evidence_scores",
+        "selected_evidence_ids",
+        "omitted_evidence_ids",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "citation": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "char_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "char_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "question_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transcription": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "source_sha256",
+        "locator",
+        "raw_evidence",
+        "char_start",
+        "char_end",
+        "question_id",
+        "confidence"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

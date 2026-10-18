@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101210"><title>Backspace · Learning Studio</title>
+  <link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/studio.css"><link rel="stylesheet" href="/history.css">
+  <script src="/vendor/gsap.min.js" defer></script><script src="/vendor/Flip.min.js" defer></script>
+  <link rel="preload" href="/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="/vendor/ScrollTrigger.min.js" defer></script><script src="/vendor/SplitText.min.js" defer></script><script src="/vendor/DrawSVGPlugin.min.js" defer></script>
+  <script src="/motion.js" defer></script><script src="/views.js" defer></script><script src="/graph.js" defer></script><script src="/perception.js" defer></script><script src="/app.js" defer></script><script src="/history.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="Backspace 홈"><svg class="brand-logo" viewBox="70 475 1115 278" aria-hidden="true"><image href="/backspace-logo-original.png" width="1254" height="1254"/></svg></a>
+    <div class="workspace-label"><span class="workspace-icon">B</span><div>내 학습 공간</div></div>
+    
+    <nav aria-label="주 메뉴"><div class="nav-section-label">작업공간</div>
+      <button class="nav-item active" data-page="overview"><span data-icon="dashboard"></span>작업 홈</button>
+      <button class="nav-item" data-page="teacher"><span data-icon="layers"></span>선생님 자료</button>
+      <button class="nav-item" data-page="model"><span data-icon="network"></span><span class="nav-desktop">Teacher Model</span><span class="nav-mobile">사고 지도</span></button>
+      <div class="nav-section-label">시험 준비</div>
+      <button class="nav-item" data-page="scope"><span data-icon="book"></span><span class="nav-desktop">이번 시험범위</span><span class="nav-mobile">시험범위</span></button>
+      <button class="nav-item" data-page="plan"><span data-icon="calendar"></span><span class="nav-desktop">나의 학습계획</span><span class="nav-mobile">학습계획</span></button>
+    </nav>
+
+    <div class="sidebar-bottom"><span class="avatar">나</span><div>내 작업공간<small>로컬에 안전하게 저장</small></div><span class="local-dot"></span></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><button class="icon-button menu-toggle" id="menu-toggle" aria-label="메뉴 펼치기" aria-expanded="false">☰</button><a class="mobile-brand" href="#overview" aria-label="Backspace 홈"><svg class="brand-logo" viewBox="70 475 1115 278" aria-hidden="true"><image href="/backspace-logo-original.png" width="1254" height="1254"/></svg></a><div class="breadcrumb"><strong id="breadcrumb">작업 홈</strong></div><div class="top-actions"><span class="local-status"><i></i> 로컬 연결</span><button id="job-toggle" class="job-toggle" data-action="show-job" hidden aria-controls="job-tray" aria-expanded="false">진행상황</button><button id="history-toggle" class="job-toggle" aria-controls="history-window" aria-expanded="false">변경 이력</button><button id="mode-button" class="mode-button">예시 둘러보기 <span>⌄</span></button><button class="icon-button" id="help-button" aria-label="사용 안내"><span data-icon="help"></span></button></div></header>
+    <main id="main" tabindex="-1"><div class="loading-view">학습 지도를 펼치는 중…</div></main>
+    <footer><span>BACKSPACE</span><span>내 자료는 이 컴퓨터에 저장됩니다.</span></footer>
+  </div>
+  <dialog id="dialog"><div class="dialog-head"><span id="dialog-title"></span><button class="icon-button" id="close-dialog" aria-label="닫기">×</button></div><div id="dialog-body"></div></dialog>
+  <dialog id="discard-dialog" aria-labelledby="discard-title"><div class="dialog-head"><span id="discard-title">미저장 원문 수정</span></div><div class="discard-body"><p>저장하지 않은 수정이 있습니다. 닫으면 이 수정이 사라집니다.</p><div class="action-row"><button class="button primary" id="keep-review" autofocus>계속 수정하기</button><button class="button" id="discard-review">수정 버리고 닫기</button></div></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button id="job-mini" class="job-mini" data-action="show-job" hidden aria-controls="job-tray" aria-expanded="false"></button>
+  <section id="job-tray" class="job-tray" hidden aria-labelledby="job-title"></section>
+  <section id="history-window" class="history-window" role="dialog" aria-modal="false" aria-labelledby="history-title" hidden>
+    <header id="history-handle" class="history-head" tabindex="0" aria-label="변경 이력 창 이동. 방향키로 위치를 옮길 수 있습니다.">
+      <div><strong id="history-title">개발 변천사</strong><span>BACKSPACE TIMELINE</span></div>
+      <button id="history-close" class="icon-button" aria-label="변경 이력 닫기">×</button>
+    </header>
+    <div class="history-tools"><span id="history-count">불러오는 중…</span><div><button id="history-first">처음</button><button id="history-latest">최신</button></div></div>
+    <div class="history-filters">
+      <select id="history-type" aria-label="변천사 상태"><option value="">전체 상태</option><option value="IDEA">아이디어</option><option value="DESIGN">설계</option><option value="IMPLEMENTED">구현</option><option value="VALIDATED">검증</option><option value="FAILURE">실패</option><option value="PIVOT">구조 전환</option><option value="RESEARCH">조사</option><option value="PRODUCT">제품 방향</option><option value="NEXT">다음 단계</option></select>
+      <select id="history-origin" aria-label="기록 출처"><option value="">모든 기록</option><option value="supplied_history">제공한 변천사</option><option value="code_record">코드 변경 기록</option></select>
+    </div>
+    <div id="history-content" class="history-content" tabindex="0" aria-label="날짜별 프로그램 변경 이력"></div>
+    <footer class="history-foot">한국 시간 · 제공한 회고와 실제 코드 변경 기록을 구분합니다.<br>구현·검증 표시는 당시 보고 기준이며, 정확하지 않은 시간은 그대로 표시합니다.</footer>
+  </section>
+</body>
+</html>

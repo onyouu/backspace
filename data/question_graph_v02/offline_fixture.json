@@ -1,0 +1,1029 @@
+{
+  "schema_version": "1.1",
+  "reasoning_codes": [
+    {
+      "id": "read_data",
+      "label": "자료 해석",
+      "definition": "표, 그래프, 모식도에서 조건과 정보를 읽는다."
+    },
+    {
+      "id": "recall",
+      "label": "개념 회상",
+      "definition": "필요한 개념이나 정의를 떠올린다."
+    },
+    {
+      "id": "compare",
+      "label": "조건 비교",
+      "definition": "둘 이상의 상태, 조건, 구조를 비교한다."
+    },
+    {
+      "id": "classify",
+      "label": "분류",
+      "definition": "대상의 특성에 따라 범주를 판정한다."
+    },
+    {
+      "id": "calculate",
+      "label": "수량 계산",
+      "definition": "수치 관계나 비율을 계산한다."
+    },
+    {
+      "id": "infer_cause",
+      "label": "원인 추론",
+      "definition": "관찰된 결과를 설명하는 기작이나 원인을 연결한다."
+    },
+    {
+      "id": "predict",
+      "label": "결과 예측",
+      "definition": "조건 변화가 일으킬 결과를 예측한다."
+    },
+    {
+      "id": "evaluate",
+      "label": "진술 판단",
+      "definition": "보기나 설명이 자료와 개념에 맞는지 판단한다."
+    },
+    {
+      "id": "justify",
+      "label": "근거 제시",
+      "definition": "결론을 자료 또는 개념으로 설명한다."
+    },
+    {
+      "id": "integrate",
+      "label": "체계 통합",
+      "definition": "여러 요소나 기관의 관계를 연결한다."
+    },
+    {
+      "id": "propose",
+      "label": "변화 방안 제시",
+      "definition": "주어진 목표를 만드는 조건 변화를 제안한다."
+    }
+  ],
+  "scope": {
+    "teacher_id": "local",
+    "subject": "생명과학",
+    "label": "v0.2 합성 구조·근거 검사 fixture (실제 NVIDIA 결과 아님)",
+    "teacher_identity_verified": false
+  },
+  "notes": [
+    "합성 입력과 고정 응답으로 작성한 구조 검증 fixture. 실제 NVIDIA 또는 Jev의 예측이 아니다.",
+    "모든 confidence와 검토 판정은 검사 fixture 값이며 과학적 정확도 측정 결과가 아니다."
+  ],
+  "sources": [
+    {
+      "id": "src_76d9c2dc26e2893d8cea",
+      "kind": "learning_material",
+      "title": "live_material.txt",
+      "path": "data/live_material.txt",
+      "sha256": "115881d8f65c45e38e87e39850760f31f5e96c5d7234cd90755a3b2f12337dce",
+      "format": "txt",
+      "extraction_status": "text_extracted_needs_review",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.\n"
+        }
+      ],
+      "material_type": "worksheet",
+      "material_analysis_version": "teacher-material-1.0"
+    },
+    {
+      "id": "src_1c8780416fb33f875499",
+      "kind": "answer_key",
+      "title": "answers.txt",
+      "path": "data/question_graph_v02/answers.txt",
+      "sha256": "cd46c2c005ae6e0f1508ed91d9234ab31ff1c04c8cc2e34cf2dde4383a6ae140",
+      "format": "txt",
+      "extraction_status": "text_extracted_needs_review",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다.\r\n\r\n2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다.\r\n"
+        }
+      ],
+      "exam_id": "architecture_v02_demo"
+    },
+    {
+      "id": "src_bcd6310d3ccf664d0b45",
+      "kind": "exam",
+      "title": "exam.txt",
+      "path": "data/question_graph_v02/exam.txt",
+      "sha256": "b0686c9f5e11795928e887e4205904b6cccb81244f9dccd0728b8b10863f92e5",
+      "format": "txt",
+      "extraction_status": "text_extracted_needs_review",
+      "excerpts": [
+        {
+          "locator": "p1",
+          "text": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오.\r\n\r\n2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오.\r\n"
+        }
+      ],
+      "exam_id": "architecture_v02_demo",
+      "answer_key_manifest_hash": "273d05359e1612e910babab9996eef891b9eaff684e4e781e38d0a6ce97d2dff",
+      "answer_key_mapping": [
+        {
+          "exam_locator": "p1",
+          "question_number": "1",
+          "block_ids": [
+            "ak_68ee0c24847417a1296f"
+          ]
+        },
+        {
+          "exam_locator": "p1",
+          "question_number": "2",
+          "block_ids": [
+            "ak_9e3786a46dad33241f73"
+          ]
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c_536402970a38c239",
+      "label": "세포호흡",
+      "aliases": []
+    },
+    {
+      "id": "c_2c02cf60cf097927",
+      "label": "산소",
+      "aliases": []
+    },
+    {
+      "id": "c_3cde7b098065b1c5",
+      "label": "미토콘드리아 전자 전달계",
+      "aliases": []
+    },
+    {
+      "id": "c_55a9715a82669d3c",
+      "label": "ATP 합성",
+      "aliases": []
+    },
+    {
+      "id": "c_0633cce65e59802a",
+      "label": "산화적 인산화",
+      "aliases": []
+    }
+  ],
+  "material_relations": [
+    {
+      "id": "src_76d9c2dc26e2893d8cea:r:0749dbb023d7770c",
+      "from": "c_536402970a38c239",
+      "to": "c_55a9715a82669d3c",
+      "relation": "produces",
+      "statement": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다.",
+      "conditions": [],
+      "confidence": 0.95,
+      "semantic_review": {
+        "status": "ai_supported",
+        "reason": "The statement indicates that cellular respiration uses chemical energy for ATP synthesis, implying that ATP synthesis occurs as a result of cellular respiration, which aligns with the 'produces' relation from cellular respiration to ATP synthesis."
+      },
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다."
+        }
+      ]
+    },
+    {
+      "id": "src_76d9c2dc26e2893d8cea:r:0a11af7189ca9d30",
+      "from": "c_2c02cf60cf097927",
+      "to": "c_55a9715a82669d3c",
+      "relation": "causes",
+      "statement": "산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.",
+      "conditions": [
+        "산소 공급이 감소하면"
+      ],
+      "confidence": 0.9,
+      "semantic_review": {
+        "status": "ai_supported",
+        "reason": "The statement explicitly says that a decrease in oxygen supply can lead to a decrease in ATP production via oxidative phosphorylation, matching the 'causes' relation from oxygen (via its supply decrease) to ATP synthesis under the given condition."
+      },
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다."
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "src_bcd6310d3ccf664d0b45:q:fedd748b90958182",
+      "exam_id": "architecture_v02_demo",
+      "title": "1",
+      "prompt_excerpt": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오.",
+      "concept_ids": [
+        "c_2c02cf60cf097927"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "산소 조건 비교",
+          "input": "산소 감소 조건",
+          "output": "산소 변화와 ATP 생성의 비교표",
+          "success_criteria": [
+            "원인 조건과 관찰 결과 구분"
+          ],
+          "conditions": [],
+          "practice": "산소 공급 조건과 ATP 생성량을 두 열로 구분한 표를 작성하세요.",
+          "confidence": 0.8,
+          "claim_ids": [
+            "claim0",
+            "claim1"
+          ],
+          "assessment_evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        },
+        {
+          "id": "s1",
+          "code": "justify",
+          "label": "ATP 감소 설명",
+          "input": "조건 비교표",
+          "output": "ATP 감소를 조건과 연결한 답안",
+          "success_criteria": [
+            "산소 감소와 ATP 생성 감소 연결"
+          ],
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "practice": "산소 공급 감소와 ATP 생성 감소를 연결하는 조건부 설명을 작성하세요.",
+          "confidence": 0.8,
+          "claim_ids": [
+            "claim0",
+            "claim2"
+          ],
+          "assessment_evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "code": "predict",
+          "label": "조건 변화 예측",
+          "input": "조건 비교표",
+          "output": "조건별 결과 예측표",
+          "success_criteria": [
+            "산소 감소와 ATP 생성 감소 연결"
+          ],
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "practice": "산소 공급 감소와 ATP 생성 감소를 연결하는 조건부 설명을 작성하세요.",
+          "confidence": 0.8,
+          "claim_ids": [
+            "claim0",
+            "claim3"
+          ],
+          "assessment_evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "supports",
+          "explanation": "조건 비교가 결과 설명의 근거가 된다.",
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "s2",
+          "relation": "supports",
+          "explanation": "조건 비교가 결과 예측의 근거이다.",
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "c_2c02cf60cf097927",
+          "relation": "requires",
+          "explanation": "이 개념이 연결된 요구 사고 수행에 필요하다.",
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            }
+          ]
+        }
+      ],
+      "claims": [
+        {
+          "id": "claim0",
+          "statement": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다.",
+          "conditions": [],
+          "evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "model",
+          "confidence": 0.8,
+          "step_id": ""
+        },
+        {
+          "id": "claim1",
+          "statement": "산소 변화와 ATP 생성의 비교표",
+          "conditions": [],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            },
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "step_output",
+          "confidence": 0.8,
+          "step_id": "s0"
+        },
+        {
+          "id": "claim2",
+          "statement": "ATP 감소를 조건과 연결한 답안",
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            },
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "step_output",
+          "confidence": 0.8,
+          "step_id": "s1"
+        },
+        {
+          "id": "claim3",
+          "statement": "조건별 결과 예측표",
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+            },
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "step_output",
+          "confidence": 0.8,
+          "step_id": "s2"
+        }
+      ],
+      "answer_requirements": [
+        "산소 변화와 ATP 감소의 조건부 연결"
+      ],
+      "retrieval": {
+        "method": "lexical_original_blocks_v1",
+        "query": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오.\n",
+        "total_blocks": 1,
+        "matched_blocks": 1,
+        "selected_blocks": [
+          {
+            "block_id": "b_b4a1312b294db3c0c335",
+            "source_id": "src_76d9c2dc26e2893d8cea",
+            "locator": "p1",
+            "title": "live_material.txt",
+            "source_sha256": "115881d8f65c45e38e87e39850760f31f5e96c5d7234cd90755a3b2f12337dce",
+            "start": 0,
+            "end": 111,
+            "text": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.",
+            "score": 15.0904
+          }
+        ],
+        "context_chars": 111,
+        "budget_limited": false,
+        "max_chars": 10000,
+        "top_k": 6,
+        "corpus_hash": "49e3e3f0a1afd489f3e8a348f044cc4b96f232ae4f6e15b90ab4951086adfe4f"
+      },
+      "analysis_version": "grounded-2.3",
+      "implementation_milestone": "0.2",
+      "actual_student_behavior": "not_observed",
+      "confidence": 0.8,
+      "task": {
+        "description": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오.",
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "source_id": "src_bcd6310d3ccf664d0b45",
+            "locator": "p1",
+            "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+          }
+        ]
+      },
+      "concept_confidences": [
+        {
+          "concept_id": "c_2c02cf60cf097927",
+          "step_id": "s0",
+          "value": 0.8
+        }
+      ],
+      "answer_key_context": {
+        "status": "provided",
+        "exam_locator": "p1",
+        "blocks": [
+          {
+            "source_id": "src_1c8780416fb33f875499",
+            "source_sha256": "cd46c2c005ae6e0f1508ed91d9234ab31ff1c04c8cc2e34cf2dde4383a6ae140",
+            "locator": "p1",
+            "start": 0,
+            "end": 265,
+            "text": "1. 조건 B의 산화적 인산화에 의한 ATP 생성은 A보다 적다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 이 문제에서는 산소 제한이 실제 전자 전달 속도를 낮추었다고 가정한다. 이때 양성자 펌핑이 감소하고 막 사이 양성자 기울기가 약해져 ATP 합성효소를 통한 ATP 생성이 감소할 수 있다. 답안 기준 후보: A와 B의 ATP 생성 비교, 산소의 역할 제시, 전자 전달·양성자 기울기·ATP 합성효소를 잇는 조건부 설명. 완전 중단이라고 단정하지 않는다.",
+            "block_id": "ak_68ee0c24847417a1296f"
+          }
+        ]
+      },
+      "analysis_status": "ai_reviewed",
+      "review_history": [
+        {
+          "attempt": 0,
+          "candidate_hash": "7f6e44bffe31abe7fe67e75e562d22dfd2d82db1a9b6b723e330a0a5d31154e0",
+          "review": {
+            "task_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "문항 요구에 근거한 과제"
+              }
+            ],
+            "claim_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 1,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 2,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 3,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "step_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 1,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 2,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "link_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 1,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "missing_requirements": [],
+            "issues": []
+          },
+          "review_model": "fixture",
+          "grounding_model": "fixture",
+          "grounding_verdicts": [
+            {
+              "index": 0,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            },
+            {
+              "index": 1,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            },
+            {
+              "index": 2,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            },
+            {
+              "index": 3,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "review_status": "unreviewed",
+        "objective": "기작 연결을 평가한다는 가설",
+        "success_criteria": [
+          "산소 역할을 설명"
+        ],
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "source_id": "src_bcd6310d3ccf664d0b45",
+            "locator": "p1",
+            "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "src_bcd6310d3ccf664d0b45",
+          "locator": "p1",
+          "quote": "1. 같은 종류의 세포를 산소가 충분한 조건 A와 산소 공급이 감소한 조건 B에 두었다. B에서 미토콘드리아의 산화적 인산화에 의한 ATP 생성이 A보다 감소하였다. 두 조건을 비교하고, 산소의 역할과 전자 전달계를 연결하여 ATP 생성 감소를 설명하시오."
+        }
+      ]
+    },
+    {
+      "id": "src_bcd6310d3ccf664d0b45:q:ed4220305f231cae",
+      "exam_id": "architecture_v02_demo",
+      "title": "2",
+      "prompt_excerpt": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오.",
+      "concept_ids": [
+        "c_2c02cf60cf097927"
+      ],
+      "steps": [
+        {
+          "id": "s0",
+          "code": "compare",
+          "label": "산소 조건 비교",
+          "input": "산소 감소 조건",
+          "output": "산소 변화와 ATP 생성의 비교표",
+          "success_criteria": [
+            "원인 조건과 관찰 결과 구분"
+          ],
+          "conditions": [],
+          "practice": "산소 공급 조건과 ATP 생성량을 두 열로 구분한 표를 작성하세요.",
+          "confidence": 0.8,
+          "claim_ids": [
+            "claim0",
+            "claim1"
+          ],
+          "assessment_evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다."
+            }
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            }
+          ]
+        },
+        {
+          "id": "s1",
+          "code": "justify",
+          "label": "ATP 감소 설명",
+          "input": "조건 비교표",
+          "output": "ATP 감소를 조건과 연결한 답안",
+          "success_criteria": [
+            "산소 감소와 ATP 생성 감소 연결"
+          ],
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "practice": "산소 공급 감소와 ATP 생성 감소를 연결하는 조건부 설명을 작성하세요.",
+          "confidence": 0.8,
+          "claim_ids": [
+            "claim0",
+            "claim2"
+          ],
+          "assessment_evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다."
+            }
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "s0",
+          "to": "s1",
+          "relation": "supports",
+          "explanation": "조건 비교가 결과 설명의 근거가 된다.",
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            }
+          ]
+        },
+        {
+          "from": "s0",
+          "to": "c_2c02cf60cf097927",
+          "relation": "requires",
+          "explanation": "이 개념이 연결된 요구 사고 수행에 필요하다.",
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            }
+          ]
+        }
+      ],
+      "claims": [
+        {
+          "id": "claim0",
+          "statement": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다.",
+          "conditions": [],
+          "evidence": [
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "model",
+          "confidence": 0.8,
+          "step_id": ""
+        },
+        {
+          "id": "claim1",
+          "statement": "산소 변화와 ATP 생성의 비교표",
+          "conditions": [],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            },
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "step_output",
+          "confidence": 0.8,
+          "step_id": "s0"
+        },
+        {
+          "id": "claim2",
+          "statement": "ATP 감소를 조건과 연결한 답안",
+          "conditions": [
+            "전자 전달의 완전 중단을 단정하지 않음"
+          ],
+          "evidence": [
+            {
+              "source_id": "src_bcd6310d3ccf664d0b45",
+              "locator": "p1",
+              "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+            },
+            {
+              "source_id": "src_1c8780416fb33f875499",
+              "locator": "p1",
+              "quote": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다."
+            }
+          ],
+          "review_status": "supported",
+          "review_reason": "검증용 고정 판정",
+          "origin": "step_output",
+          "confidence": 0.8,
+          "step_id": "s1"
+        }
+      ],
+      "answer_requirements": [
+        "산소 변화와 ATP 감소의 조건부 연결"
+      ],
+      "retrieval": {
+        "method": "lexical_original_blocks_v1",
+        "query": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오.\n",
+        "total_blocks": 1,
+        "matched_blocks": 1,
+        "selected_blocks": [
+          {
+            "block_id": "b_b4a1312b294db3c0c335",
+            "source_id": "src_76d9c2dc26e2893d8cea",
+            "locator": "p1",
+            "title": "live_material.txt",
+            "source_sha256": "115881d8f65c45e38e87e39850760f31f5e96c5d7234cd90755a3b2f12337dce",
+            "start": 0,
+            "end": 111,
+            "text": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다. 산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다. 산소 공급이 감소하면 산화적 인산화에 의한 ATP 생성이 감소할 수 있다.",
+            "score": 10.2383
+          }
+        ],
+        "context_chars": 111,
+        "budget_limited": false,
+        "max_chars": 10000,
+        "top_k": 6,
+        "corpus_hash": "49e3e3f0a1afd489f3e8a348f044cc4b96f232ae4f6e15b90ab4951086adfe4f"
+      },
+      "analysis_version": "grounded-2.3",
+      "implementation_milestone": "0.2",
+      "actual_student_behavior": "not_observed",
+      "confidence": 0.8,
+      "task": {
+        "description": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오.",
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "source_id": "src_bcd6310d3ccf664d0b45",
+            "locator": "p1",
+            "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+          }
+        ]
+      },
+      "concept_confidences": [
+        {
+          "concept_id": "c_2c02cf60cf097927",
+          "step_id": "s0",
+          "value": 0.8
+        }
+      ],
+      "answer_key_context": {
+        "status": "provided",
+        "exam_locator": "p1",
+        "blocks": [
+          {
+            "source_id": "src_1c8780416fb33f875499",
+            "source_sha256": "cd46c2c005ae6e0f1508ed91d9234ab31ff1c04c8cc2e34cf2dde4383a6ae140",
+            "locator": "p1",
+            "start": 269,
+            "end": 481,
+            "text": "2. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 없다. 관찰된 것은 산화적 인산화에 의한 ATP 생성의 감소이며, 세포 전체의 ATP 생성량이 0이라는 정보는 없다. 해당과정의 기질 수준 인산화 등 다른 ATP 생성 경로는 별도로 평가해야 한다. 답안 기준 후보: 감소와 완전 중단을 구별하고, 산화적 인산화와 세포 전체 ATP 생성 범위를 구별한다.",
+            "block_id": "ak_9e3786a46dad33241f73"
+          }
+        ]
+      },
+      "analysis_status": "ai_reviewed",
+      "review_history": [
+        {
+          "attempt": 0,
+          "candidate_hash": "8e51389ef92a42001ec4823401427022837471056a9b60e9e55cc86f67c09b87",
+          "review": {
+            "task_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "문항 요구에 근거한 과제"
+              }
+            ],
+            "claim_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 1,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 2,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "step_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              },
+              {
+                "index": 1,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "link_verdicts": [
+              {
+                "index": 0,
+                "status": "supported",
+                "reason": "검증용 고정 판정"
+              }
+            ],
+            "missing_requirements": [],
+            "issues": []
+          },
+          "review_model": "fixture",
+          "grounding_model": "fixture",
+          "grounding_verdicts": [
+            {
+              "index": 0,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            },
+            {
+              "index": 1,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            },
+            {
+              "index": 2,
+              "status": "supported",
+              "reason": "검증용 근거 판정"
+            }
+          ]
+        }
+      ],
+      "intent": {
+        "status": "hypothesis",
+        "review_status": "unreviewed",
+        "objective": "기작 연결을 평가한다는 가설",
+        "success_criteria": [
+          "산소 역할을 설명"
+        ],
+        "confidence": 0.8,
+        "evidence": [
+          {
+            "source_id": "src_bcd6310d3ccf664d0b45",
+            "locator": "p1",
+            "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "src_bcd6310d3ccf664d0b45",
+          "locator": "p1",
+          "quote": "2. 산소 공급 감소 조건에서 산화적 인산화에 의한 ATP 생성 감소를 관찰하였다. 이 관찰만으로 세포의 모든 ATP 생성이 완전히 중단되었다고 결론낼 수 있는가? 관찰이 지지하는 범위와 결론의 한계를 구분하여 설명하시오."
+        }
+      ]
+    }
+  ],
+  "material_observations": [
+    {
+      "id": "mo_800ebf533fed940b9ae2",
+      "concept_id": "c_536402970a38c239",
+      "surface_form": "세포호흡",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_2cc8f1495c5b85f48c15",
+      "concept_id": "c_2c02cf60cf097927",
+      "surface_form": "산소",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_f06758223a611df421fe",
+      "concept_id": "c_3cde7b098065b1c5",
+      "surface_form": "미토콘드리아 전자 전달계",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "산소는 미토콘드리아 전자 전달계의 최종 전자 수용체이다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_2c6116f32f3d5fae6782",
+      "concept_id": "c_55a9715a82669d3c",
+      "surface_form": "ATP 합성",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "세포호흡은 유기물의 화학 에너지를 ATP 합성에 이용하는 과정이다."
+        }
+      ],
+      "explicit_emphasis": []
+    },
+    {
+      "id": "mo_44c45616f46f23a0f9ab",
+      "concept_id": "c_0633cce65e59802a",
+      "surface_form": "산화적 인산화",
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "source_id": "src_76d9c2dc26e2893d8cea",
+          "locator": "p1",
+          "quote": "산화적 인산화에 의한 ATP 생성이 감소할 수 있다."
+        }
+      ],
+      "explicit_emphasis": []
+    }
+  ]
+}

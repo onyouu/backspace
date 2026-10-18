@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bounded Jev judgment and separate Python route",
+  "type": "object",
+  "required": [
+    "decision_id",
+    "decision_type",
+    "state_hash",
+    "question_version",
+    "model",
+    "raw_answers",
+    "probabilities",
+    "confidence",
+    "threshold_version",
+    "final_route",
+    "created_at",
+    "related_note_ids",
+    "related_hypothesis_ids",
+    "status"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "decision_type": {
+      "enum": [
+        "source_evidence",
+        "note_router",
+        "graph_gate",
+        "hypothesis_prefilter",
+        "hypothesis_validation",
+        "teacher_update_gate",
+        "planning_gate",
+        "teacher_relation",
+        "teacher_prefilter",
+        "teacher_novelty",
+        "teacher_integration",
+        "teacher_sufficient",
+        "teacher_notes_prefilter",
+        "teacher_notes_novelty",
+        "teacher_notes_integration",
+        "teacher_notes_sufficient",
+        "graph_emphasis",
+        "teacher_notes_ambiguity",
+        "study_relations",
+        "teacher_efficient_review"
+      ]
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "question_version": {
+      "type": "string"
+    },
+    "question_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "question_hash": {
+      "type": "string"
+    },
+    "questions": {
+      "type": "object"
+    },
+    "state_snapshot": {
+      "type": "object"
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "configured_model": {
+      "type": "string"
+    },
+    "raw_answers": {
+      "type": "object"
+    },
+    "probabilities": {
+      "type": "object"
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    "threshold_version": {
+      "type": "string"
+    },
+    "thresholds": {
+      "type": "object"
+    },
+    "final_route": {
+      "type": [
+        "object",
+        "string"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "related_note_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_hypothesis_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "success",
+        "fallback"
+      ]
+    },
+    "attempt_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "error": {
+      "type": "string"
+    },
+    "usage": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "bundle_decision_id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

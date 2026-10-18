@@ -1,0 +1,8 @@
+{
+  "name": "backspace-web",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local Backspace Teacher Studio with GSAP",
+  "scripts": {"start": "python -m backspace_mvp.web --port 8786", "check": "node --check backspace_mvp/web_static/app.js && node --check backspace_mvp/web_static/views.js && node --check backspace_mvp/web_static/graph.js && node --check backspace_mvp/web_static/perception.js && node --check backspace_mvp/web_static/motion.js && node --check backspace_mvp/web_static/history.js && node tests/test_web_graph.cjs"},
+  "dependencies": {"gsap": "3.15.0"}
+}

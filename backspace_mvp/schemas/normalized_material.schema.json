@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Backspace Normalized Material",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "settings": {
+      "type": "object",
+      "required": [
+        "version",
+        "detector",
+        "recognizer",
+        "threshold",
+        "device",
+        "dpi",
+        "surya"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "complete": {
+      "type": "boolean"
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^pb_[a-f0-9]{20}$"
+                },
+                "raw_text": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "bbox": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "method": {
+                  "enum": [
+                    "native",
+                    "paddle"
+                  ]
+                },
+                "confidence": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "status": {
+                  "enum": [
+                    "accepted",
+                    "needs_review",
+                    "human_verified",
+                    "excluded"
+                  ]
+                },
+                "candidates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "edits": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "start": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "id",
+                "raw_text",
+                "text",
+                "bbox",
+                "method",
+                "confidence",
+                "status",
+                "candidates",
+                "edits"
+              ]
+            }
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^pa_[a-f0-9]{20}$"
+                },
+                "file": {
+                  "type": "string",
+                  "pattern": "^pa_[a-f0-9]{20}\\.png$"
+                },
+                "bbox": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "visual_review_required": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "file",
+                "bbox",
+                "sha256",
+                "visual_review_required"
+              ]
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "text": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "needs_review",
+              "blank",
+              "visual_only"
+            ]
+          },
+          "pending_blocks": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "visual_acknowledged": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "locator",
+          "width",
+          "height",
+          "blocks",
+          "assets",
+          "errors",
+          "text",
+          "status",
+          "pending_blocks",
+          "visual_acknowledged"
+        ]
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "pages",
+        "accepted_blocks",
+        "pending_blocks",
+        "pages_with_errors",
+        "visual_regions"
+      ]
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "needs_review"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_sha256",
+    "settings",
+    "revision",
+    "complete",
+    "pages",
+    "history",
+    "coverage",
+    "content_hash",
+    "status"
+  ]
+}

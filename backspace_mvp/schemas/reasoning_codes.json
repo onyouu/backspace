@@ -1,0 +1,57 @@
+[
+  {
+    "id": "read_data",
+    "label": "자료 해석",
+    "definition": "표, 그래프, 모식도에서 조건과 정보를 읽는다."
+  },
+  {
+    "id": "recall",
+    "label": "개념 회상",
+    "definition": "필요한 개념이나 정의를 떠올린다."
+  },
+  {
+    "id": "compare",
+    "label": "조건 비교",
+    "definition": "둘 이상의 상태, 조건, 구조를 비교한다."
+  },
+  {
+    "id": "classify",
+    "label": "분류",
+    "definition": "대상의 특성에 따라 범주를 판정한다."
+  },
+  {
+    "id": "calculate",
+    "label": "수량 계산",
+    "definition": "수치 관계나 비율을 계산한다."
+  },
+  {
+    "id": "infer_cause",
+    "label": "원인 추론",
+    "definition": "관찰된 결과를 설명하는 기작이나 원인을 연결한다."
+  },
+  {
+    "id": "predict",
+    "label": "결과 예측",
+    "definition": "조건 변화가 일으킬 결과를 예측한다."
+  },
+  {
+    "id": "evaluate",
+    "label": "진술 판단",
+    "definition": "보기나 설명이 자료와 개념에 맞는지 판단한다."
+  },
+  {
+    "id": "justify",
+    "label": "근거 제시",
+    "definition": "결론을 자료 또는 개념으로 설명한다."
+  },
+  {
+    "id": "integrate",
+    "label": "체계 통합",
+    "definition": "여러 요소나 기관의 관계를 연결한다."
+  },
+  {
+    "id": "propose",
+    "label": "변화 방안 제시",
+    "definition": "주어진 목표를 만드는 조건 변화를 제안한다."
+  }
+]

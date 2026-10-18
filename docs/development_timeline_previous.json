@@ -1,0 +1,439 @@
+{
+  "version": 1,
+  "timezone": "Asia/Seoul",
+  "entries": [
+    {
+      "id": "restored-c506c2122ec0f585",
+      "at": "2026-10-06T08:03:31+09:00",
+      "category": "시작",
+      "title": "로컬 Teacher Agent의 첫 코드",
+      "summary": "자료와 문항을 구조화해 저장하는 Python 프로토타입을 시작했습니다.",
+      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
+      "reference": "backspace_mvp/analysis.py",
+      "files": [
+        "backspace_mvp/analysis.py",
+        "backspace_mvp/model.py"
+      ]
+    },
+    {
+      "id": "restored-9584c62b232f25dd",
+      "at": "2026-10-06T08:04:02+09:00",
+      "category": "AI 연결",
+      "title": "NVIDIA API와 작은 CLI 연결",
+      "summary": "로컬에서 자료 분석을 실행하고 결과를 저장하는 흐름을 마련했습니다. API 키는 환경 파일에서 읽습니다.",
+      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
+      "reference": "backspace_mvp/nvidia.py",
+      "files": [
+        "backspace_mvp/nvidia.py",
+        "backspace_mvp/cli.py"
+      ]
+    },
+    {
+      "id": "restored-1ae6695508fb388d",
+      "at": "2026-10-06T09:14:16+09:00",
+      "category": "안정화",
+      "title": "분석을 나눠 저장하는 구조",
+      "summary": "자료 분석을 작은 단계로 나누고, 저장된 중간 결과를 재사용하는 기반을 추가했습니다.",
+      "time_basis": "복원 기록 · 첫 코드 파일 생성 시각",
+      "reference": "backspace_mvp/staged.py",
+      "files": [
+        "backspace_mvp/staged.py"
+      ]
+    },
+    {
+      "id": "restored-5002e3f61ea65413",
+      "at": "2026-10-06T10:28:51+09:00",
+      "category": "v0.1",
+      "title": "자료를 누적 개념 지도로",
+      "summary": "학습자료는 하나의 누적 지도, 시험은 문항별 사고 지도로 나누는 구조를 고정했습니다. Teacher Intelligence 70 / Planning 30 방향을 잡았습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/teacher_intelligence_architecture_v0.1.md",
+      "files": [
+        "backspace_mvp/materials.py",
+        "docs/teacher_intelligence_architecture_v0.1.md"
+      ]
+    },
+    {
+      "id": "restored-6e84539dc6b63477",
+      "at": "2026-10-06T11:49:17+09:00",
+      "category": "v0.2",
+      "title": "문항별 요구 사고 분석",
+      "summary": "각 문제의 개념·요구 행동·사고 과정·답안 기준·출제 의도 후보를 별도 지도로 저장합니다. 학생이 실제로 한 행동과 문제에서 요구하는 행동을 구분합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.2.md",
+      "files": [
+        "backspace_mvp/question_graphs.py"
+      ]
+    },
+    {
+      "id": "restored-1d85757f335a3f60",
+      "at": "2026-10-06T12:08:32+09:00",
+      "category": "v0.3",
+      "title": "여러 문제에서 반복되는 사고 찾기",
+      "summary": "Python이 반복되는 노드·연결·경로·분기 구조를 집계하도록 했습니다. 같은 문항 안의 반복과 여러 문항의 지지를 구분합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.3.md",
+      "files": [
+        "backspace_mvp/patterns.py"
+      ]
+    },
+    {
+      "id": "restored-394c16983ead7410",
+      "at": "2026-10-06T12:08:32+09:00",
+      "category": "검증",
+      "title": "v0.1~v0.7 통합 검증 기록",
+      "summary": "합성 자료로 전체 파이프라인을 연결하고 실제 NVIDIA·Jev 호출을 제한적으로 확인했습니다. 실제 교사 시험 정확도 평가는 별도 과제로 남겼습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/implementation_status.md",
+      "files": [
+        "docs/implementation_status.md"
+      ]
+    },
+    {
+      "id": "restored-ad5fc37a0534178a",
+      "at": "2026-10-06T12:14:18+09:00",
+      "category": "v0.4",
+      "title": "교사의 평가 방식에 대한 가설",
+      "summary": "반복 패턴과 자료 근거를 바탕으로 교사 가설을 만듭니다. 지지 근거·반례·적용 조건·다른 설명을 함께 남깁니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.4.md",
+      "files": [
+        "backspace_mvp/hypotheses.py"
+      ]
+    },
+    {
+      "id": "restored-82a5af9a433fb7d8",
+      "at": "2026-10-06T12:21:26+09:00",
+      "category": "v0.5",
+      "title": "Jev로 중요도와 근거 점수화",
+      "summary": "개념 중요도와 가설 지지·반박을 Jev가 판단하도록 연결했습니다. 요약 점수와 함께 원 점수·분포·판단 근거를 보관합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.5.md",
+      "files": [
+        "backspace_mvp/jev.py",
+        "backspace_mvp/scoring.py"
+      ]
+    },
+    {
+      "id": "restored-796e0bf92aad5514",
+      "at": "2026-10-06T12:27:23+09:00",
+      "category": "v0.6",
+      "title": "구조화된 Teacher Model",
+      "summary": "개념 중요도·주요 사고 패턴·평가 가설을 하나의 교사 모델로 묶었습니다. 아직 산정하지 않은 점수는 빈 값으로 남깁니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.6.md",
+      "files": [
+        "backspace_mvp/teacher_model.py"
+      ]
+    },
+    {
+      "id": "restored-e6724e75e05fa559",
+      "at": "2026-10-06T12:38:38+09:00",
+      "category": "v0.7",
+      "title": "새 시험범위로 학습계획 만들기",
+      "summary": "교사 모델과 이번 시험범위 자료를 따로 연결해 공부 깊이와 일정을 만듭니다. 완료 상태·메모·계획 변경 이력을 저장합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/milestone_v0.7.md",
+      "files": [
+        "backspace_mvp/study_plan.py"
+      ]
+    },
+    {
+      "id": "restored-37c743f718df8905",
+      "at": "2026-10-06T13:48:22+09:00",
+      "category": "웹",
+      "title": "학생용 웹 작업공간",
+      "summary": "선생님 모델을 만드는 과거 자료 공간과 이번 시험 준비 공간을 나눴습니다. 업로드부터 모델 탐색·계획까지 브라우저에서 사용할 수 있게 했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/web_app.md",
+      "files": [
+        "backspace_mvp/web.py",
+        "backspace_mvp/web_static/app.js"
+      ]
+    },
+    {
+      "id": "restored-485cf37a27927fb3",
+      "at": "2026-10-06T14:20:46+09:00",
+      "category": "자료 읽기",
+      "title": "로컬 OCR과 원문 검토",
+      "summary": "PDF·PPT의 텍스트와 이미지 읽기를 의미 분석 앞에 분리했습니다. 원본·최초 인식·수정 이력을 보존하고, 파일당 업로드 제한을 100MB로 늘렸습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/perception.md",
+      "files": [
+        "backspace_mvp/perception.py",
+        "backspace_mvp/web_static/perception.js"
+      ]
+    },
+    {
+      "id": "restored-bd5c4b7d1846b8de",
+      "at": "2026-10-06T17:53:09+09:00",
+      "category": "디자인",
+      "title": "Black & Lime 작업공간",
+      "summary": "블랙·라임 디자인과 GSAP 전환, 인터랙티브 사고 지도를 적용했습니다. 모바일 화면과 원문 검토·계획 작업 흐름을 확인했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/design_validation.md",
+      "files": [
+        "backspace_mvp/web_static/motion.js",
+        "backspace_mvp/web_static/graph.js"
+      ]
+    },
+    {
+      "id": "restored-fa7720042d0fa879",
+      "at": "2026-10-06T19:07:36+09:00",
+      "category": "안정화",
+      "title": "원문 인용 오류 조사",
+      "summary": "원문에 없는 인용과 개념 추출 실패 기록을 조사했습니다. 인용을 임의로 만들어 통과시키지 않고, 실제 원문과의 대응을 확인하도록 했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/error_audit_2026-10-06.md",
+      "files": [
+        "docs/error_audit_2026-10-06.md"
+      ]
+    },
+    {
+      "id": "restored-723a0d6bbce7ed24",
+      "at": "2026-10-06T19:33:50+09:00",
+      "category": "디자인",
+      "title": "더 간결한 AI 작업 화면",
+      "summary": "기술 기업의 AI UI를 참고해 설명을 줄이고, 정돈된 자료 목록과 작업 중심의 화면으로 방향을 다듬었습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/UI_REFERENCES.md",
+      "files": [
+        "backspace_mvp/web_static/studio.css",
+        "docs/UI_REFERENCES.md"
+      ]
+    },
+    {
+      "id": "restored-4ea79b0f28213f4f",
+      "at": "2026-10-07T11:46:36+09:00",
+      "category": "그림 이해",
+      "title": "글자뿐 아니라 도식과 그림도 분석",
+      "summary": "자료의 그림·표·도식에 이미지 분석을 연결하고, 어느 영역을 이해했는지 원문 좌표와 함께 저장합니다. 이미지 해석과 원문 인용을 구분합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/visual_understanding.md",
+      "files": [
+        "backspace_mvp/visual.py"
+      ]
+    },
+    {
+      "id": "restored-4f74e47b9441bdb5",
+      "at": "2026-10-07T12:23:59+09:00",
+      "category": "메모리",
+      "title": "자료를 이해 노트로 기억",
+      "summary": "자료에서 이해한 내용을 출처가 있는 짧은 노트로 저장하고 관련 노트를 다시 찾도록 A-MEM을 연결했습니다. 요약만으로 교사의 중요도를 확정하지 않습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/amem_integration.md",
+      "files": [
+        "backspace_mvp/understanding.py",
+        "backspace_mvp/amem_adapter.py"
+      ]
+    },
+    {
+      "id": "restored-3596f3dbdc88c508",
+      "at": "2026-10-07T13:37:42+09:00",
+      "category": "AI 연결",
+      "title": "Jev 호출 위치 점검",
+      "summary": "어느 단계에서 Jev가 호출되고, 언제 점수화가 생략되거나 대기하는지 연결 구조를 정리했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/jev_call_mapping.md",
+      "files": [
+        "docs/jev_call_mapping.md"
+      ]
+    },
+    {
+      "id": "restored-ca415d953f081d76",
+      "at": "2026-10-07T14:10:21+09:00",
+      "category": "비용·속도",
+      "title": "Jev가 느린 분석의 필요성을 먼저 판단",
+      "summary": "Jev를 점수화뿐 아니라 분류·중복·추가 분석 필요성 판단에도 사용합니다. 큰 요청을 그대로 반복하거나 NVIDIA 시간 제한부터 늘리는 방식을 줄였습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/jev_control_update.md",
+      "files": [
+        "backspace_mvp/semantic_control.py",
+        "docs/jev_control_update.md"
+      ]
+    },
+    {
+      "id": "restored-e7b76ce60c049d9b",
+      "at": "2026-10-07T15:09:30+09:00",
+      "category": "교사 모델",
+      "title": "Teacher Model을 조금씩 갱신",
+      "summary": "새 자료마다 가설 전체를 다시 쓰는 대신 지지·반례를 기존 가설에 붙입니다. 기존 가설로 설명되지 않는 반복 패턴이 있을 때 새 가설을 제안합니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/teacher_incremental_update.md",
+      "files": [
+        "backspace_mvp/teacher_incremental.py",
+        "backspace_mvp/teacher_update.py"
+      ]
+    },
+    {
+      "id": "restored-375aba3e0c8c7832",
+      "at": "2026-10-07T17:43:13+09:00",
+      "category": "복구",
+      "title": "후속 실패가 저장된 노트를 지우지 않도록",
+      "summary": "노트 저장과 검색·Jev·지도·모델·계획의 완료 상태를 분리했습니다. 일부 단계가 실패해도 저장 결과를 남기고, 미완료 단계부터 이어갑니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/pipeline_recovery_report.md",
+      "files": [
+        "backspace_mvp/stage_state.py",
+        "backspace_mvp/web_pipeline.py"
+      ]
+    },
+    {
+      "id": "restored-403070d6e6951ed4",
+      "at": "2026-10-07T19:01:46+09:00",
+      "category": "안정화",
+      "title": "실패 기록과 응답 시간 처리 개선",
+      "summary": "이전 실패 기록에서 즉시 멈추던 작은 분석 구간을 다시 시도하도록 했습니다. 응답 전체의 시간 예산을 적용하고 읽기 완료와 분석 완료 안내를 구분했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/error_recovery_followup.md",
+      "files": [
+        "backspace_mvp/staged.py",
+        "backspace_mvp/nvidia.py"
+      ]
+    },
+    {
+      "id": "restored-0569e319061095db",
+      "at": "2026-10-07T19:15:55+09:00",
+      "category": "검증",
+      "title": "실제 실행 화면과 저장 상태 점검",
+      "summary": "실제 서버와 저장 노트를 확인하고, 진행상황 창의 닫기·최소화·재열기를 점검했습니다. 테스트 통과와 실제 자료의 분석 완료를 구분해 기록했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/runtime_verification_2026-10-07.md",
+      "files": [
+        "docs/runtime_verification_2026-10-07.md"
+      ]
+    },
+    {
+      "id": "restored-a5affef3a2439a08",
+      "at": "2026-10-07T20:06:44+09:00",
+      "category": "안정화",
+      "title": "수정된 서버 적용과 안내자료 제외",
+      "summary": "수정 전 서버로 반복 분석하던 문제를 확인해 새 실행 주소에 수정본을 적용했습니다. 요청한 영어 안내자료를 목록·활성 근거에서 제외하고 원본은 보관했습니다.",
+      "time_basis": "복원 기록 · 문서 생성 시각",
+      "reference": "docs/retry_runtime_and_file_exclusion_2026-10-07.md",
+      "files": [
+        "backspace_mvp/web.py",
+        "scripts/exclude_unprojected_file.py"
+      ]
+    },
+    {
+      "id": "change-b922bb05f75f4fa2b60970e388de58ae",
+      "at": "2026-10-07T20:11:09+09:00",
+      "category": "업데이트",
+      "title": "프로그램 변천사를 보는 연표 창",
+      "summary": "상단 변경 이력 버튼에서 초기 개발부터 현재까지 확인할 수 있습니다. 창을 드래그하거나 방향키로 옮기고, 처음·최신 기록으로 이동할 수 있습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/web_static/index.html",
+          "sha256": "398c88d5e0188808c1014a96869f167e54b9a20c4f4ce5f873ec6d43c024eef4",
+          "modified_at": "2026-10-07T20:10:02+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/web_static/history.js",
+          "sha256": "9dc43364b0d760a191c591fbd5c795d5361758f9cc732150e09d80889852d78f",
+          "modified_at": "2026-10-07T20:09:57+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/web_static/history.css",
+          "sha256": "5bc71fe298580cc5d1189f267b39085d94e932b56c116764d6368aca6a2a3ca7",
+          "modified_at": "2026-10-07T20:09:57+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "scripts/update_change_history.py",
+          "sha256": "c45d066439df28ab50b63ad63966e900c2c4dc5c83581669d9ca89ad6b6ec263",
+          "modified_at": "2026-10-07T20:11:03+09:00",
+          "change": "recorded"
+        }
+      ]
+    },
+    {
+      "id": "change-a8b48eae9e6540f49b9c5cf680f22b53",
+      "at": "2026-10-07T20:15:40+09:00",
+      "category": "업데이트",
+      "title": "작은 화면의 상단 버튼 정렬",
+      "summary": "변경 이력과 진행상황 버튼을 함께 표시해도 작은 화면에서 글자가 세로로 꺾이지 않도록 조정했습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/web_static/history.css",
+          "sha256": "d4e1b83ed22974184bd1a3c037a9ca8067a80bd85c6a7aaebd86bdca71d65aa3",
+          "modified_at": "2026-10-07T20:14:38+09:00",
+          "change": "modified"
+        }
+      ]
+    },
+    {
+      "id": "change-af23619c5fae497f9a5735d1cc13650b",
+      "at": "2026-10-07T20:32:55+09:00",
+      "category": "업데이트",
+      "title": "GitHub 비공개 저장소에 첫 업로드",
+      "summary": "코드·샘플·설명서·변경 연표를 비공개 저장소에 보관했습니다. API 키와 실제 학습자료·분석 결과는 올리지 않았습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "scripts/prepare_github_export.py",
+          "sha256": "b1603f93694fed64d36dd20b809da5f5b3be50efc4bdae2de6d20a61f6d33bc7",
+          "modified_at": "2026-10-07T20:26:47+09:00",
+          "change": "recorded"
+        }
+      ]
+    },
+    {
+      "id": "change-5b58f440a5e5441e85cbf3427dcb9d35",
+      "at": "2026-10-07T21:16:41+09:00",
+      "category": "업데이트",
+      "title": "교사 가설 갱신 전 증거 선별 추가",
+      "summary": "일반 교과 설명은 보존하면서 불필요한 관계 분석을 줄입니다. 시험문항과 확인된 반례는 보호하고, 불확실한 판단은 검토 대기로 남깁니다. 전체 테스트 203개를 통과했습니다.",
+      "time_basis": "변경 기록 시각 · 파일별 수정 시각 별도",
+      "files": [
+        {
+          "path": "backspace_mvp/schemas/teacher_prefilter.schema.json",
+          "sha256": "5d7f73abe509f9b3953bf86d6d766f3b050df8c8b36750a6c3b62acdcdd23ef8",
+          "modified_at": "2026-10-07T21:10:44+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "backspace_mvp/teacher_incremental.py",
+          "sha256": "05bb3ccefc902da0ef8c2a51b0acce3e64bd0d8389b3888f0108713515c8cc9c",
+          "modified_at": "2026-10-07T21:11:32+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/teacher_note_evidence.py",
+          "sha256": "7abee0dca248f1fa0bd4064aec6c3a2b249aaf8391fe377a59a5959c7d6c209e",
+          "modified_at": "2026-10-07T21:09:12+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/teacher_update.py",
+          "sha256": "1bd009c473174a2d90cbc862afef0389d1e08624b15583c14465764a47c6985e",
+          "modified_at": "2026-10-07T21:14:15+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "backspace_mvp/web.py",
+          "sha256": "5760b36fef60b15d318018e40f87a5a558f789acfcf61cd0e5d0fc9347536fb5",
+          "modified_at": "2026-10-07T21:09:12+09:00",
+          "change": "modified"
+        },
+        {
+          "path": "scripts/validate_teacher_prefilter.py",
+          "sha256": "96ae4d4bfabf6fafa3c50262af3f10a5ae1a479959b41a38be0b50323370d3d0",
+          "modified_at": "2026-10-07T21:12:46+09:00",
+          "change": "recorded"
+        },
+        {
+          "path": "tests/test_teacher_prefilter.py",
+          "sha256": "415678c83702baae898ef38a194f6c73c35b5ef6e82b2d32451811889abf3f0f",
+          "modified_at": "2026-10-07T21:14:35+09:00",
+          "change": "recorded"
+        }
+      ]
+    }
+  ],
+  "updated_at": "2026-10-07T21:16:41+09:00"
+}
