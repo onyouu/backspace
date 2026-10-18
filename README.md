@@ -32,6 +32,16 @@ if (!(Test-Path .env)) { Copy-Item .env.example .env }
 
 최초 메모리 검색에는 로컬 임베딩 모델 다운로드가 필요합니다. OCR의 GPU 지원과 설치 가능 여부는 환경에 따라 다릅니다. Surya는 선택 기능입니다. 설정과 상세 절차는 [인식 문서](docs/perception.md)와 [메모리 문서](docs/amem_integration.md)를 참고하세요.
 
+## 내 PC를 통한 개인용 외부 접속
+
+PC와 접속할 휴대폰/다른 컴퓨터에 [Tailscale](https://tailscale.com/download)을 설치하고 같은 개인 계정으로 연결한 뒤, PC에서 `run_backspace_remote.cmd`를 실행하세요. 처음에는 안내된 Tailscale 주소에서 HTTPS/Serve 활성화가 필요할 수 있습니다. 표시된 `https://…ts.net` 주소로 접속하면 기존 자료·Teacher Model·계획을 그대로 사용할 수 있습니다.
+
+- PC가 켜져 있고 절전 상태가 아니어야 합니다. 재부팅 후에는 `run_backspace_remote.cmd`를 다시 실행하세요.
+- 같은 소유자 계정으로 연결한 기기만 허용합니다. 공개 인터넷 배포 기능인 Funnel은 사용하지 않습니다.
+- 원본·생성 결과·ChatGPT 로그인 정보는 PC에 남습니다. 새 ChatGPT 로그인은 해당 PC의 로컬 화면에서 진행하세요.
+- 개인 접속 설정은 Git에서 제외된 `state/web/private_access.json`에 저장됩니다. 소유자 계정이나 DNS 주소가 바뀌면 자동으로 권한을 바꾸지 않고 실행을 중단합니다.
+- 개인 접속을 중지하려면 `tailscale serve --https=443 off`를 실행하세요. 이후 원격 실행 파일을 열면 다시 연결됩니다.
+
 ## AI 연결
 
 **선생님 자료 → Continue with ChatGPT**에서 본인 계정으로 로그인하고 앱 사용을 허용한 뒤 제공되는 모델을 선택할 수 있습니다. 이 연결은 Windows 로컬 앱용이며, 로그인 정보는 프로젝트 밖 `%LOCALAPPDATA%/Backspace/chatgpt/`에 암호화해 보관합니다. 연결 가능 여부와 사용 한도는 계정에서 확인하세요.

@@ -11,7 +11,7 @@ from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parents[1]
 FOLDERS = ('backspace_mvp', 'data', 'docs', 'scripts', 'tests', 'third_party')
-ROOT_FILES = ('.gitignore', '.env.example', 'README.md', 'pyproject.toml', 'package.json', 'package-lock.json', 'run_backspace.cmd')
+ROOT_FILES = ('.gitignore', '.env.example', 'README.md', 'pyproject.toml', 'package.json', 'package-lock.json', 'run_backspace.cmd', 'run_backspace_remote.cmd')
 IGNORES = {'__pycache__', '.git', '.pytest_cache'}
 
 
